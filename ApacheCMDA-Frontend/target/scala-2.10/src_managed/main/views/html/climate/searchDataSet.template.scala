@@ -554,24 +554,24 @@ Seq[Any](format.raw/*18.40*/("""
     """),_display_(Seq[Any](/*511.6*/helper/*511.12*/.form(routes.DatasetController.getSearchResult())/*511.61*/ {_display_(Seq[Any](format.raw/*511.63*/("""
     	<div class="ui-widget col-sm-offset-3 col-sm-7">
     	<div class = "form-group">
-    		"""),_display_(Seq[Any](/*514.8*/inputText(dataSetForm("Dataset Name"), 'class -> "form-control", 'id -> "dataSetName", '_label -> Messages("Dataset Name"), 'placeholder -> "ARGO Ocean Temperature", 'size->70))),format.raw/*514.184*/(""" 
+    		"""),_display_(Seq[Any](/*514.8*/inputText(dataSetForm("Dataset Name"), 'class -> "form-control", 'userId -> "dataSetName", '_label -> Messages("Dataset Name"), 'placeholder -> "ARGO Ocean Temperature", 'size->70))),format.raw/*514.188*/("""
     	</div>
     	<div class = "form-group">
-    		"""),_display_(Seq[Any](/*517.8*/inputText(dataSetForm("Agency"), 'class -> "form-control", 'id -> "agency", '_label -> Messages("Agency"), 'placeholder -> "NOAA", 'size->70))),format.raw/*517.149*/(""" 
+    		"""),_display_(Seq[Any](/*517.8*/inputText(dataSetForm("Agency"), 'class -> "form-control", 'userId -> "agency", '_label -> Messages("Agency"), 'placeholder -> "NOAA", 'size->70))),format.raw/*517.153*/("""
     	</div>
     	<div class = "form-group">
-    		"""),_display_(Seq[Any](/*520.8*/inputText(dataSetForm("Instrument"), 'class -> "form-control", 'id -> "instrument", '_label -> Messages("Instrument"), 'placeholder -> "ARGO", 'size->70))),format.raw/*520.161*/(""" 
+    		"""),_display_(Seq[Any](/*520.8*/inputText(dataSetForm("Instrument"), 'class -> "form-control", 'userId -> "instrument", '_label -> Messages("Instrument"), 'placeholder -> "ARGO", 'size->70))),format.raw/*520.165*/("""
        	</div>
        	<div class = "form-group">
-       		"""),_display_(Seq[Any](/*523.11*/inputText(dataSetForm("Physical Variable"), 'class -> "form-control", 'id -> "physicalVariable", '_label -> Messages("Physical Variable"), 'placeholder -> "Ocean temperature", 'size->70))),format.raw/*523.197*/("""
+       		"""),_display_(Seq[Any](/*523.11*/inputText(dataSetForm("Physical Variable"), 'class -> "form-control", 'userId -> "physicalVariable", '_label -> Messages("Physical Variable"), 'placeholder -> "Ocean temperature", 'size->70))),format.raw/*523.201*/("""
 	    </div>
 	    <div class = "form-group">
-	    	"""),_display_(Seq[Any](/*526.8*/inputText(dataSetForm("Grid Dimension"), 'class -> "form-control", 'id -> "gridDimension", '_label -> Messages("Grids Dimension"), 'placeholder -> "3D", 'size->70))),format.raw/*526.171*/("""
+	    	"""),_display_(Seq[Any](/*526.8*/inputText(dataSetForm("Grid Dimension"), 'class -> "form-control", 'userId -> "gridDimension", '_label -> Messages("Grids Dimension"), 'placeholder -> "3D", 'size->70))),format.raw/*526.175*/("""
 	    	
 	    </div>
 	    <div class = "form-group">
-	    	"""),_display_(Seq[Any](/*530.8*/inputText(dataSetForm("Dataset Start Time"), 'class -> "form-control", 'id -> "dataSetStartTime", '_label -> Messages("Dataset Start Time"), 'placeholder -> "YYYYMM", 'size->70))),format.raw/*530.185*/("""
-	    	"""),_display_(Seq[Any](/*531.8*/inputText(dataSetForm("Dataset End Time"), 'class -> "form-control", 'id -> "dataSetEndTime", '_label -> Messages("Dataset End Time"), 'placeholder -> "YYYYMM", 'size->70))),format.raw/*531.179*/("""
+	    	"""),_display_(Seq[Any](/*530.8*/inputText(dataSetForm("Dataset Start Time"), 'class -> "form-control", 'userId -> "dataSetStartTime", '_label -> Messages("Dataset Start Time"), 'placeholder -> "YYYYMM", 'size->70))),format.raw/*530.189*/("""
+	    	"""),_display_(Seq[Any](/*531.8*/inputText(dataSetForm("Dataset End Time"), 'class -> "form-control", 'userId -> "dataSetEndTime", '_label -> Messages("Dataset End Time"), 'placeholder -> "YYYYMM", 'size->70))),format.raw/*531.183*/("""
 	    	
 	    	<div id="show" style="display: none;">
 	    		<textarea style="width: 640px" rows="4" id="content"></textarea>
@@ -596,10 +596,10 @@ Seq[Any](format.raw/*18.40*/("""
 }
                 /*
                     -- GENERATED --
-                    DATE: Fri Sep 18 18:40:50 PDT 2015
-                    SOURCE: /home/xingwei/SOC-Fall-2015/ApacheCMDA-Frontend/app/views/climate/searchDataSet.scala.html
-                    HASH: c2dd8ec623e9aa8a68a5cd2ec3161c619c2d5e43
-                    MATRIX: 3202->1205|3334->1264|3349->1271|3434->1275|3486->1291|3501->1297|3563->1337|3870->1616|3899->1617|20964->18653|20994->18654|21061->18693|21090->18694|21151->18726|21181->18727|21242->18760|21271->18761|21336->18797|21366->18798|21432->18836|21461->18837|21532->18879|21562->18880|21633->18923|21662->18924|21730->18963|21760->18964|21828->19004|21857->19005|21890->19010|21919->19011|21995->19058|22025->19059|22115->19120|22145->19121|22296->19243|22326->19244|23097->19986|23127->19987|23296->20127|23326->20128|23420->20193|23450->20194|23608->20323|23638->20324|23740->20397|23770->20398|23936->20535|23966->20536|24080->20621|24110->20622|24289->20772|24319->20773|24427->20852|24457->20853|24630->20997|24660->20998|24774->21083|24804->21084|24984->21235|25014->21236|25124->21317|25154->21318|25330->21465|25360->21466|25403->21480|25433->21481|25468->21487|25498->21488|25680->21641|25710->21642|25751->21654|25781->21655|25818->21664|25847->21665|25902->1243|25931->1262|25960->21680|25999->21683|26040->21714|26080->21715|26121->21720|26159->21735|26261->21801|26277->21807|26336->21856|26377->21858|26507->21952|26707->22128|26796->22181|26961->22322|27050->22375|27227->22528|27326->22590|27536->22776|27624->22828|27811->22991|27906->23050|28107->23227|28151->23235|28346->23406|28725->23753
+                    DATE: Fri Nov 06 10:45:04 PST 2015
+                    SOURCE: /Users/lixunrong/Documents/soc/SOC-Fall-2015-Team14-Lead-Xunrong-Li/ApacheCMDA-Frontend/app/views/climate/searchDataSet.scala.html
+                    HASH: b6eca2fbf76c3a444d3b11324eba228d83622a3a
+                    MATRIX: 3202->1205|3334->1264|3349->1271|3434->1275|3486->1291|3501->1297|3563->1337|3870->1616|3899->1617|20964->18653|20994->18654|21061->18693|21090->18694|21151->18726|21181->18727|21242->18760|21271->18761|21336->18797|21366->18798|21432->18836|21461->18837|21532->18879|21562->18880|21633->18923|21662->18924|21730->18963|21760->18964|21828->19004|21857->19005|21890->19010|21919->19011|21995->19058|22025->19059|22115->19120|22145->19121|22296->19243|22326->19244|23097->19986|23127->19987|23296->20127|23326->20128|23420->20193|23450->20194|23608->20323|23638->20324|23740->20397|23770->20398|23936->20535|23966->20536|24080->20621|24110->20622|24289->20772|24319->20773|24427->20852|24457->20853|24630->20997|24660->20998|24774->21083|24804->21084|24984->21235|25014->21236|25124->21317|25154->21318|25330->21465|25360->21466|25403->21480|25433->21481|25468->21487|25498->21488|25680->21641|25710->21642|25751->21654|25781->21655|25818->21664|25847->21665|25902->1243|25931->1262|25960->21680|25999->21683|26040->21714|26080->21715|26121->21720|26159->21735|26261->21801|26277->21807|26336->21856|26377->21858|26507->21952|26711->22132|26799->22184|26968->22329|27056->22381|27237->22538|27335->22599|27549->22789|27637->22841|27828->23008|27923->23067|28128->23248|28172->23256|28371->23431|28750->23778
                     LINES: 56->18|59->22|59->22|61->22|62->23|62->23|62->23|67->28|67->28|436->397|436->397|438->399|438->399|439->400|439->400|441->402|441->402|442->403|442->403|444->405|444->405|445->406|445->406|447->408|447->408|448->409|448->409|450->411|450->411|451->412|451->412|455->416|455->416|458->419|458->419|461->422|461->422|485->446|485->446|490->451|490->451|492->453|492->453|497->458|497->458|499->460|499->460|504->465|504->465|506->467|506->467|511->472|511->472|513->474|513->474|518->479|518->479|520->481|520->481|525->486|525->486|527->488|527->488|532->493|532->493|534->495|534->495|534->495|534->495|539->500|539->500|540->501|540->501|541->502|541->502|544->18|546->21|547->504|549->506|549->506|549->506|551->508|551->508|554->511|554->511|554->511|554->511|557->514|557->514|560->517|560->517|563->520|563->520|566->523|566->523|569->526|569->526|573->530|573->530|574->531|574->531|586->543
                     -- GENERATED --
                 */

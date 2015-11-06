@@ -511,24 +511,24 @@
     @helper.form(routes.DatasetController.getSearchResult()) {
     	<div class="ui-widget col-sm-offset-3 col-sm-7">
     	<div class = "form-group">
-    		@inputText(dataSetForm("Dataset Name"), 'class -> "form-control", 'id -> "dataSetName", '_label -> Messages("Dataset Name"), 'placeholder -> "ARGO Ocean Temperature", 'size->70) 
+    		@inputText(dataSetForm("Dataset Name"), 'class -> "form-control", 'userId -> "dataSetName", '_label -> Messages("Dataset Name"), 'placeholder -> "ARGO Ocean Temperature", 'size->70)
     	</div>
     	<div class = "form-group">
-    		@inputText(dataSetForm("Agency"), 'class -> "form-control", 'id -> "agency", '_label -> Messages("Agency"), 'placeholder -> "NOAA", 'size->70) 
+    		@inputText(dataSetForm("Agency"), 'class -> "form-control", 'userId -> "agency", '_label -> Messages("Agency"), 'placeholder -> "NOAA", 'size->70)
     	</div>
     	<div class = "form-group">
-    		@inputText(dataSetForm("Instrument"), 'class -> "form-control", 'id -> "instrument", '_label -> Messages("Instrument"), 'placeholder -> "ARGO", 'size->70) 
+    		@inputText(dataSetForm("Instrument"), 'class -> "form-control", 'userId -> "instrument", '_label -> Messages("Instrument"), 'placeholder -> "ARGO", 'size->70)
        	</div>
        	<div class = "form-group">
-       		@inputText(dataSetForm("Physical Variable"), 'class -> "form-control", 'id -> "physicalVariable", '_label -> Messages("Physical Variable"), 'placeholder -> "Ocean temperature", 'size->70)
+       		@inputText(dataSetForm("Physical Variable"), 'class -> "form-control", 'userId -> "physicalVariable", '_label -> Messages("Physical Variable"), 'placeholder -> "Ocean temperature", 'size->70)
 	    </div>
 	    <div class = "form-group">
-	    	@inputText(dataSetForm("Grid Dimension"), 'class -> "form-control", 'id -> "gridDimension", '_label -> Messages("Grids Dimension"), 'placeholder -> "3D", 'size->70)
+	    	@inputText(dataSetForm("Grid Dimension"), 'class -> "form-control", 'userId -> "gridDimension", '_label -> Messages("Grids Dimension"), 'placeholder -> "3D", 'size->70)
 	    	
 	    </div>
 	    <div class = "form-group">
-	    	@inputText(dataSetForm("Dataset Start Time"), 'class -> "form-control", 'id -> "dataSetStartTime", '_label -> Messages("Dataset Start Time"), 'placeholder -> "YYYYMM", 'size->70)
-	    	@inputText(dataSetForm("Dataset End Time"), 'class -> "form-control", 'id -> "dataSetEndTime", '_label -> Messages("Dataset End Time"), 'placeholder -> "YYYYMM", 'size->70)
+	    	@inputText(dataSetForm("Dataset Start Time"), 'class -> "form-control", 'userId -> "dataSetStartTime", '_label -> Messages("Dataset Start Time"), 'placeholder -> "YYYYMM", 'size->70)
+	    	@inputText(dataSetForm("Dataset End Time"), 'class -> "form-control", 'userId -> "dataSetEndTime", '_label -> Messages("Dataset End Time"), 'placeholder -> "YYYYMM", 'size->70)
 	    	
 	    	<div id="show" style="display: none;">
 	    		<textarea style="width: 640px" rows="4" id="content"></textarea>

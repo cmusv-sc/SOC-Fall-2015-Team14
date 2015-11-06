@@ -1,6 +1,6 @@
-// @SOURCE:/home/xingwei/SOC-Fall-2015/ApacheCMDA-Frontend/conf/routes
-// @HASH:a567abac742231815a5a9271612732827c1dd425
-// @DATE:Fri Sep 18 18:40:49 PDT 2015
+// @SOURCE:/Users/lixunrong/Documents/soc/SOC-Fall-2015-Team14-Lead-Xunrong-Li/ApacheCMDA-Frontend/conf/routes
+// @HASH:51dc39f14b47a80d3bb45b74473aefb33680b5ab
+// @DATE:Fri Nov 06 10:45:01 PST 2015
 
 import Routes.{prefix => _prefix, defaultPrefix => _defaultPrefix}
 import play.core._
@@ -13,6 +13,9 @@ import play.libs.F
 import Router.queryString
 
 
+// @LINE:46
+// @LINE:45
+// @LINE:44
 // @LINE:40
 // @LINE:37
 // @LINE:36
@@ -108,6 +111,33 @@ def list(): Call = {
 // @LINE:12
 def newReport(): Call = {
    Call("GET", _prefix + { _defaultPrefix } + "newReport")
+}
+                                                
+    
+}
+                          
+
+// @LINE:46
+// @LINE:45
+// @LINE:44
+class ReversePostController {
+    
+
+// @LINE:45
+def newPost(): Call = {
+   Call("POST", _prefix + { _defaultPrefix } + "sns/posts/add")
+}
+                                                
+
+// @LINE:46
+def addPost(): Call = {
+   Call("GET", _prefix + { _defaultPrefix } + "sns/posts/add")
+}
+                                                
+
+// @LINE:44
+def getAllPosts(): Call = {
+   Call("GET", _prefix + { _defaultPrefix } + "sns/home")
 }
                                                 
     
@@ -248,6 +278,9 @@ def deleteClimateService(): Call = {
                   
 
 
+// @LINE:46
+// @LINE:45
+// @LINE:44
 // @LINE:40
 // @LINE:37
 // @LINE:36
@@ -381,6 +414,48 @@ def newReport : JavascriptReverseRoute = JavascriptReverseRoute(
    """
       function() {
       return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "newReport"})
+      }
+   """
+)
+                        
+    
+}
+              
+
+// @LINE:46
+// @LINE:45
+// @LINE:44
+class ReversePostController {
+    
+
+// @LINE:45
+def newPost : JavascriptReverseRoute = JavascriptReverseRoute(
+   "controllers.PostController.newPost",
+   """
+      function() {
+      return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "sns/posts/add"})
+      }
+   """
+)
+                        
+
+// @LINE:46
+def addPost : JavascriptReverseRoute = JavascriptReverseRoute(
+   "controllers.PostController.addPost",
+   """
+      function() {
+      return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "sns/posts/add"})
+      }
+   """
+)
+                        
+
+// @LINE:44
+def getAllPosts : JavascriptReverseRoute = JavascriptReverseRoute(
+   "controllers.PostController.getAllPosts",
+   """
+      function() {
+      return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "sns/home"})
       }
    """
 )
@@ -596,6 +671,9 @@ def deleteClimateService : JavascriptReverseRoute = JavascriptReverseRoute(
         
 
 
+// @LINE:46
+// @LINE:45
+// @LINE:44
 // @LINE:40
 // @LINE:37
 // @LINE:36
@@ -692,6 +770,34 @@ def list(): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRef(
 // @LINE:12
 def newReport(): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRef(
    controllers.BugReportController.newReport(), HandlerDef(this, "controllers.BugReportController", "newReport", Seq(), "GET", """""", _prefix + """newReport""")
+)
+                      
+    
+}
+                          
+
+// @LINE:46
+// @LINE:45
+// @LINE:44
+class ReversePostController {
+    
+
+// @LINE:45
+def newPost(): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRef(
+   controllers.PostController.newPost(), HandlerDef(this, "controllers.PostController", "newPost", Seq(), "POST", """""", _prefix + """sns/posts/add""")
+)
+                      
+
+// @LINE:46
+def addPost(): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRef(
+   controllers.PostController.addPost(), HandlerDef(this, "controllers.PostController", "addPost", Seq(), "GET", """""", _prefix + """sns/posts/add""")
+)
+                      
+
+// @LINE:44
+def getAllPosts(): play.api.mvc.HandlerRef[_] = new play.api.mvc.HandlerRef(
+   controllers.PostController.getAllPosts(), HandlerDef(this, "controllers.PostController", "getAllPosts", Seq(), "GET", """
+#Map sns""", _prefix + """sns/home""")
 )
                       
     

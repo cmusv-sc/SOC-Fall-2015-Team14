@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea_modules/ApacheCMDA_Frontend.iml" filepath="$PROJECT_DIR$/.idea_modules/ApacheCMDA_Frontend.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea_modules/ApacheCMDA_Frontend-build.iml" filepath="$PROJECT_DIR$/.idea_modules/ApacheCMDA_Frontend-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/apachecmda-frontend.iml" filepath="$PROJECT_DIR$/.idea/modules/apachecmda-frontend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/apachecmda-frontend-build.iml" filepath="$PROJECT_DIR$/.idea/modules/apachecmda-frontend-build.iml" />
     </modules>
   </component>
 </project>
