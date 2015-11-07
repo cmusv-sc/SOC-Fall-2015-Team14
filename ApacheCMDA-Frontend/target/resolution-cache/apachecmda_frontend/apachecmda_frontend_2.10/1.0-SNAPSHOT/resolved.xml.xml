@@ -4,7 +4,7 @@
 		module="apachecmda_frontend_2.10"
 		revision="1.0-SNAPSHOT"
 		status="integration"
-		publication="20151106104453"
+		publication="20151106164339"
 	>
 		<description>
 		ApacheCMDA_Frontend
@@ -31,9 +31,7 @@
 	</configurations>
 	<publications>
 		<artifact name="apachecmda_frontend_2.10" type="pom" ext="pom" conf="pom"/>
-		<artifact name="apachecmda_frontend_2.10" type="jar" ext="jar" conf="compile"/>
-		<artifact name="apachecmda_frontend_2.10" type="src" ext="jar" conf="sources" e:classifier="sources"/>
-		<artifact name="apachecmda_frontend_2.10" type="doc" ext="jar" conf="docs" e:classifier="javadoc"/>
+		<artifact name="apachecmda_frontend_2.10" type="jar" ext="jar" conf="optional" e:classifier="download"/>
 	</publications>
 	<dependencies>
 		<dependency org="org.scala-lang" name="scala-compiler" rev="2.10.3" conf="scala-tool->default,optional(default)"/>
