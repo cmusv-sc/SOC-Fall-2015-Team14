@@ -89,6 +89,10 @@ Seq[Any](format.raw/*18.19*/("""
    <p>Zhiyu Lin</p>  
    <p>Jian Jiao</p>
    <p>Juanchen Li</p>
+       <p>Xunrong Li</p>
+       <p>Teng Fu</p>
+       <p>Dacheng Wen</p>
+       <p>Xiaofen Liu</p>
    <br>
    <h3><strong>CMU Former Contributors</strong></h3>
    <p>Pinchao Wang</p>
@@ -132,9 +136,9 @@ Seq[Any](format.raw/*18.19*/("""
 }
                 /*
                     -- GENERATED --
-                    DATE: Fri Sep 18 18:40:50 PDT 2015
-                    SOURCE: /home/xingwei/SOC-Fall-2015/ApacheCMDA-Frontend/app/views/climate/aboutus.scala.html
-                    HASH: a0e5135b7554c04a0e56e57b12e5e053ec8c0d01
+                    DATE: Sun Nov 15 13:55:34 PST 2015
+                    SOURCE: /Users/lixunrong/Documents/SOC-Fall-2015-Team14-Lead-Xunrong-Li/ApacheCMDA-Frontend/app/views/climate/aboutus.scala.html
+                    HASH: f552ba2c2b1f54a7217c988f354deeb97c825b5d
                     MATRIX: 3179->1205|3291->1222|3329->1225|3354->1241|3394->1243
                     LINES: 56->18|59->18|61->20|61->20|61->20
                     -- GENERATED --
