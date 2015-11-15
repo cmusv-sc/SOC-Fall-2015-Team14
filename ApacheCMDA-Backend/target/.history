@@ -1,8 +1,0 @@
-run 9034
-clean
-run 9034
-clean
-compile
-exit
-compile
-run 9034

@@ -1,0 +1,49 @@
+@*******************************************************************************
+* Licensed to the Apache Software Foundation (ASF) under one or more		   *
+* contributor license agreements.  See the NOTICE file distributed with	   *
+* this work for additional information regarding copyright ownership.         *
+* The ASF licenses this file to You under the Apache License, Version 2.0     *
+* (the "License"); you may not use this file except in compliance with        *
+* the License.  You may obtain a copy of the License at                       *
+*                                                                             *
+*    http://www.apache.org/licenses/LICENSE-2.0                               *
+*																			   *
+* Unless required by applicable law or agreed to in writing, software         *
+* distributed under the License is distributed on an "AS IS" BASIS,           *
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    *
+* See the License for the specific language governing permissions and         *
+* limitations under the License.											   *
+*******************************************************************************@
+
+@(posts: List[metadata.PostService], postServiceForm: play.data.Form[metadata.PostService])
+
+@import helper._
+
+@scripts = {
+<script src='@routes.Assets.at("../../../public/javascripts/edit_button.js")'></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+
+    });
+</script>
+}
+
+@main("Posts Services") {
+
+@flash_message()
+
+<h1>@posts.size() Posts</h1>
+    <span class="col-md-2">User Id:</span>
+    <span class="col-md-8">Content:</span>
+    <span class="col-md-2">Time</span>
+<ul>
+    @for(post <- posts){
+    <li>
+        <span class="col-md-2">@post.getUserId</span>
+        <span class="col-md-8">@post.getContent</span>
+        <span class="col-md-2">@post.getTime</span>
+    </li>
+    }
+</ul>
+
+}

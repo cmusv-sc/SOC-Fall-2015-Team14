@@ -1,6 +1,6 @@
 # Ignore Play! working directory #
 bin/
-/db
+/data
 .eclipse
 /lib/
 /logs/

@@ -3,7 +3,11 @@
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
+<<<<<<< HEAD
   <component name="IdProvider" IDEtalkID="0898365B92047E5FA0039ECECB1C24FF" />
+=======
+  <component name="IdProvider" IDEtalkID="568D8DCF05739F44279F50BD7BFD848C" />
+>>>>>>> 00cdc56d625f75afb73385001b18b55de90f4519
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/target/idea_output" />
   </component>

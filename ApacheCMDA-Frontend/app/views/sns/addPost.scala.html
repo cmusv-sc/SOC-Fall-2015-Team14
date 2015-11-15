@@ -1,0 +1,25 @@
+
+@(postServiceForm: play.data.Form[metadata.PostService])
+@import helper._
+
+@scripts = {
+    <script src='@routes.Assets.at("../../../public/javascripts/edit_button.js")'></script>
+}
+
+@main("Post Services") {
+
+    @flash_message()
+
+    <h1>Add a new post</h1>
+    @form(routes.PostController.newPost()) {
+        @inputText(
+        postServiceForm("Content"),
+        '_label -> "Content"
+        )
+
+        <input class="btn" type="submit" value="publish">
+        <a href="@routes.PostController.getAllPosts()" class="btn">Cancel</a>
+    }
+    <br>
+}
+
