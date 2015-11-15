@@ -16,10 +16,10 @@
  */
 package models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
+import java.util.Set;
+import java.util.HashSet;
 
 @Entity
 public class User {
@@ -38,8 +38,18 @@ public class User {
 	private String mailingAddress;
 	private String phoneNumber;
 	private String faxNumber;
-	private String researchFields;
+	private String researchInterests;
 	private String highestDegree;
+	private String photoName;
+	@ManyToMany (fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	@JoinTable(name = "UserRelationship",
+			joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+			inverseJoinColumns = {@JoinColumn(name = "follower_id", referencedColumnName = "id")})
+	private Set<User> followers;
+	@ManyToMany (mappedBy = "followers" )
+	private Set<User> followedUsers;
+	@ManyToMany (mappedBy = "sharedUsers" )
+	private Set<Post> sharedPosts;
 
 	// @OneToMany(mappedBy = "user", cascade={CascadeType.ALL})
 	// private Set<ClimateService> climateServices = new
@@ -51,7 +61,7 @@ public class User {
 	public User(String userName, String password, String firstName,
 			String lastName, String middleInitial, String affiliation,
 			String title, String email, String mailingAddress,
-			String phoneNumber, String faxNumber, String researchFields,
+			String phoneNumber, String faxNumber, String researchInterests,
 			String highestDegree) {
 		super();
 		this.userName = userName;
@@ -65,8 +75,11 @@ public class User {
 		this.mailingAddress = mailingAddress;
 		this.phoneNumber = phoneNumber;
 		this.faxNumber = faxNumber;
-		this.researchFields = researchFields;
+		this.researchInterests = researchInterests;
 		this.highestDegree = highestDegree;
+		this.followers = new HashSet<>();
+		this.followedUsers = new HashSet<>();
+		this.sharedPosts = new HashSet<>();
 	}
 
 	public long getId() {
@@ -117,13 +130,21 @@ public class User {
 		return faxNumber;
 	}
 
-	public String getResearchFields() {
-		return researchFields;
+	public String getResearchInterests() {
+		return researchInterests;
 	}
 
 	public String getHighestDegree() {
 		return highestDegree;
 	}
+
+	public String getPhotoName() { return photoName; }
+
+	public Set<User> getFollowers() { return followers; }
+
+	public Set<User> getFollowedUsers() { return followedUsers; }
+
+	public Set<Post> getSharedPosts() { return sharedPosts; }
 
 	public void setUserName(String userName) {
 		this.userName = userName;
@@ -169,13 +190,21 @@ public class User {
 		this.faxNumber = faxNumber;
 	}
 
-	public void setResearchFields(String researchFields) {
-		this.researchFields = researchFields;
+	public void setResearchInterests(String researchFields) {
+		this.researchInterests = researchFields;
 	}
 
 	public void setHighestDegree(String highestDegree) {
 		this.highestDegree = highestDegree;
 	}
+
+	public void setPhotoName(String photoName) { this.photoName = photoName; }
+
+	public void addFollower(User user) { followers.add(user); }
+
+	public void addFollowedUser(User user) { followedUsers.add(user); };
+
+	public void addSharedPost(Post post) { sharedPosts.add(post); }
 
 	@Override
 	public String toString() {
@@ -185,7 +214,7 @@ public class User {
 				+ ", affiliation=" + affiliation + ", title=" + title
 				+ ", email=" + email + ", mailingAddress=" + mailingAddress
 				+ ", phoneNumber=" + phoneNumber + ", faxNumber=" + faxNumber
-				+ ", researchFields=" + researchFields + ", highestDegree="
+				+ ", researchInterests=" + researchInterests + ", highestDegree="
 				+ highestDegree + "]";
 	}
 

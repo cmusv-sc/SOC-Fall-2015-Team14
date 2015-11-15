@@ -1,9 +1,10 @@
 package models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by dachengwen on 11/3/15.
@@ -15,11 +16,19 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String userId;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "creatorId", referencedColumnName = "id")
+    private User user;
     private String title;
     private String content;
-    private String time;
+    private Date time;
     private String visibility;
+    private int likeCount;
+    @ManyToMany (fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinTable(name = "SharedPost",
+            joinColumns = {@JoinColumn(name = "post_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
+    private Set<User> sharedUsers;
 
     // @OneToMany(mappedBy = "user", cascade={CascadeType.ALL})
     // private Set<ClimateService> climateServices = new
@@ -28,14 +37,16 @@ public class Post {
     public Post() {
     }
 
-    public Post(String userId, String title, String content,
-                String time, String visibility) {
+    public Post(User user, String title, String content,
+                Date time, String visibility) {
         super();
-        this.userId = userId;
+        this.user = user;
         this.content = content;
         this.time = time;
         this.visibility = visibility;
         this.title = title;
+        this.likeCount = 0;
+        this.sharedUsers = new HashSet<>();
     }
 
 
@@ -47,12 +58,12 @@ public class Post {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getTitle() {
@@ -71,11 +82,9 @@ public class Post {
         this.content = content;
     }
 
-    public String getTime() {
-        return time;
-    }
+    public Date getTime() { return time; }
 
-    public void setTime(String time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
@@ -87,9 +96,17 @@ public class Post {
         this.visibility = visibility;
     }
 
+    public int getLikeCount() { return likeCount; }
+
+    public void addOneToLikeCount() { likeCount++; }
+
+    public Set<User> getSharedUsers() { return sharedUsers; }
+
+    public void addSharedUsers(User user) { sharedUsers.add(user); }
+
     @Override
     public String toString() {
-        return "Post [id=" + id + ", userId=" + userId + ", title="
+        return "Post [id=" + id + ", user=" + user + ", title="
                 + title + ", content=" + content + ", time="
                 + time + ", visibility=" + visibility + "]";
     }

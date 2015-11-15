@@ -46,19 +46,34 @@ PUT           /parameter/updateParameter/name/:oldName                          
 DELETE        /parameter/deleteParameter/service/:id/name/:name                                         @controllers.ParameterController.deleteParameterByName(id:Long, name: String)
 
 #Posts
-GET           /posts/postId/:id                                                                         @controllers.PostController.getPost(id: Long)
-GET           /posts/userId/:userId                                                                     @controllers.PostController.getAllPostsByUserId(userId: String)
+GET           /posts/postId/:id                                                                         @controllers.PostController.getPost(id: Long, format: String="json")
+GET           /posts/userId/:id                                                                         @controllers.PostController.getAllPostsByUser(id: Long, format: String="json")
 GET           /posts/getAllPosts/json                                                                   @controllers.PostController.getAllPosts(format: String="json")
 POST          /posts/add                                                                                @controllers.PostController.addPost
+PUT           /posts/addLike/:id                                                                        @controllers.PostController.addPostLike(id: Long)
 PUT           /posts/update/:id                                                                         @controllers.PostController.updatePost(id: Long)
+PUT           /posts/updateVisibility/:id                                                               @controllers.PostController.updatePostVisibility(id: Long)
+PUT           /posts/addSharedUser/:id                                                                  @controllers.PostController.addSharedUser(id: Long)
 DELETE        /posts/delete/:id                                                                         @controllers.PostController.deletePost(id: Long)
+DELETE        /posts/deleteByUser/:id                                                                   @controllers.PostController.deletePostsByUser(id: Long)
+
+#Comments
+POST          /comments/add                                                                             @controllers.CommentController.addComment
+DELETE        /comments/delete/:id                                                                      @controllers.CommentController.deleteComment(id: Long)
+GET           /comments/getByPost/:id                                                                   @controllers.CommentController.getCommentsByPost(id: Long, format: String="json")
+DELETE        /comments/deleteByPost/:id                                                                @controllers.CommentController.deleteCommentsByPost(id: Long)
 
 # Users
 GET           /users/:id                                                                                @controllers.UserController.getUser(id: Long, format: String="json")
 POST          /users/add                                                                                @controllers.UserController.addUser
+POST          /users/uploadPhoto/:id                                                                    @controllers.UserController.uploadUserPhoto(id: Long)
 PUT           /users/update/:id                                                                         @controllers.UserController.updateUser(id: Long)
 DELETE        /users/delete/:id                                                                         @controllers.UserController.deleteUser(id: Long)
+GET           /users/getPhoto/:id                                                                       @controllers.UserController.getUserPhoto(id: Long)
 GET			  /users/getAllUsers/json																	@controllers.UserController.getAllUsers(format: String="json")
+GET           /users/getFollowers/:id                                                                   @controllers.UserController.getFollowers(id: Long, format: String="json")
+GET           /users/getFollowedUsers/:id                                                               @controllers.UserController.getFollowedUsers(id: Long, format: String="json")
+GET           /users/getSharedPosts/:id                                                                 @controllers.UserController.getSharedPosts(id:Long, format: String="json")
 POST		  /users/isUserValid																		@controllers.UserController.isUserValid
 DELETE		  /users/delete/userName/:userName/password/:password										@controllers.UserController.deleteUserByUserNameandPassword(userName: String, password: String)
 
