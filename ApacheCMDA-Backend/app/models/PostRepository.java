@@ -18,6 +18,7 @@ import javax.inject.Singleton;
 @Named
 @Singleton
 public interface PostRepository extends CrudRepository<Post, Long> {
-    List<Post> findByUserId(String userId);
+    List<Post> findByUserOrderByTimeDesc(User user);
+    List<Post> findBySharedUsersOrderByTimeDesc(User user);
 }
 

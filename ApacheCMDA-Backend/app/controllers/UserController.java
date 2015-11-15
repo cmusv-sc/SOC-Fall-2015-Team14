@@ -16,17 +16,24 @@
  */
 package controllers;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mchange.v2.io.FileUtils;
+import models.Post;
 import models.User;
 import models.UserRepository;
 import play.mvc.*;
+import play.mvc.Http.MultipartFormData;
+import play.mvc.Http.MultipartFormData.FilePart;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.persistence.PersistenceException;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.Gson;
@@ -66,7 +73,7 @@ public class UserController extends Controller {
 	    String mailingAddress = json.path("mailingAddress").asText();
 	    String phoneNumber = json.path("phoneNumber").asText();
 	    String faxNumber = json.path("faxNumber").asText();
-	    String researchFields = json.path("researchFields").asText();
+	    String researchInterests = json.path("researchInterests").asText();
 	    String highestDegree = json.path("highestDegree").asText();
 
 		try {
@@ -74,7 +81,8 @@ public class UserController extends Controller {
 				System.out.println("UserName has been used: " + userName);
 				return badRequest("UserName has been used");
 			}
-			User user = new User(userName, password, firstName, lastName, middleInitial, affiliation, title, email, mailingAddress, phoneNumber, faxNumber, researchFields, highestDegree);	
+			User user = new User(userName, password, firstName, lastName, middleInitial, affiliation,
+					title, email, mailingAddress, phoneNumber, faxNumber, researchInterests, highestDegree);
 			userRepository.save(user);
 			System.out.println("User saved: " + user.getId());
 			return created(new Gson().toJson(user.getId()));
@@ -85,11 +93,79 @@ public class UserController extends Controller {
 		}
 	}
 
+	public Result uploadUserPhoto(Long id) {
+		MultipartFormData body = request().body().asMultipartFormData();
+		FilePart photo = body.getFile("photo");
+		if (photo == null) {
+			System.out.println("User photo not saved, expecting binary data");
+			return notFound("User photon not saved, expecting binary data");
+		}
+
+		User user = userRepository.findOne(id);
+		if (user == null) {
+			System.out.println("User not found with id: " + id);
+			return notFound("User not found with id: " + id);
+		}
+
+		File dir = new File("images");
+		if (!dir.exists()) {
+			dir.mkdir();
+		}
+
+		File oldFile = new File("images/" + user.getPhotoName());
+		if (oldFile.exists() && oldFile.isFile()) {
+			oldFile.delete();
+		}
+
+		File newFile = photo.getFile();
+		String filename = newFile.getName();
+		int index = filename.lastIndexOf('.');
+		String extension = filename.substring(index + 1);
+		user.setPhotoName(user.getId() + "." + extension);
+
+		newFile.renameTo(new File("images/" + user.getPhotoName()));
+
+		try {
+			User savedUser = userRepository.save(user);
+			System.out.println("User photo updated: " + savedUser.getFirstName()
+					+ " " + savedUser.getLastName());
+			return ok("User photo updated: " + savedUser.getFirstName() + " "
+					+ savedUser.getLastName());
+		} catch (PersistenceException pe) {
+			pe.printStackTrace();
+			System.out.println("User not updated: " + user.getFirstName() + " "
+					+ user.getLastName());
+			return badRequest("User not updated: " + user.getFirstName() + " " +
+					user.getLastName());
+		}
+	}
+
+	public Result getUserPhoto(Long id) {
+		User user = userRepository.findOne(id);
+		if (user == null) {
+			System.out.println("User not found with id: " + id);
+			return notFound("User not found with id: " + id);
+		}
+
+		File photo = new File("images/" + user.getPhotoName());
+		if (!photo.exists() || !photo.isFile()) {
+			System.out.println("User photo not found with id: " + id);
+			return notFound("User photo not found with id: " + id);
+		}
+
+		return ok(photo);
+	}
+
 	public Result deleteUser(Long id) {
 		User deleteUser = userRepository.findOne(id);
 		if (deleteUser == null) {
 			System.out.println("User not found with id: " + id);
 			return notFound("User not found with id: " + id);
+		}
+
+		File photo = new File("images/" + deleteUser.getPhotoName());
+		if (photo.exists() && photo.isFile()) {
+			photo.delete();
 		}
 
 		userRepository.delete(deleteUser);
@@ -114,7 +190,7 @@ public class UserController extends Controller {
 	    String mailingAddress = json.path("mailingAddress").asText();
 	    String phoneNumber = json.path("phoneNumber").asText();
 	    String faxNumber = json.path("faxNumber").asText();
-	    String researchFields = json.path("researchFields").asText();
+	    String researchInterests = json.path("researchInterests").asText();
 	    String highestDegree = json.path("highestDegree").asText();
 		try {
 			User updateUser = userRepository.findOne(id);
@@ -128,7 +204,7 @@ public class UserController extends Controller {
 			updateUser.setMailingAddress(mailingAddress);
 			updateUser.setMiddleInitial(middleInitial);
 			updateUser.setPhoneNumber(phoneNumber);
-			updateUser.setResearchFields(researchFields);
+			updateUser.setResearchInterests(researchInterests);
 			updateUser.setTitle(title);
 			
 			User savedUser = userRepository.save(updateUser);
@@ -142,6 +218,69 @@ public class UserController extends Controller {
 					+ lastName);
 			return badRequest("User not updated: " + firstName + " " + lastName);
 		}
+	}
+
+	public Result getFollowers(Long id, String format) {
+		if (id == null) {
+			System.out.println("User id is null or empty!");
+			return badRequest("User id is null or empty!");
+		}
+
+		User user = userRepository.findOne(id);
+
+		if (user == null) {
+			System.out.println("User not found with with id: " + id);
+			return notFound("User not found with with id: " + id);
+		}
+
+		String result = new String();
+		if (format.equals("json")) {
+			result = new Gson().toJson(new ArrayList<User>(user.getFollowers()));
+		}
+
+		return ok(result);
+	}
+
+	public Result getFollowedUsers(Long id, String format) {
+		if (id == null) {
+			System.out.println("User id is null or empty!");
+			return badRequest("User id is null or empty!");
+		}
+
+		User user = userRepository.findOne(id);
+
+		if (user == null) {
+			System.out.println("User not found with with id: " + id);
+			return notFound("User not found with with id: " + id);
+		}
+
+		String result = new String();
+		if (format.equals("json")) {
+			result = new Gson().toJson(new ArrayList<User>(user.getFollowedUsers()));
+		}
+
+		return ok(result);
+	}
+
+	public Result getSharedPosts(Long id, String format) {
+		if (id == null) {
+			System.out.println("User id is null or empty!");
+			return badRequest("User id is null or empty!");
+		}
+
+		User user = userRepository.findOne(id);
+
+		if (user == null) {
+			System.out.println("User not found with with id: " + id);
+			return notFound("User not found with with id: " + id);
+		}
+
+		String result = new String();
+		if (format.equals("json")) {
+			result = new Gson().toJson(new ArrayList<Post>(user.getSharedPosts()));
+		}
+
+		return ok(result);
 	}
 
 	public Result getUser(Long id, String format) {
@@ -205,6 +344,10 @@ public class UserController extends Controller {
 			User user = users.get(0);
 			if (user.getPassword().equals(password)) {
 				System.out.println("User is deleted: "+user.getId());
+				File photo = new File("images/" + user.getPhotoName());
+				if (photo.exists() && photo.isFile()) {
+					photo.delete();
+				}
 				userRepository.delete(user);
 				return ok("User is deleted");
 			}

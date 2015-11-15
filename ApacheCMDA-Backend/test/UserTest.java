@@ -101,8 +101,8 @@ public class UserTest {
 	
 	@Test
 	public void testResearchFields() {
-		user.setResearchFields(RESEARCH_FIELDS);
-		assertEquals(RESEARCH_FIELDS, user.getResearchFields());
+		user.setResearchInterests(RESEARCH_FIELDS);
+		assertEquals(RESEARCH_FIELDS, user.getResearchInterests());
 	}
 	
 	@Test
