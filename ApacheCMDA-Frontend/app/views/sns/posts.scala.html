@@ -15,7 +15,7 @@
 * limitations under the License.											   *
 *******************************************************************************@
 
-@(posts: List[metadata.PostService], postServiceForm: play.data.Form[metadata.PostService])
+@(posts: java.util.ArrayList[metadata.Post], postServiceForm: play.data.Form[metadata.Post])
 
 @import helper._
 
@@ -28,7 +28,7 @@
 </script>
 }
 
-@main("Posts Services") {
+@index("Posts Services") {
 
 @flash_message()
 

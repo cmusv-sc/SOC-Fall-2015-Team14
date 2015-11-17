@@ -2,8 +2,15 @@
   <library name="aws-java-sdk-1.7.5.jar">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/aws-java-sdk-1.7.5.jar!/" />
+      <root url="file://$PROJECT_DIR$" />
+      <root url="file://$PROJECT_DIR$" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/app" />
+      <root url="file://$PROJECT_DIR$/target/scala-2.10/src_managed/main" />
+      <root url="file://$PROJECT_DIR$/test" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$" recursive="false" />
   </library>
 </component>

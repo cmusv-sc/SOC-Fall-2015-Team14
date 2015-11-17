@@ -5,13 +5,14 @@ import util.APICall;
 import util.Constants;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author: Xunrong Li
  * @andrewID: xunrongl
  * Created on 11/5/15.
  */
-public class PostService {
+public class Post {
 
     //restful uris
     private static final String GET_POST_SERVICES_CALL = Constants.NEW_BACKEND+"posts/getAllPosts/json";
@@ -57,17 +58,17 @@ public class PostService {
     }
 
 
-    public static PostService find(String id) {
-        PostService postService = new PostService();
-        postService.setUserId(id);
-        return postService;
+    public static Post find(String id) {
+        Post post = new Post();
+        post.setUserId(id);
+        return post;
     }
 
     /*
         List all posts
      */
-    public static ArrayList<PostService> getAllPosts() {
-        ArrayList<PostService> posts = new ArrayList<>();
+    public static ArrayList<Post> getAllPosts() {
+        ArrayList<Post> posts = new ArrayList<Post>();
         JsonNode postsNode = APICall.callAPI(GET_POST_SERVICES_CALL);
 
         if (postsNode == null || postsNode.has("error") || !postsNode.isArray()) {
@@ -76,7 +77,7 @@ public class PostService {
 
         for (int i = 0; i < postsNode.size(); i++) {
             JsonNode json = postsNode.path(i);
-            PostService newPost = new PostService();
+            Post newPost = new Post();
             newPost.setUserId(json.path("userId").asText());
             newPost.setContent(json.path("content").asText());
             newPost.setTime(json.path("time").asText());

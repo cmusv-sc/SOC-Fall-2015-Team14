@@ -2,19 +2,20 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import models.metadata.PostService;
+import models.metadata.Post;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+//import views.sns.*;
+//import views.html.*;
+import views.html.sns.main;
+import views.html.sns.*;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-//import views.sns.*;
-//import views.html.*;
-import views.html.sns.*;
 
 
 /**
@@ -23,18 +24,26 @@ import views.html.sns.*;
  * Created on 11/5/15.
  */
 public class PostController extends Controller {
-    final static Form<PostService> postServiceForm = Form.form(PostService.class);
+    final static Form<Post> postForm = Form.form(Post.class);
 
     public static Result getAllPosts() {
-        return ok(posts.render(PostService.getAllPosts(), postServiceForm));
+        return ok(posts.render(Post.getAllPosts(), postForm));
     }
 
     public static Result addPost() {
-        return ok(addPost.render(postServiceForm));
+        return ok(addPost.render(postForm));
+    }
+
+    public static Result home() {
+        return ok(home.render());
+    }
+
+    public static Result main() {
+        return ok(main.render());
     }
 
     public static Result newPost() {
-        Form<PostService> dc = postServiceForm.bindFromRequest();
+        Form<Post> dc = postForm.bindFromRequest();
         ObjectNode jsonData = Json.newObject();
         jsonData.put("userId", 1);
         jsonData.put("content", dc.field("content").value());
@@ -42,7 +51,7 @@ public class PostController extends Controller {
         Date date = new Date();
         jsonData.put("time", dateFormat.format(date));
         jsonData.put("visibility", "public");
-        JsonNode response = PostService.addPost(jsonData);
+        JsonNode response = Post.addPost(jsonData);
         Application.flashMsg(response);
         return redirect("/sns/home");
     }
