@@ -33,7 +33,7 @@ public class PostController extends Controller {
     // desire for immutability.
     @Inject
     public PostController(final PostRepository postRepository,
-                          final UserRepository userRepository) {
+                           UserRepository userRepository) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
     }

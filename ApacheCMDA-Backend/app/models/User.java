@@ -46,9 +46,9 @@ public class User {
 			joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
 			inverseJoinColumns = {@JoinColumn(name = "follower_id", referencedColumnName = "id")})
 	private Set<User> followers;
-	@ManyToMany (mappedBy = "followers" )
+	@ManyToMany (fetch = FetchType.EAGER, mappedBy = "followers" )
 	private Set<User> followedUsers;
-	@ManyToMany (mappedBy = "sharedUsers" )
+	@ManyToMany (fetch = FetchType.EAGER, mappedBy = "sharedUsers" )
 	private Set<Post> sharedPosts;
 
 	// @OneToMany(mappedBy = "user", cascade={CascadeType.ALL})
