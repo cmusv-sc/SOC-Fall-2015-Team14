@@ -1,6 +1,6 @@
-// @SOURCE:/Users/tonyfu/Documents/workspace/SOC-Fall-2015-Team14-Lead-Xunrong-Li/ApacheCMDA-Backend/conf/routes
-// @HASH:0ab8732a008af3837eb15657dcf4b48d96da9564
-// @DATE:Sat Nov 14 17:57:12 PST 2015
+// @SOURCE:/Users/lixunrong/Documents/SOC-Fall-2015-Team14-Lead-Xunrong-Li/ApacheCMDA-Backend/conf/routes
+// @HASH:c918de6d0a515048603f0bb7e8a2d6e892b1fd6a
+// @DATE:Sun Nov 15 14:20:18 PST 2015
 
 package controllers;
 
@@ -10,6 +10,7 @@ public static final controllers.ReverseInstrumentController InstrumentController
 public static final controllers.ReverseUserController UserController = new controllers.ReverseUserController();
 public static final controllers.ReverseParameterController ParameterController = new controllers.ReverseParameterController();
 public static final controllers.ReversePostController PostController = new controllers.ReversePostController();
+public static final controllers.ReverseCommentController CommentController = new controllers.ReverseCommentController();
 public static final controllers.ReverseDatasetController DatasetController = new controllers.ReverseDatasetController();
 public static final controllers.ReverseClimateServiceController ClimateServiceController = new controllers.ReverseClimateServiceController();
 
@@ -19,6 +20,7 @@ public static final controllers.javascript.ReverseInstrumentController Instrumen
 public static final controllers.javascript.ReverseUserController UserController = new controllers.javascript.ReverseUserController();
 public static final controllers.javascript.ReverseParameterController ParameterController = new controllers.javascript.ReverseParameterController();
 public static final controllers.javascript.ReversePostController PostController = new controllers.javascript.ReversePostController();
+public static final controllers.javascript.ReverseCommentController CommentController = new controllers.javascript.ReverseCommentController();
 public static final controllers.javascript.ReverseDatasetController DatasetController = new controllers.javascript.ReverseDatasetController();
 public static final controllers.javascript.ReverseClimateServiceController ClimateServiceController = new controllers.javascript.ReverseClimateServiceController();
 }
@@ -30,6 +32,7 @@ public static final controllers.ref.ReverseInstrumentController InstrumentContro
 public static final controllers.ref.ReverseUserController UserController = new controllers.ref.ReverseUserController();
 public static final controllers.ref.ReverseParameterController ParameterController = new controllers.ref.ReverseParameterController();
 public static final controllers.ref.ReversePostController PostController = new controllers.ref.ReversePostController();
+public static final controllers.ref.ReverseCommentController CommentController = new controllers.ref.ReverseCommentController();
 public static final controllers.ref.ReverseDatasetController DatasetController = new controllers.ref.ReverseDatasetController();
 public static final controllers.ref.ReverseClimateServiceController ClimateServiceController = new controllers.ref.ReverseClimateServiceController();
 }

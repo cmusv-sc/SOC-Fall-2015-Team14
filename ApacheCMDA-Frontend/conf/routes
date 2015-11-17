@@ -6,7 +6,6 @@
 GET         /home                                            controllers.ClimateServiceController.home(email ?= null, vfile ?= null, dataset ?= null)
 GET         /                                                controllers.ClimateServiceController.home(email ?= null, vfile ?= null, dataset ?= null)
 
-
 # BugReporting
 GET         /bugs                                            controllers.BugReportController.reports()
 GET         /newReport                                       controllers.BugReportController.newReport()
@@ -41,6 +40,7 @@ GET         /assets/*file                                    controllers.Assets.
 
 #
 ##Map sns
-GET         /sns/home                                        controllers.PostController.getAllPosts()
+GET         /sns/home                                        controllers.PostController.home()
+GET         /sns/main                                        controllers.PostController.main()
 POST        /sns/posts/add                                   controllers.PostController.newPost()
 GET         /sns/posts/add                                   controllers.PostController.addPost()

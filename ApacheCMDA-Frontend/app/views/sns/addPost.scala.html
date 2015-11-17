@@ -1,12 +1,12 @@
 
-@(postServiceForm: play.data.Form[metadata.PostService])
+@(postServiceForm: play.data.Form[metadata.Post])
 @import helper._
 
 @scripts = {
     <script src='@routes.Assets.at("../../../public/javascripts/edit_button.js")'></script>
 }
 
-@main("Post Services") {
+@index("Post Services") {
 
     @flash_message()
 
@@ -18,7 +18,7 @@
         )
 
         <input class="btn" type="submit" value="publish">
-        <a href="@routes.PostController.getAllPosts()" class="btn">Cancel</a>
+        <a href="@routes.PostController.home()" class="btn">Cancel</a>
     }
     <br>
 }
