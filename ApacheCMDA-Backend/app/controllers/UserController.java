@@ -18,8 +18,10 @@ package controllers;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.mchange.v2.io.FileUtils;
 import models.Post;
@@ -37,7 +39,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.Gson;
-
+import com.google.gson.reflect.*;
 /**
  * The main set of web services.
  */
@@ -95,6 +97,7 @@ public class UserController extends Controller {
 
 	public Result uploadUserPhoto(Long id) {
 		MultipartFormData body = request().body().asMultipartFormData();
+
 		FilePart photo = body.getFile("photo");
 		if (photo == null) {
 			System.out.println("User photo not saved, expecting binary data");
@@ -119,6 +122,15 @@ public class UserController extends Controller {
 
 		File newFile = photo.getFile();
 		String filename = newFile.getName();
+		/*System.out.println("****************************");
+		Map<String, String[]> headerMap = request().headers();
+		for(Map.Entry<String, String[]> entry: headerMap.entrySet()) {
+			System.out.println(entry.getKey());
+			for(String s: entry.getValue()) {
+				System.out.println("\t" + s);
+			}
+		}
+		System.out.print(filename);*/
 		int index = filename.lastIndexOf('.');
 		String extension = filename.substring(index + 1);
 		user.setPhotoName(user.getId() + "." + extension);
@@ -254,9 +266,33 @@ public class UserController extends Controller {
 			return notFound("User not found with with id: " + id);
 		}
 
+		/*String followedSTR = "start2 ";
+		for(User u : user.getFollowedUsers()){
+			followedSTR = followedSTR + u.getId();
+		}
+		System.out.println("___________________");
+		System.out.println(followedSTR);*/
+
 		String result = new String();
 		if (format.equals("json")) {
 			result = new Gson().toJson(new ArrayList<User>(user.getFollowedUsers()));
+			//result = new Gson().toJson(new ArrayList<User>(user.getFollowedUsers())).toString();
+			//result = new Gson().toJson(user.getFollowedUsers());
+
+			//Gson gson = new Gson();
+			//Type listOfObject = new TypeToken<List<User>>(){}.getType();
+			//String s = gson.toJson(new ArrayList<User>(user.getFollowedUsers()), listOfObject);
+			//result = s;
+
+
+			//List<User> userList = new ArrayList<User>(user.getFollowedUsers());
+			//result = new Gson().toJson(userList);
+			//try {
+			//	result = new Gson().toJson(user);
+			//} catch(Exception e) {
+			//	System.out.println("error");
+		//		System.out.println(e.getMessage());
+		//	}
 		}
 
 		return ok(result);
@@ -362,6 +398,30 @@ public class UserController extends Controller {
 			return badRequest("User is not deleted");
 		}
 		
+	}
+
+	public Result addFollowee(long followerID, long followeeID) {
+		if(followerID == followeeID) {
+			String response = "Cannot follow yourself!";
+			return badRequest(response);
+		}
+		User follower = userRepository.findOne(followerID);
+		if (follower == null) {
+			System.out.println("Follower not found with id: " + followerID);
+			return notFound("Follower not found with id: " + followerID);
+		}
+		User followee = userRepository.findOne(followeeID);
+		if (follower == null) {
+			System.out.println("Followee not found with id: " + followeeID);
+			return notFound("Followee not found with id: " + followeeID);
+		}
+		follower.addFollowedUser(followee);
+		followee.addFollower(follower);
+		userRepository.save(follower);
+		userRepository.save(followee);
+
+		return ok("Followed");
+
 	}
 
 }

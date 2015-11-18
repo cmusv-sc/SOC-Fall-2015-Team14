@@ -33,8 +33,8 @@ public class CommentController extends Controller {
     // desire for immutability.
     @Inject
     public CommentController(final CommentRepository commentRepository,
-                             final UserRepository userRepository,
-                             final PostRepository postRepository) {
+                              UserRepository userRepository,
+                              PostRepository postRepository) {
         this.commentRepository = commentRepository;
         this.userRepository = userRepository;
         this.postRepository = postRepository;
@@ -108,7 +108,7 @@ public class CommentController extends Controller {
             return notFound("Post not found with with id: " + post);
         }
 
-        List<Comment> comments = commentRepository.findByPostOrderOrderByTimeDesc(post);
+        List<Comment> comments = commentRepository.findByPostOrderByTimeDesc(post);
 
         if (comments == null && comments.size() == 0) {
             System.out.println("Comment not found with with id: " + id);
@@ -134,7 +134,7 @@ public class CommentController extends Controller {
             return notFound("Post not found with with id: " + post);
         }
 
-        List<Comment> comments = commentRepository.findByPostOrderOrderByTimeDesc(post);
+        List<Comment> comments = commentRepository.findByPostOrderByTimeDesc(post);
 
         for (Comment comment : comments) {
             System.out.println("Comment is deleted: " + comment.getId());

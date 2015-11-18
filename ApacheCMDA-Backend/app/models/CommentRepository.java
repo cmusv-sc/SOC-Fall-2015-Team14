@@ -12,5 +12,6 @@ import java.util.List;
 @Named
 @Singleton
 public interface CommentRepository extends CrudRepository<Comment, Long> {
-    List<Comment> findByPostOrderOrderByTimeDesc(Post post);
+    List<Comment> findByPostOrderByTimeDesc(Post post);
+    Comment findOne(Long Id);
 }

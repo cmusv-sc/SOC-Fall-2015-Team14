@@ -18,6 +18,7 @@ public class Comment {
     @JoinColumn(name = "postId", referencedColumnName = "id")
     private Post post;
     private String content;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date time;
 
     public Comment() {}

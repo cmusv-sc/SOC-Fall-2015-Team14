@@ -21,6 +21,7 @@ public class Post {
     private User user;
     private String title;
     private String content;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date time;
     private String visibility;
     private int likeCount;
@@ -29,6 +30,7 @@ public class Post {
             joinColumns = {@JoinColumn(name = "post_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
     private Set<User> sharedUsers;
+
 
     // @OneToMany(mappedBy = "user", cascade={CascadeType.ALL})
     // private Set<ClimateService> climateServices = new
@@ -48,7 +50,6 @@ public class Post {
         this.likeCount = 0;
         this.sharedUsers = new HashSet<>();
     }
-
 
     public long getId() {
         return id;
