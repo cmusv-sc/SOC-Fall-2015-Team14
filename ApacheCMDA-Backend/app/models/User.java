@@ -17,8 +17,6 @@
 package models;
 
 import com.google.gson.annotations.Expose;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 
@@ -59,7 +57,7 @@ public class User {
 	@Expose
 	private String highestDegree;
 	@Expose
-	private String photoName;
+	private String photoContentType;
 
 	@ManyToMany (fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
 	@JoinTable(name = "UserRelationship",
@@ -160,7 +158,7 @@ public class User {
 		return highestDegree;
 	}
 
-	public String getPhotoName() { return photoName; }
+	public String getPhotoContentType() { return photoContentType; }
 
 	public Set<User> getFollowers() { return followers; }
 
@@ -220,7 +218,7 @@ public class User {
 		this.highestDegree = highestDegree;
 	}
 
-	public void setPhotoName(String photoName) { this.photoName = photoName; }
+	public void setPhotoContentType(String photoName) { this.photoContentType = photoName; }
 
 	public void addFollower(User user) { followers.add(user); }
 

@@ -17,15 +17,10 @@
 package controllers;
 
 import java.io.File;
-import java.io.FilenameFilter;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import com.google.gson.GsonBuilder;
-import com.mchange.v2.io.FileUtils;
 import models.Post;
 import models.User;
 import models.UserRepository;
@@ -39,11 +34,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.persistence.PersistenceException;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.Gson;
-import com.google.gson.reflect.*;
 import util.CustomExclusionStrategy;
 
 /**
@@ -124,7 +117,7 @@ public class UserController extends Controller {
 			dir.mkdir();
 		}
 
-		File oldFile = new File("images/" + user.getPhotoName());
+		File oldFile = new File("images/" + user.getId());
 		if (oldFile.exists() && oldFile.isFile()) {
 			oldFile.delete();
 		}
@@ -140,11 +133,9 @@ public class UserController extends Controller {
 			}
 		}
 		System.out.print(filename);*/
-		int index = filename.lastIndexOf('.');
-		String extension = filename.substring(index + 1);
-		user.setPhotoName(user.getId() + "." + extension);
+		user.setPhotoContentType(photo.getContentType());
 
-		newFile.renameTo(new File("images/" + user.getPhotoName()));
+		newFile.renameTo(new File("images/" + user.getId()));
 
 		try {
 			User savedUser = userRepository.save(user);
@@ -168,12 +159,13 @@ public class UserController extends Controller {
 			return notFound("User not found with id: " + id);
 		}
 
-		File photo = new File("images/" + user.getPhotoName());
+		File photo = new File("images/" + user.getId());
 		if (!photo.exists() || !photo.isFile()) {
 			System.out.println("User photo not found with id: " + id);
 			return notFound("User photo not found with id: " + id);
 		}
 
+		response().setContentType(user.getPhotoContentType());
 		return ok(photo);
 	}
 
@@ -184,7 +176,7 @@ public class UserController extends Controller {
 			return notFound("User not found with id: " + id);
 		}
 
-		File photo = new File("images/" + deleteUser.getPhotoName());
+		File photo = new File("images/" + deleteUser.getId());
 		if (photo.exists() && photo.isFile()) {
 			photo.delete();
 		}
@@ -393,7 +385,7 @@ public class UserController extends Controller {
 			User user = users.get(0);
 			if (user.getPassword().equals(password)) {
 				System.out.println("User is deleted: "+user.getId());
-				File photo = new File("images/" + user.getPhotoName());
+				File photo = new File("images/" + user.getId());
 				if (photo.exists() && photo.isFile()) {
 					photo.delete();
 				}
