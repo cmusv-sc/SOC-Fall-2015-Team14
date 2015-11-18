@@ -2,7 +2,10 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import models.CommentRepository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 import play.mvc.*;
 
 import javax.inject.Inject;
@@ -12,9 +15,11 @@ import javax.persistence.PersistenceException;
 
 import models.*;
 import util.Common;
+import util.CustomExclusionStrategy;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +28,8 @@ import java.util.List;
  */
 @Named
 @Singleton
+@Transactional
+@EnableTransactionManagement
 public class CommentController extends Controller {
 
     private final CommentRepository commentRepository;
@@ -54,8 +61,8 @@ public class CommentController extends Controller {
 
         Post post = postRepository.findOne(postId);
         if (post == null) {
-            System.out.println("Post not found with with id: " + post);
-            return notFound("Post not found with with id: " + post);
+            System.out.println("Post not found with with id: " + postId);
+            return notFound("Post not found with with id: " + postId);
         }
 
         User user = userRepository.findOne(userId);
@@ -91,6 +98,9 @@ public class CommentController extends Controller {
             return notFound("Comment not found with id: " + id);
         }
 
+        deleteComment.setPost(null);
+        deleteComment.setUser(null);
+
         commentRepository.delete(deleteComment);
         System.out.println("Comment is deleted: " + id);
         return ok("Comment is deleted: " + id);
@@ -116,7 +126,12 @@ public class CommentController extends Controller {
         }
         String result = new String();
         if (format.equals("json")) {
-            result = new Gson().toJson(comments);
+            //result = new Gson().toJson(comments);
+            Gson gson = new GsonBuilder().serializeNulls()
+                    .setExclusionStrategies(new CustomExclusionStrategy(Comment.class))
+                    .excludeFieldsWithoutExposeAnnotation().create();
+
+            result = gson.toJson(comments);
         }
 
         return ok(result);
@@ -138,6 +153,9 @@ public class CommentController extends Controller {
 
         for (Comment comment : comments) {
             System.out.println("Comment is deleted: " + comment.getId());
+            comment.setUser(null);
+            comment.setPost(null);
+            commentRepository.save(comment);
             commentRepository.delete(comment);
         }
 

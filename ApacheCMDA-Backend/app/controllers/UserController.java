@@ -22,11 +22,15 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import com.google.gson.GsonBuilder;
 import com.mchange.v2.io.FileUtils;
 import models.Post;
 import models.User;
 import models.UserRepository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 import play.mvc.*;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
@@ -40,11 +44,15 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.Gson;
 import com.google.gson.reflect.*;
+import util.CustomExclusionStrategy;
+
 /**
  * The main set of web services.
  */
 @Named
 @Singleton
+@Transactional
+@EnableTransactionManagement
 public class UserController extends Controller {
 
 	private final UserRepository userRepository;
@@ -83,6 +91,7 @@ public class UserController extends Controller {
 				System.out.println("UserName has been used: " + userName);
 				return badRequest("UserName has been used");
 			}
+
 			User user = new User(userName, password, firstName, lastName, middleInitial, affiliation,
 					title, email, mailingAddress, phoneNumber, faxNumber, researchInterests, highestDegree);
 			userRepository.save(user);
@@ -247,7 +256,11 @@ public class UserController extends Controller {
 
 		String result = new String();
 		if (format.equals("json")) {
-			result = new Gson().toJson(new ArrayList<User>(user.getFollowers()));
+			Gson gson = new GsonBuilder().serializeNulls()
+					.setExclusionStrategies(new CustomExclusionStrategy(User.class))
+					.excludeFieldsWithoutExposeAnnotation().create();
+
+			result = gson.toJson(new ArrayList<User>(user.getFollowers()));
 		}
 
 		return ok(result);
@@ -266,33 +279,14 @@ public class UserController extends Controller {
 			return notFound("User not found with with id: " + id);
 		}
 
-		/*String followedSTR = "start2 ";
-		for(User u : user.getFollowedUsers()){
-			followedSTR = followedSTR + u.getId();
-		}
-		System.out.println("___________________");
-		System.out.println(followedSTR);*/
-
 		String result = new String();
 		if (format.equals("json")) {
-			result = new Gson().toJson(new ArrayList<User>(user.getFollowedUsers()));
-			//result = new Gson().toJson(new ArrayList<User>(user.getFollowedUsers())).toString();
-			//result = new Gson().toJson(user.getFollowedUsers());
+			Gson gson = new GsonBuilder().serializeNulls()
+					.setExclusionStrategies(new CustomExclusionStrategy(User.class))
+					.excludeFieldsWithoutExposeAnnotation().create();
 
-			//Gson gson = new Gson();
-			//Type listOfObject = new TypeToken<List<User>>(){}.getType();
-			//String s = gson.toJson(new ArrayList<User>(user.getFollowedUsers()), listOfObject);
-			//result = s;
+			result = gson.toJson(new ArrayList<User>(user.getFollowedUsers()));
 
-
-			//List<User> userList = new ArrayList<User>(user.getFollowedUsers());
-			//result = new Gson().toJson(userList);
-			//try {
-			//	result = new Gson().toJson(user);
-			//} catch(Exception e) {
-			//	System.out.println("error");
-		//		System.out.println(e.getMessage());
-		//	}
 		}
 
 		return ok(result);
@@ -333,7 +327,12 @@ public class UserController extends Controller {
 		}
 		String result = new String();
 		if (format.equals("json")) {
-			result = new Gson().toJson(user);
+			//result = new Gson().toJson(user);
+			Gson gson = new GsonBuilder().serializeNulls()
+					.setExclusionStrategies(new CustomExclusionStrategy(User.class))
+					.excludeFieldsWithoutExposeAnnotation().create();
+
+			result = gson.toJson(user);
 		}
 
 		return ok(result);
@@ -347,7 +346,12 @@ public class UserController extends Controller {
 		}
 		String result = new String();
 		if (format.equals("json")) {
-			result = new Gson().toJson(userList);
+			//result = new Gson().toJson(userList);
+			Gson gson = new GsonBuilder().serializeNulls()
+					.setExclusionStrategies(new CustomExclusionStrategy(User.class))
+					.excludeFieldsWithoutExposeAnnotation().create();
+
+			result = gson.toJson(userList);
 		}
 		return ok(result);
 	}
@@ -358,9 +362,18 @@ public class UserController extends Controller {
 			System.out.println("Cannot check user, expecting Json data");
 			return badRequest("Cannot check user, expecting Json data");
 		}
-		String email = json.path("email").asText();
+		//String email = json.path("email").asText();
+		String userName = json.path("userName").asText();
 		String password = json.path("password").asText();
-		User user = userRepository.findByEmail(email);
+		//User user = userRepository.findByEmail(email);
+		List<User> userList = userRepository.findByUserName(userName);
+
+		if(userList.size() != 1) {
+			System.out.println("User not found with with userName: " + userName);
+			return notFound("User not found with with userName: " + userName);
+		}
+
+		User user = userList.get(0);
 		if (user.getPassword().equals(password)) {
 			System.out.println("User is valid");
 			return ok("User is valid");
@@ -384,6 +397,21 @@ public class UserController extends Controller {
 				if (photo.exists() && photo.isFile()) {
 					photo.delete();
 				}
+
+				/*Set<User> followers = user.getFollowers();
+				for(User f : followers) {
+					f.removeFollowedUser(user);
+					userRepository.save(f);
+				}
+
+				Set<User> followedUsers = user.getFollowedUsers();
+				for(User f : followedUsers) {
+					f.removeFollower(user);
+					userRepository.save(f);
+				}
+*/
+				user.cleanUpBeforeDelete();
+				userRepository.save(user);
 				userRepository.delete(user);
 				return ok("User is deleted");
 			}
@@ -411,7 +439,7 @@ public class UserController extends Controller {
 			return notFound("Follower not found with id: " + followerID);
 		}
 		User followee = userRepository.findOne(followeeID);
-		if (follower == null) {
+		if (followee == null) {
 			System.out.println("Followee not found with id: " + followeeID);
 			return notFound("Followee not found with id: " + followeeID);
 		}
@@ -421,6 +449,31 @@ public class UserController extends Controller {
 		userRepository.save(followee);
 
 		return ok("Followed");
+
+	}
+
+
+	public Result removeFollowee(long followerID, long followeeID) {
+		if(followerID == followeeID) {
+			String response = "Cannot follow yourself!";
+			return badRequest(response);
+		}
+		User follower = userRepository.findOne(followerID);
+		if (follower == null) {
+			System.out.println("Follower not found with id: " + followerID);
+			return notFound("Follower not found with id: " + followerID);
+		}
+		User followee = userRepository.findOne(followeeID);
+		if (follower == null) {
+			System.out.println("Followee not found with id: " + followeeID);
+			return notFound("Followee not found with id: " + followeeID);
+		}
+		follower.removeFollowedUser(followee);
+		followee.removeFollower(follower);
+		userRepository.save(follower);
+		userRepository.save(followee);
+
+		return ok("Unfollowed");
 
 	}
 

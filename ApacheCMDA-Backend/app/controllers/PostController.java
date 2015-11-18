@@ -2,12 +2,16 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import models.*;
 import models.Post;
 import models.PostRepository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
 import util.Common;
+import util.CustomExclusionStrategy;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,12 +22,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by dachengwen on 11/3/15.
  */
 @Named
 @Singleton
+@Transactional
+@EnableTransactionManagement
 public class PostController extends Controller {
 
     private final PostRepository postRepository;
@@ -37,6 +44,7 @@ public class PostController extends Controller {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
     }
+
 
     public Result addPost() {
         JsonNode json = request().body().asJson();
@@ -67,6 +75,7 @@ public class PostController extends Controller {
 
         try {
             Post post = new Post(user, title, content, time, visibility);
+
             postRepository.save(post);
             System.out.println("Post saved: " + post.getId());
             return created(new Gson().toJson(post.getId()));
@@ -84,6 +93,8 @@ public class PostController extends Controller {
             return notFound("Post not found with id: " + id);
         }
 
+        deletePost.setUser(null);
+        postRepository.save(deletePost);
         postRepository.delete(deletePost);
         System.out.println("Post is deleted: " + id);
         return ok("Post is deleted: " + id);
@@ -97,6 +108,8 @@ public class PostController extends Controller {
         }
 
         for (Post post : postRepository.findByUserOrderByTimeDesc(user)) {
+            post.setUser(null);
+            postRepository.save(post);
             postRepository.delete(post);
         }
 
@@ -247,7 +260,12 @@ public class PostController extends Controller {
 
         String result = new String();
         if (format.equals("json")) {
-            result = new Gson().toJson(post);
+            //result = new Gson().toJson(post);
+            Gson gson = new GsonBuilder().serializeNulls()
+                    .setExclusionStrategies(new CustomExclusionStrategy(Post.class))
+                    .excludeFieldsWithoutExposeAnnotation().create();
+
+            result = gson.toJson(post);
         }
 
         return ok(result);
@@ -261,7 +279,12 @@ public class PostController extends Controller {
         }
         String result = new String();
         if (format.equals("json")) {
-            result = new Gson().toJson(postList);
+            //result = new Gson().toJson(postList);
+            Gson gson = new GsonBuilder().serializeNulls()
+                    .setExclusionStrategies(new CustomExclusionStrategy(Post.class))
+                    .excludeFieldsWithoutExposeAnnotation().create();
+
+            result = gson.toJson(postList);
         }
         return ok(result);
     }
@@ -277,7 +300,32 @@ public class PostController extends Controller {
 
         String result = new String();
         if (format.equals("json")) {
-            result = new Gson().toJson(posts);
+            //result = new Gson().toJson(posts);
+            Gson gson = new GsonBuilder().serializeNulls()
+                    .setExclusionStrategies(new CustomExclusionStrategy(Post.class))
+                    .excludeFieldsWithoutExposeAnnotation().create();
+
+            result = gson.toJson(posts);
+        }
+        return ok(result);
+    }
+
+    public Result getSharedUser(Long postId, String format) {
+        Post post = postRepository.findOne(postId);
+        if (post == null) {
+            System.out.println("Post not found with with id: " + postId);
+            return notFound("Post not found with with id: " + postId);
+        }
+
+        Set<User> users = post.getSharedUsers();
+
+        String result = new String();
+        if (format.equals("json")) {
+            Gson gson = new GsonBuilder().serializeNulls()
+                    .setExclusionStrategies(new CustomExclusionStrategy(User.class))
+                    .excludeFieldsWithoutExposeAnnotation().create();
+
+            result = gson.toJson(new ArrayList<User>(users));
         }
         return ok(result);
     }

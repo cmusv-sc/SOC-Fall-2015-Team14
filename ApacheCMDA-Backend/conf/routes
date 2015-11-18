@@ -53,7 +53,8 @@ POST          /posts/add                                                        
 PUT           /posts/addLike/:id                                                                        @controllers.PostController.addPostLike(id: Long)
 PUT           /posts/update/:id                                                                         @controllers.PostController.updatePost(id: Long)
 PUT           /posts/updateVisibility/:id                                                               @controllers.PostController.updatePostVisibility(id: Long)
-PUT           /posts/addSharedUser/:id                                                                  @controllers.PostController.addSharedUser(id: Long)
+PUT           /posts/addSharedUser/:userId                                                              @controllers.PostController.addSharedUser(userId: Long)
+GET           /posts/getSharedUser/:postId                                                              @controllers.PostController.getSharedUser(postId: Long, format: String="json")
 DELETE        /posts/delete/:id                                                                         @controllers.PostController.deletePost(id: Long)
 DELETE        /posts/deleteByUser/:id                                                                   @controllers.PostController.deletePostsByUser(id: Long)
 
@@ -76,7 +77,8 @@ GET           /users/getFollowedUsers/:id                                       
 GET           /users/getSharedPosts/:id                                                                 @controllers.UserController.getSharedPosts(id:Long, format: String="json")
 POST		  /users/isUserValid																		@controllers.UserController.isUserValid
 DELETE		  /users/delete/userName/:userName/password/:password										@controllers.UserController.deleteUserByUserNameandPassword(userName: String, password: String)
-POST          /users/:followerID/follow/:followeeID                                                     @controllers.UserController.addFollowee(followerID: Long, followeeID: Long)
+PUT           /users/:followerID/follow/:followeeID                                                     @controllers.UserController.addFollowee(followerID: Long, followeeID: Long)
+DELETE        /users/:followerID/unfollow/:followeeID                                                     @controllers.UserController.removeFollowee(followerID: Long, followeeID: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                                                                             controllers.Assets.at(path="/public", file)

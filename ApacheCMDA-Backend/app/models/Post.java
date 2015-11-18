@@ -1,5 +1,7 @@
 package models;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 
 import java.util.Date;
@@ -13,18 +15,26 @@ import java.util.Set;
 @Entity
 public class Post {
 
+    @Expose
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @Expose
     @JoinColumn(name = "creatorId", referencedColumnName = "id")
     private User user;
+    @Expose
     private String title;
+    @Expose
     private String content;
+    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     private Date time;
+    @Expose
     private String visibility;
+    @Expose
     private int likeCount;
+
     @ManyToMany (fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinTable(name = "SharedPost",
             joinColumns = {@JoinColumn(name = "post_id", referencedColumnName = "id")},

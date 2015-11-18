@@ -16,6 +16,10 @@
  */
 package models;
 
+import com.google.gson.annotations.Expose;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
 
 import java.util.Set;
@@ -24,30 +28,48 @@ import java.util.HashSet;
 @Entity
 public class User {
 
+	@Expose
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	@Expose
 	private String userName;
+	@Expose
 	private String password;
+	@Expose
 	private String firstName;
+	@Expose
 	private String lastName;
+	@Expose
 	private String middleInitial;
+	@Expose
 	private String affiliation;
+	@Expose
 	private String title;
+	@Expose
 	private String email;
+	@Expose
 	private String mailingAddress;
+	@Expose
 	private String phoneNumber;
+	@Expose
 	private String faxNumber;
+	@Expose
 	private String researchInterests;
+	@Expose
 	private String highestDegree;
+	@Expose
 	private String photoName;
+
 	@ManyToMany (fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
 	@JoinTable(name = "UserRelationship",
 			joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
 			inverseJoinColumns = {@JoinColumn(name = "follower_id", referencedColumnName = "id")})
 	private Set<User> followers;
+
 	@ManyToMany (fetch = FetchType.EAGER, mappedBy = "followers" )
 	private Set<User> followedUsers;
+
 	@ManyToMany (fetch = FetchType.EAGER, mappedBy = "sharedUsers" )
 	private Set<Post> sharedPosts;
 
@@ -204,7 +226,25 @@ public class User {
 
 	public void addFollowedUser(User user) { followedUsers.add(user); };
 
+	public void removeFollower(User user) { followers.remove(user); }
+
+	public void removeAllFollower() { followers.clear(); }
+
+	public void removeFollowedUser(User user) { followedUsers.remove(user); };
+
+	public void removeAllFollowedUser() { followedUsers.clear(); };
+
 	public void addSharedPost(Post post) { sharedPosts.add(post); }
+
+	public void removeSharedPost(Post post) { sharedPosts.remove(post); }
+
+	public void removeAllSharedPost() { sharedPosts.clear(); }
+
+	public void cleanUpBeforeDelete() {
+		removeAllFollower();
+		removeAllFollowedUser();
+		removeAllSharedPost();
+	}
 
 	@Override
 	public String toString() {

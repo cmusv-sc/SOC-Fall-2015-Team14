@@ -1,5 +1,7 @@
 package models;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,16 +10,21 @@ import java.util.Date;
  */
 @Entity
 public class Comment {
+    @Expose
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Expose
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "creatorId", referencedColumnName = "id")
     private User user;
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "postId", referencedColumnName = "id")
     private Post post;
+    @Expose
     private String content;
+    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     private Date time;
 
