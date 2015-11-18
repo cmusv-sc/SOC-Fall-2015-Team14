@@ -1,0 +1,70 @@
+.main-content {
+    padding: 0 5%;
+}
+
+.profile-container {
+    border: 1px solid #55ACEE;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+.profile-name {
+    font-size: 20px;
+}
+
+.profile-image {
+    display: inline-block;
+    width: 280px;
+    height: 280px;
+    background-position: center center;
+    background-size: cover;
+}
+
+.profile-edit-container {
+    display: none;
+}
+
+.image-edit-container {
+    position: relative;
+    width: 280px;
+    height: 280px;
+}
+
+.overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: .5;
+}
+
+.image-upload-container {
+    position: absolute;
+    left: 0;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 24px;
+    padding: 0px 15px 0 15px;
+    text-align: center;
+    text-shadow: 0 1px 3px rgba(0,0,0,.75);
+}
+
+#image-btn {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    outline: 0;
+}
+
+#image-btn span {
+    display: block;
+    font-size: 55px;
+}
+
