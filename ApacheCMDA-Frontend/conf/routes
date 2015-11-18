@@ -44,3 +44,11 @@ GET         /sns/home                                        controllers.PostCon
 GET         /sns/main                                        controllers.PostController.main()
 POST        /sns/posts/add                                   controllers.PostController.newPost()
 GET         /sns/posts/add                                   controllers.PostController.addPost()
+
+GET		/sns/login						controllers.Application.login()
+GET		/sns/logout						controllers.Application.logout()
+POST	/sns/authenticate				controllers.Application.authenticate()
+GET		/sns/signup						controllers.Application.signup()
+GET		/sns/createNewUser				controllers.Application.createNewUser()
+GET		/sns/createSuccess				controllers.Application.createSuccess()
+POST	/sns/isEmailExisted				controllers.Application.isEmailExisted()

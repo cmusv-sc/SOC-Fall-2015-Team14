@@ -15,10 +15,17 @@ $(document).ready(function() {
 
 function getFile(){
     $("#upfile").click();
+    e.preventDefault();
 }
 
 function sub(obj){
-    var file = obj.value;
+    if (obj.files && obj.files[0]) {
+        var reader = new FileReader();
 
+        reader.onload = function (e) {
+            $(".profile-image").css('background-image', 'url(' + e.target.result + ')');
+        }
 
+        reader.readAsDataURL(obj.files[0]);
+    }
 }

@@ -23,6 +23,10 @@
 
 .profile-edit-container {
     display: none;
+    border: 1px solid #55ACEE;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
 }
 
 .image-edit-container {
@@ -61,6 +65,8 @@
     border: 0;
     cursor: pointer;
     outline: 0;
+    width: 100%;
+    height: 100%;
 }
 
 #image-btn span {
