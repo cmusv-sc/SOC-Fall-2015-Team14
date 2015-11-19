@@ -347,7 +347,23 @@ public class UserController extends Controller {
 		}
 		return ok(result);
 	}
-	
+
+	public Result isUserNameExisted(String userName) {
+
+		List<User> userList = userRepository.findByUserName(userName);
+
+		String responseStr = null;
+		if(userList.size() >0 ) {
+			responseStr = "true";
+
+		} else {
+			responseStr = "false";
+		}
+
+		System.out.println("UserName existed: " + responseStr);
+		return ok(responseStr);
+	}
+
 	public Result isUserValid() {
 		JsonNode json = request().body().asJson();
 		if (json == null) {
