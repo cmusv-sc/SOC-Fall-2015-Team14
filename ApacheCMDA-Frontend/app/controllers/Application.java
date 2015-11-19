@@ -41,6 +41,9 @@ public class Application extends Controller {
     final static Form<User> userForm = Form
             .form(User.class);
 
+    private static User user = null;
+    private static String userId;
+
     public static class Login {
 
         public String username;
@@ -92,10 +95,14 @@ public class Application extends Controller {
             }
             return badRequest(login.render(loginForm));
         } else {
+            System.out.println(loginForm.get().username);
+            System.out.println(userId);
             session().clear();
-            session("username", loginForm.get().username);
-            //Todo change to our home and add validation to our own controller
-            return redirect(routes.ClimateServiceController.home("", "", ""));
+            session("userName", loginForm.get().username);
+            session("userId", userId);
+//            JsonNode response = APICall.callAPI(Constants.NEW_BACKEND + Constants.GET_USER_API + userId);
+
+            return redirect(routes.MainController.home());
         }
     }
 
@@ -129,13 +136,34 @@ public class Application extends Controller {
             jsonData.put("mailingAddress", nu.get().getMailingAddress());
             jsonData.put("phoneNumber", nu.get().getPhoneNumber());
             jsonData.put("faxNumber", nu.get().getFaxNumber());
-            jsonData.put("researchFields", nu.get().getResearchFields());
+            jsonData.put("researchInterests", nu.get().getResearchInterests());
             jsonData.put("highestDegree", nu.get().getHighestDegree());
 
             JsonNode response = APICall.postAPI(Constants.NEW_BACKEND + Constants.ADD_USER, jsonData);
 
             // flash the response message
             Application.flashMsg(response);
+            userId = response.asText();
+
+            //Todo validate response successful
+            user = new User(
+                    nu.get().getUserName(),
+                    nu.get().getPassword(),
+                    nu.get().getFirstName(),
+                    nu.get().getFirstName(),
+                    nu.get().getMiddleInitial(),
+                    nu.get().getAffiliation(),
+                    nu.get().getTitle(),
+                    nu.get().getEmail(),
+                    nu.get().getMailingAddress(),
+                    nu.get().getPhoneNumber(),
+                    nu.get().getFaxNumber(),
+                    nu.get().getResearchInterests(),
+                    nu.get().getHighestDegree()
+            );
+
+            user.setId(Long.parseLong(userId));
+
             return redirect(routes.Application.createSuccess());
 
         }catch (IllegalStateException e) {

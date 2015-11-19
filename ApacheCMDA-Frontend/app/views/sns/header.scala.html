@@ -24,11 +24,11 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li @if(requestHeader.uri == routes.PostController.home.url){ class="active" }>
-                    <a href="@routes.PostController.home()">Home</a>
+                <li @if(requestHeader.uri == routes.MainController.home.url){ class="active" }>
+                    <a href="@routes.MainController.home()">Home</a>
                 </li>
-                <li @if(requestHeader.uri == routes.PostController.main.url){ class="active" }>
-                    <a href="@routes.PostController.main()">Main</a>
+                <li @if(requestHeader.uri == routes.MainController.main.url){ class="active" }>
+                    <a href="@routes.MainController.main()">Main</a>
                 </li>
             </ul>
             <div class="nav navbar-right">

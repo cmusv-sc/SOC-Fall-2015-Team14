@@ -34,13 +34,6 @@ public class PostController extends Controller {
         return ok(addPost.render(postForm));
     }
 
-    public static Result home() {
-        return ok(home.render());
-    }
-
-    public static Result main() {
-        return ok(main.render());
-    }
 
     public static Result newPost() {
         Form<Post> dc = postForm.bindFromRequest();

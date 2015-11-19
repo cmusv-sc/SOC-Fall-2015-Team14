@@ -19,6 +19,13 @@
 
     function isEmailExisted() {
         var email = document.getElementById("email").value;
+
+        if (email == "" || email == null) {
+            document.getElementById("create").disabled = false;
+            document.getElementById("msg1").innerHTML = "";
+            return true;
+        }
+
         var obj = {
             email : email
         }
@@ -31,14 +38,14 @@
             type: "POST"
         }).done(function(data) {
             console.log(data);
-            document.getElementById("msg1").innerHTML = "Email already used";
-            document.getElementById("create").disabled = true;
+            document.getElementById("msg1").innerHTML = "";
+            document.getElementById("create").disabled = false;
             return true;
 
         }).error(function(error) {
             console.log(error)
-            document.getElementById("msg1").innerHTML = "";
-            document.getElementById("create").disabled = false;
+            document.getElementById("msg1").innerHTML = "Email already used";
+            document.getElementById("create").disabled = true;
             return true;
         });
     }
@@ -63,16 +70,14 @@
                 'Content-Type': 'application/json'
             },
             type: "POST"
-        }).done(function(response) {
-            console.log(response);
-            if ("error" in response) {
-                document.getElementById("msg0").innerHTML = "UserName already used";
-                document.getElementById("create").disabled = true;
-            } else {
-                document.getElementById("msg0").innerHTML = "";
-                document.getElementById("create").disabled = false;
-                return true;
-            }
+        }).done(function(data) {
+            document.getElementById("msg0").innerHTML = "";
+            document.getElementById("create").disabled = false;
+            return true;
+        }).error(function(error) {
+            document.getElementById("msg0").innerHTML = "UserName already used";
+            document.getElementById("create").disabled = true;
+            return;
         })
     }
 

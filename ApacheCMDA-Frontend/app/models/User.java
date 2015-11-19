@@ -21,7 +21,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import play.data.validation.Constraints;
+import util.APICall;
+import util.Constants;
 
 @Entity
 public class User {
@@ -45,8 +50,9 @@ public class User {
 	private String mailingAddress;
 	private String phoneNumber;
 	private String faxNumber;
-	private String researchFields;
+	private String researchInterests;
 	private String highestDegree;
+    private String photoContentType;
 
 	// @OneToMany(mappedBy = "user", cascade={CascadeType.ALL})
 	// private Set<ClimateService> climateServices = new
@@ -58,7 +64,7 @@ public class User {
 	public User(String userName, String password, String firstName,
 			String lastName, String middleInitial, String affiliation,
 			String title, String email, String mailingAddress,
-			String phoneNumber, String faxNumber, String researchFields,
+			String phoneNumber, String faxNumber, String researchInterests,
 			String highestDegree) {
 		super();
 		this.userName = userName;
@@ -72,7 +78,7 @@ public class User {
 		this.mailingAddress = mailingAddress;
 		this.phoneNumber = phoneNumber;
 		this.faxNumber = faxNumber;
-		this.researchFields = researchFields;
+		this.researchInterests = researchInterests;
 		this.highestDegree = highestDegree;
 	}
 
@@ -95,6 +101,10 @@ public class User {
 	public String getLastName() {
 		return lastName;
 	}
+
+    public String getFullName() {
+        return firstName + " " + middleInitial + " " + lastName;
+    }
 
 	public String getMiddleInitial() {
 		return middleInitial;
@@ -124,8 +134,8 @@ public class User {
 		return faxNumber;
 	}
 
-	public String getResearchFields() {
-		return researchFields;
+	public String getResearchInterests() {
+		return researchInterests;
 	}
 
 	public String getHighestDegree() {
@@ -180,15 +190,24 @@ public class User {
 		this.faxNumber = faxNumber;
 	}
 
-	public void setResearchFields(String researchFields) {
-		this.researchFields = researchFields;
+	public void setResearchInterests(String researchInterests) {
+		this.researchInterests = researchInterests;
 	}
 
 	public void setHighestDegree(String highestDegree) {
 		this.highestDegree = highestDegree;
 	}
 
-	@Override
+
+    public String getPhotoContentType() {
+        return photoContentType;
+    }
+
+    public void setPhotoContentType(String photoContentType) {
+        this.photoContentType = photoContentType;
+    }
+
+    @Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", password="
 				+ password + ", firstName=" + firstName + ", lastName="
@@ -196,9 +215,22 @@ public class User {
 				+ ", affiliation=" + affiliation + ", title=" + title
 				+ ", email=" + email + ", mailingAddress=" + mailingAddress
 				+ ", phoneNumber=" + phoneNumber + ", faxNumber=" + faxNumber
-				+ ", researchFields=" + researchFields + ", highestDegree="
+				+ ", researchFields=" + researchInterests + ", highestDegree="
 				+ highestDegree + "]";
 	}
+
+    public static User getUserById(String id) {
+        JsonNode response = APICall.callAPI(Constants.NEW_BACKEND + Constants.GET_USER_API + id);
+        ObjectMapper mapper = new ObjectMapper();
+        User user = new User();
+        try {
+            user = mapper.treeToValue(response, User.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return user;
+
+    }
 
 }
 
