@@ -23,7 +23,7 @@
             email : email
         }
         $.ajax({
-            url: "sns/isEmailExisted",
+            url: "/sns/isEmailExisted",
             data: JSON.stringify(obj),
             headers: {
                 'Content-Type': 'application/json'
@@ -31,20 +31,27 @@
             type: "POST"
         }).done(function(data) {
             console.log(data);
-            var response = data;
-            if("error" in response){
-                document.getElementById("msg1").innerHTML = "Email already used";
-                document.getElementById("create").disabled = true;
-            }else{
-                document.getElementById("msg1").innerHTML = "";
-                document.getElementById("create").disabled = false;
-                return true;
-            }
+            document.getElementById("msg1").innerHTML = "Email already used";
+            document.getElementById("create").disabled = true;
+            return true;
+
+        }).error(function(error) {
+            console.log(error)
+            document.getElementById("msg1").innerHTML = "";
+            document.getElementById("create").disabled = false;
+            return true;
         });
     }
 
     function isUserNameExisted() {
         var userName = $("#userName").val();
+
+        if (userName == "" || userName == null) {
+            document.getElementById("create").disabled = false;
+            document.getElementById("msg0").innerHTML = "";
+            return true;
+        }
+
         var obj = {
             userName : userName
         }
