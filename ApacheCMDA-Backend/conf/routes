@@ -78,8 +78,8 @@ GET           /users/getSharedPosts/:id                                         
 POST		  /users/isUserValid																		@controllers.UserController.isUserValid
 DELETE		  /users/delete/userName/:userName/password/:password										@controllers.UserController.deleteUserByUserNameandPassword(userName: String, password: String)
 PUT           /users/:followerID/follow/:followeeID                                                     @controllers.UserController.addFollowee(followerID: Long, followeeID: Long)
-DELETE        /users/:followerID/unfollow/:followeeID                                                     @controllers.UserController.removeFollowee(followerID: Long, followeeID: Long)
-
+DELETE        /users/:followerID/unfollow/:followeeID                                                   @controllers.UserController.removeFollowee(followerID: Long, followeeID: Long)
+GET           /users/isUserNameExisted/:userName                                                        @controllers.UserController.isUserNameExisted(userName: String)
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                                                                             controllers.Assets.at(path="/public", file)
 
