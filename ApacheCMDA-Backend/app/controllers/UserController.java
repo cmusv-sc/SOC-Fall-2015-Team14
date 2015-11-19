@@ -169,6 +169,8 @@ public class UserController extends Controller {
 		return ok(photo);
 	}
 
+
+
 	public Result deleteUser(Long id) {
 		User deleteUser = userRepository.findOne(id);
 		if (deleteUser == null) {
@@ -320,6 +322,32 @@ public class UserController extends Controller {
 		String result = new String();
 		if (format.equals("json")) {
 			//result = new Gson().toJson(user);
+			Gson gson = new GsonBuilder().serializeNulls()
+					.setExclusionStrategies(new CustomExclusionStrategy(User.class))
+					.excludeFieldsWithoutExposeAnnotation().create();
+
+			result = gson.toJson(user);
+		}
+
+		return ok(result);
+	}
+
+	public Result getUserByUserName(String userName, String format) {
+		if (userName == null) {
+			System.out.println("Username is null or empty!");
+			return badRequest("Username is null or empty!");
+		}
+
+		List<User> users = userRepository.findByUserName(userName);
+
+		if (users.size() ==0) {
+			System.out.println("User not found with with Username: " + userName);
+			return notFound("User not found with with Username: " + userName);
+		}
+
+		User user = users.get(0);
+		String result = new String();
+		if (format.equals("json")) {
 			Gson gson = new GsonBuilder().serializeNulls()
 					.setExclusionStrategies(new CustomExclusionStrategy(User.class))
 					.excludeFieldsWithoutExposeAnnotation().create();

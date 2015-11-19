@@ -66,6 +66,7 @@ DELETE        /comments/deleteByPost/:id                                        
 
 # Users
 GET           /users/:id                                                                                @controllers.UserController.getUser(id: Long, format: String="json")
+GET           /users/username/:username                                                                 @controllers.UserController.getUserByUserName(username: String, format: String="json")
 POST          /users/add                                                                                @controllers.UserController.addUser
 POST          /users/uploadPhoto/:id                                                                    @controllers.UserController.uploadUserPhoto(id: Long)
 PUT           /users/update/:id                                                                         @controllers.UserController.updateUser(id: Long)
