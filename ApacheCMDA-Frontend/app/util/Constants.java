@@ -55,5 +55,6 @@ public class Constants {
     public static final String IS_USER_VALID = "/users/isUserValid";
     public static final String ADD_USER = "/users/add";
     public static final String IS_EMAIL_EXISTED = "/users/isEmailExisted";
+    public static final String IS_USERNAME_EXISTED = "/users/isUserNameExisted";
 
 }

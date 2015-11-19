@@ -2,7 +2,7 @@
  * Created by lixunrong on 11/17/15.
  */
 
-$(document).ready(function() {
+
     function checkpwd(){
         var p1=document.getElementById("password").value;
         var p2=document.getElementById("repassword").value;
@@ -23,7 +23,7 @@ $(document).ready(function() {
             email : email
         }
         $.ajax({
-            url: "/isEmailExisted",
+            url: "sns/isEmailExisted",
             data: JSON.stringify(obj),
             headers: {
                 'Content-Type': 'application/json'
@@ -42,4 +42,30 @@ $(document).ready(function() {
             }
         });
     }
-})
+
+    function isUserNameExisted() {
+        var userName = $("#userName").val();
+        var obj = {
+            userName : userName
+        }
+
+        $.ajax({
+            url: "/sns/isUserNameExisted",
+            data: JSON.stringify(obj),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            type: "POST"
+        }).done(function(response) {
+            console.log(response);
+            if ("error" in response) {
+                document.getElementById("msg0").innerHTML = "UserName already used";
+                document.getElementById("create").disabled = true;
+            } else {
+                document.getElementById("msg0").innerHTML = "";
+                document.getElementById("create").disabled = false;
+                return true;
+            }
+        })
+    }
+

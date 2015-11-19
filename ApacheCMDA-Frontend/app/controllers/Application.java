@@ -116,12 +116,9 @@ public class Application extends Controller {
     public static Result createNewUser(){
         Form<User> nu = userForm.bindFromRequest();
         ObjectNode jsonData = Json.newObject();
-        String userName = null;
 
         try{
-            userName = nu.field("firstName").value()+" "+(nu.field("middleInitial")).value()
-                    +" "+(nu.field("lastName")).value();
-            jsonData.put("userName", userName);
+            jsonData.put("userName", nu.get().getUserName());
             jsonData.put("firstName", nu.get().getFirstName());
             jsonData.put("middleInitial", nu.get().getMiddleInitial());
             jsonData.put("lastName", nu.get().getLastName());
@@ -172,6 +169,29 @@ public class Application extends Controller {
             Application.flashMsg(APICall
                     .createResponse(ResponseType.UNKNOWN));
         }
+        return ok(response);
+    }
+
+    public static Result isUserNameExisted() {
+        JsonNode json = request().body().asJson();
+        String userName = json.path("userName").asText();
+
+        ObjectNode jsonData = Json.newObject();
+        JsonNode response = null;
+
+        try {
+            jsonData.put("userName", userName);
+            response = APICall.postAPI(Constants.NEW_BACKEND + Constants.IS_USERNAME_EXISTED, jsonData);
+            Application.flashMsg(response);
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            Application.flashMsg(APICall.createResponse(ResponseType.CONVERSIONERROR));
+        } catch (Exception e) {
+            e.printStackTrace();
+            Application.flashMsg(APICall
+                    .createResponse(ResponseType.UNKNOWN));
+        }
+
         return ok(response);
     }
 }
