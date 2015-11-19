@@ -348,8 +348,21 @@ public class UserController extends Controller {
 		return ok(result);
 	}
 
-	public Result isUserNameExisted(String userName) {
+	public Result isUserNameExisted() {
 
+		JsonNode json = request().body().asJson();
+		if (json == null) {
+			System.out.println("Cannot check userName, expecting Json data");
+			return badRequest("Cannot check userName, expecting Json data");
+		}
+		String userName = json.path("userName").asText();
+		//if (userRepository.findByUserName(userName) != null) {
+		List<User> userList = userRepository.findByUserName(userName);
+		if(userList.size() >0) {
+			return badRequest("UserName already existed");
+		}
+		return ok("UserName is valid");
+/*
 		List<User> userList = userRepository.findByUserName(userName);
 
 		String responseStr = null;
@@ -361,7 +374,20 @@ public class UserController extends Controller {
 		}
 
 		System.out.println("UserName existed: " + responseStr);
-		return ok(responseStr);
+		return ok(responseStr);*/
+	}
+
+	public Result isEmailExisted(){
+		JsonNode json = request().body().asJson();
+		if (json == null) {
+			System.out.println("Cannot check email, expecting Json data");
+			return badRequest("Cannot check email, expecting Json data");
+		}
+		String email = json.path("email").asText();
+		if (userRepository.findByEmail(email) != null) {
+			return badRequest("Email already existed");
+		}
+		return ok("Email is valid");
 	}
 
 	public Result isUserValid() {

@@ -79,7 +79,9 @@ POST		  /users/isUserValid																		@controllers.UserController.isUserVa
 DELETE		  /users/delete/userName/:userName/password/:password										@controllers.UserController.deleteUserByUserNameandPassword(userName: String, password: String)
 PUT           /users/:followerID/follow/:followeeID                                                     @controllers.UserController.addFollowee(followerID: Long, followeeID: Long)
 DELETE        /users/:followerID/unfollow/:followeeID                                                   @controllers.UserController.removeFollowee(followerID: Long, followeeID: Long)
-GET           /users/isUserNameExisted/:userName                                                        @controllers.UserController.isUserNameExisted(userName: String)
+POST          /users/isUserNameExisted                                                                  @controllers.UserController.isUserNameExisted()
+POST		  /users/isEmailExisted                                                                     @controllers.UserController.isEmailExisted
+
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                                                                             controllers.Assets.at(path="/public", file)
 
