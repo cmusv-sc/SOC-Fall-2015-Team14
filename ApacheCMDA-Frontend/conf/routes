@@ -53,3 +53,4 @@ GET         /sns/createNewUser                               controllers.Applica
 GET         /sns/createSuccess                               controllers.Application.createSuccess()
 POST        /sns/isEmailExisted                              controllers.Application.isEmailExisted()
 POST        /sns/isUserNameExisted                           controllers.Application.isUserNameExisted()
+POST        /sns/users/uploadPhoto                           controllers.UserController.uploadImage

@@ -81,8 +81,10 @@ DELETE		  /users/delete/userName/:userName/password/:password										@controll
 PUT           /users/:followerID/follow/:followeeID                                                     @controllers.UserController.addFollowee(followerID: Long, followeeID: Long)
 DELETE        /users/:followerID/unfollow/:followeeID                                                   @controllers.UserController.removeFollowee(followerID: Long, followeeID: Long)
 POST          /users/isUserNameExisted                                                                  @controllers.UserController.isUserNameExisted()
-POST		  /users/isEmailExisted                                                                     @controllers.UserController.isEmailExisted
+POST		  /users/isEmailExisted                                                                     @controllers.UserController.isEmailExisted()
 
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                                                                             controllers.Assets.at(path="/public", file)
 
+# A Catch all options route
+OPTIONS       /*all                                                                                     @controllers.Application.preflight(all: String)

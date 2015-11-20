@@ -22,9 +22,12 @@ import play.libs.Json;
 import play.libs.WS;
 import play.libs.F.Function;
 import play.libs.F.Promise;
+import play.mvc.Http;
 import scala.Console;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.io.File;
 
 public class APICall {
 	public static enum ResponseType {
@@ -111,6 +114,33 @@ public class APICall {
 			return createResponse(ResponseType.TIMEOUT);
 		}
 	}
+
+    public static JsonNode postAPIwithFile(String apiString, File file) {
+        Promise<WS.Response> responsePromise = WS.url(apiString).post(file);
+        final Promise<JsonNode> bodyPromise = responsePromise
+                .map(new Function<WS.Response, JsonNode>() {
+                    @Override
+                    public JsonNode apply(WS.Response response)
+                            throws Throwable {
+                        if ((response.getStatus() == 201 || response
+                                .getStatus() == 200)) {
+                            try {
+                                return response.asJson();
+                            }
+                            catch (Exception e){
+                                return createResponse(ResponseType.SUCCESS);
+                            }
+                        } else {
+                            return createResponse(ResponseType.SAVEERROR);
+                        }
+                    }
+                });
+        try {
+            return bodyPromise.get(10000L);
+        } catch (Exception e) {
+            return createResponse(ResponseType.TIMEOUT);
+        }
+    }
 
 	public static JsonNode putAPI(String apiString, JsonNode jsonData) {
 		Promise<WS.Response> responsePromise = WS.url(apiString).put(jsonData);

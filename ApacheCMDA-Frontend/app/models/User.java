@@ -102,10 +102,6 @@ public class User {
 		return lastName;
 	}
 
-    public String getFullName() {
-        return firstName + " " + middleInitial + " " + lastName;
-    }
-
 	public String getMiddleInitial() {
 		return middleInitial;
 	}
@@ -220,7 +216,7 @@ public class User {
 	}
 
     public static User getUserById(String id) {
-        JsonNode response = APICall.callAPI(Constants.NEW_BACKEND + Constants.GET_USER_API + id);
+        JsonNode response = APICall.callAPI(Constants.NEW_BACKEND + "/users/" + id);
         ObjectMapper mapper = new ObjectMapper();
         User user = new User();
         try {
@@ -229,7 +225,19 @@ public class User {
             e.printStackTrace();
         }
         return user;
+    }
 
+    public static User getUserByUserName(String userName) {
+        JsonNode response = APICall.callAPI(Constants.NEW_BACKEND + Constants.GET_USER_BY_USERNAME + userName);
+        ObjectMapper mapper = new ObjectMapper();
+        User user = new User();
+        try {
+            user = mapper.treeToValue(response, User.class);
+            System.out.println(user.toString());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
 }

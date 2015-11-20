@@ -8,19 +8,48 @@ $(document).ready(function() {
         $(".profile-edit-container").show();
     });
 
-
-
+    var userId = $("#hiddenSession").val();
+    $(".profile-image")
 })
 
 
 function getFile(){
     $("#upfile").click();
-    e.preventDefault();
+    //e.preventDefault();
 }
 
 function sub(obj){
     if (obj.files && obj.files[0]) {
         var reader = new FileReader();
+
+        console.log("ready to submit");
+
+        var image = obj.files[0];
+        var userId = $("#hiddenSession").val();
+        var formData = new FormData($('#profile-image-form')[0]);
+
+        console.log("ajax");
+        $.ajax({
+            url: "http://localhost:9034/users/uploadPhoto/" + userId,
+            type: "POST",
+            //xhr: function() {  // Custom XMLHttpRequest
+            //    var myXhr = $.ajaxSettings.xhr();
+            //    if(myXhr.upload){ // Check if upload property exists
+            //        //myXhr.upload.addEventListener('progress',progressHandlingFunction, false); // For handling the progress of the upload
+            //    }
+            //    return myXhr;
+            //},
+            data: formData,
+            //Options to tell jQuery not to process data or worry about content-type.
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done(function(data) {
+            console.log(data);
+        }).error(function(err) {
+            console.log(err);
+        });
+
 
         reader.onload = function (e) {
             $(".profile-image").css('background-image', 'url(' + e.target.result + ')');

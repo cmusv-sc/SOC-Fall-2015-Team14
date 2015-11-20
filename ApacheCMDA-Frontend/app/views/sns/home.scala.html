@@ -6,10 +6,7 @@
         <div class="col col-md-4">
             <div class="profile-container">
 
-                <div class="profile-image img-rounded" style="background-image: url('@routes.Assets.at("img/user_profile.jpg")')">
-                </div>
-                <div class="profile-name">
-                    @user.getFullName()
+                <div class="profile-image img-rounded" style="background-image: url('http://localhost:9034/users/getPhoto/@session.get("userId")')">
                 </div>
                 <div class="profile-username">
                     @user.getUserName()
@@ -17,19 +14,19 @@
 
                 <div class="profile-affiliation">
                     <span class="glyphicon glyphicon-briefcase"></span>
-                    Asgard
+                    @user.getAffiliation()
                 </div>
                 <div class="profile-interest">
                     <span class="glyphicon glyphicon-book"></span>
-                    Thunder
+                    @user.getResearchInterests()
                 </div>
                 <div class="profile-email">
                     <span class="glyphicon glyphicon-envelope"></span>
-                    loki&#64;example.com
+                    @user.getEmail()
                 </div>
                 <div class="profile-phone">
                     <span class="glyphicon glyphicon-phone"></span>
-                    999-999-9999
+                    @user.getPhoneNumber()
                 </div>
             </div>
 

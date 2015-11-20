@@ -1,41 +1,47 @@
 @(user: models.User)
+@import helper._
 @index("Main Page") {
 
     <div class="container main-content">
 
+        <input type="hidden" id="hiddenSession" value="@session.get("userId")">
+
         <div class="col col-md-4">
             <div class="profile-container">
 
-                <div class="profile-image img-rounded" style="background-image: url('@routes.Assets.at("img/user_profile.jpg")')">
+                <div class="profile-image img-rounded" style="background-image: url('http://localhost:9034/users/getPhoto/@session.get("userId")')">
                 </div>
                 <div class="profile-name">
-                    Tom Hiddleston
+                    @user.getUserName()
                     <span class="glyphicon glyphicon-edit" id="edit_btn"></span>
                 </div>
 
                 <div class="profile-affiliation">
                     <span class="glyphicon glyphicon-briefcase"></span>
-                    Asgard
+                    @user.getAffiliation()
                 </div>
                 <div class="profile-interest">
                     <span class="glyphicon glyphicon-book"></span>
-                    Thunder
+                    @user.getResearchInterests()
                 </div>
                 <div class="profile-email">
                     <span class="glyphicon glyphicon-envelope"></span>
-                    loki&#64;example.com
+                    @user.getEmail()
                 </div>
                 <div class="profile-phone">
                     <span class="glyphicon glyphicon-phone"></span>
-                    999-999-9999
+                    @user.getPhoneNumber()
                 </div>
             </div>
 
 
+
             <div class="profile-edit-container">
-                <form action="/notsubmit" method="post" enctype="multipart/form-data">
+                <form id="profile-image-form" method="post"
+                action=@routes.UserController.uploadImage
+                enctype="multipart/form-data">
                     <div class="image-edit-container form-group">
-                        <div class="profile-image img-rounded" style="background-image: url('@routes.Assets.at("img/user_profile.jpg")')">
+                        <div class="profile-image img-rounded" style="background-image: url('http://localhost:9034/users/getPhoto/@session.get("userId")')">
                         </div>
                         <div class="overlay"></div>
                         <div class="image-upload-container">
@@ -45,27 +51,26 @@
                             </button>
                         </div>
                         <div style='height: 0px;width: 0px; overflow:hidden;'>
-                            <input id="upfile" type="file" value="upload" onchange="sub(this)"/>
+                            <input id="upfile" name="photo" type="file" value="upload" onchange="sub(this)"/>
                         </div>
-
                     </div>
-
-
+                </form>
+                <form>
                     <div class="profile-name form-group">
-                        <input type="text" value="Tom Hiddleston" placeholder="name"/>
+                        <input type="text" value="@user.getUserName()" placeholder="name"/>
                     </div>
 
                     <div class="profile-affiliation form-group">
-                        <input type="text" value="Asgard" placeholder="affiliation"/>
+                        <input type="text" value="@user.getAffiliation()" placeholder="affiliation"/>
                     </div>
                     <div class="profile-interest form-group">
-                        <input type="text" value="Thunder" placeholder="interest"/>
+                        <input type="text" value="@user.getResearchInterests()" placeholder="interest"/>
                     </div>
                     <div class="profile-email form-group">
-                        <input type="email" value="loki@@example.com" placeholder="email"/>
+                        <input type="email" value="@user.getEmail()" placeholder="email"/>
                     </div>
                     <div class="profile-phone form-group">
-                        <input type="tel" value="999-999-9999" placeholder="phone number"/>
+                        <input type="tel" value="@user.getPhoneNumber()" placeholder="phone number"/>
                     </div>
                     <button class="btn btn-primary" type="submit">
                         Submit

@@ -76,7 +76,7 @@ public class Application extends Controller {
     public static Result logout() {
         session().clear();
         flash("success", "You've been logged out");
-        return redirect(routes.ClimateServiceController.home(null, null, null));
+        return redirect(routes.Application.login());
     }
 
     public static Result createSuccess(){
@@ -95,11 +95,8 @@ public class Application extends Controller {
             }
             return badRequest(login.render(loginForm));
         } else {
-            System.out.println(loginForm.get().username);
-            System.out.println(userId);
             session().clear();
             session("userName", loginForm.get().username);
-            session("userId", userId);
 //            JsonNode response = APICall.callAPI(Constants.NEW_BACKEND + Constants.GET_USER_API + userId);
 
             return redirect(routes.MainController.home());
@@ -138,31 +135,11 @@ public class Application extends Controller {
             jsonData.put("faxNumber", nu.get().getFaxNumber());
             jsonData.put("researchInterests", nu.get().getResearchInterests());
             jsonData.put("highestDegree", nu.get().getHighestDegree());
-
+            System.out.println(jsonData.toString());
             JsonNode response = APICall.postAPI(Constants.NEW_BACKEND + Constants.ADD_USER, jsonData);
 
             // flash the response message
             Application.flashMsg(response);
-            userId = response.asText();
-
-            //Todo validate response successful
-            user = new User(
-                    nu.get().getUserName(),
-                    nu.get().getPassword(),
-                    nu.get().getFirstName(),
-                    nu.get().getFirstName(),
-                    nu.get().getMiddleInitial(),
-                    nu.get().getAffiliation(),
-                    nu.get().getTitle(),
-                    nu.get().getEmail(),
-                    nu.get().getMailingAddress(),
-                    nu.get().getPhoneNumber(),
-                    nu.get().getFaxNumber(),
-                    nu.get().getResearchInterests(),
-                    nu.get().getHighestDegree()
-            );
-
-            user.setId(Long.parseLong(userId));
 
             return redirect(routes.Application.createSuccess());
 
