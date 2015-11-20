@@ -14,15 +14,24 @@ import java.util.ArrayList;
 public class Post {
 
     //restful uris
-    private static final String GET_POST_SERVICES_CALL = Constants.NEW_BACKEND+"posts/getAllPosts/json";
-    private static final String GET_POST_BY_ID_SERVICES_CALL = Constants.NEW_BACKEND+"posts/postId/";
-    private static final String GET_POST_BY_USER_SERVICES_CALL = Constants.NEW_BACKEND+"posts/userId/";
-    private static final String ADD_POST_SERVICE_CALL = Constants.NEW_BACKEND+"posts/add";
+    private static final String GET_POST_SERVICES_CALL = Constants.NEW_BACKEND+"/posts/getAllPosts/json";
+    private static final String GET_POST_BY_ID_SERVICES_CALL = Constants.NEW_BACKEND+"/posts/postId/";
+    private static final String GET_POST_BY_USER_SERVICES_CALL = Constants.NEW_BACKEND+"/posts/userId/";
+    private static final String ADD_POST_SERVICE_CALL = Constants.NEW_BACKEND+"/posts/add";
 
     private String userId;
+    private String userName;
     private String content;
     private String time;
     private Boolean visibility = false;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getUserId() {
         return userId;
@@ -68,7 +77,7 @@ public class Post {
      */
     public static ArrayList<Post> getAllPosts() {
         ArrayList<Post> posts = new ArrayList<Post>();
-        JsonNode postsNode = APICall.callAPI(GET_POST_SERVICES_CALL);
+        JsonNode postsNode = APICall.callAPI(GET_POST_BY_USER_SERVICES_CALL);
 
         if (postsNode == null || postsNode.has("error") || !postsNode.isArray()) {
             return posts;
@@ -86,6 +95,40 @@ public class Post {
                 newPost.setVisibility(false);
             }
             
+            posts.add(newPost);
+        }
+        return posts;
+    }
+
+    /*
+        get user posts
+
+     */
+
+    public static ArrayList<Post> getUserPosts(String id) {
+        ArrayList<Post> posts = new ArrayList<Post>();
+        JsonNode postsNode = APICall.callAPI(GET_POST_BY_USER_SERVICES_CALL + id);
+
+        if (postsNode == null || postsNode.has("error") || !postsNode.isArray()) {
+            return posts;
+        }
+
+        System.out.println("get user posts");
+
+        for (int i = 0; i < postsNode.size(); i++) {
+            JsonNode json = postsNode.path(i);
+            System.out.println(json.toString());
+            Post newPost = new Post();
+            JsonNode userJson = json.path("user");
+            newPost.setUserName(userJson.path("userName").asText());
+            newPost.setContent(json.path("content").asText());
+            newPost.setTime(json.path("time").asText());
+            if (json.path("visibility").asText().equals("true")) {
+                newPost.setVisibility(true);
+            } else {
+                newPost.setVisibility(false);
+            }
+
             posts.add(newPost);
         }
         return posts;

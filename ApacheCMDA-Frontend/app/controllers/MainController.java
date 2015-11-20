@@ -33,7 +33,7 @@ public class MainController extends Controller {
             user = user.getUserById(session("userId"));
         }
 
-        posts = Post.getAllPosts();
+        posts = Post.getUserPosts(String.valueOf(user.getId()));
 
         return ok(home.render(user, postForm, posts));
     }
@@ -48,7 +48,7 @@ public class MainController extends Controller {
             user = user.getUserById(session("userId"));
         }
 
-        posts = Post.getAllPosts();
+        posts = Post.getUserPosts(String.valueOf(user.getId()));
 
         return ok(main.render(user, postForm, posts));
     }
