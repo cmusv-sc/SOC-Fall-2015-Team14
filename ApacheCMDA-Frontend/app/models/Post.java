@@ -1,11 +1,10 @@
-package models.metadata;
+package models;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import util.APICall;
 import util.Constants;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author: Xunrong Li
@@ -23,7 +22,7 @@ public class Post {
     private String userId;
     private String content;
     private String time;
-    private String visibility;
+    private Boolean visibility = false;
 
     public String getUserId() {
         return userId;
@@ -49,11 +48,11 @@ public class Post {
         this.time = time;
     }
 
-    public String getVisibility() {
+    public Boolean getVisibility() {
         return visibility;
     }
 
-    public void setVisibility(String visibility) {
+    public void setVisibility(Boolean visibility) {
         this.visibility = visibility;
     }
 
@@ -81,8 +80,12 @@ public class Post {
             newPost.setUserId(json.path("userId").asText());
             newPost.setContent(json.path("content").asText());
             newPost.setTime(json.path("time").asText());
-            newPost.setVisibility(json.path("visibility").asText());
-
+            if (json.path("visibility").asText().equals("true")) {
+                newPost.setVisibility(true);
+            } else {
+                newPost.setVisibility(false);
+            }
+            
             posts.add(newPost);
         }
         return posts;

@@ -1,11 +1,15 @@
 package controllers;
 
+import models.Post;
 import models.User;
+import play.data.Form;
 import play.mvc.Result;
 import play.mvc.Controller;
 
 import views.html.sns.home;
 import views.html.sns.main;
+
+import java.util.ArrayList;
 
 /**
  * @author: Xunrong Li
@@ -15,6 +19,9 @@ import views.html.sns.main;
 public class MainController extends Controller {
 
     private static User user;
+    final static Form<Post> postForm = Form.form(Post.class);
+    private static ArrayList<Post> posts = new ArrayList<>();
+
     public static Result home() {
 
         if (user == null) {
@@ -26,7 +33,9 @@ public class MainController extends Controller {
             user = user.getUserById(session("userId"));
         }
 
-        return ok(home.render(user));
+        posts = Post.getAllPosts();
+
+        return ok(home.render(user, postForm, posts));
     }
 
     public static Result main() {
@@ -39,7 +48,9 @@ public class MainController extends Controller {
             user = user.getUserById(session("userId"));
         }
 
-        return ok(main.render(user));
+        posts = Post.getAllPosts();
+
+        return ok(main.render(user, postForm, posts));
     }
 
 }

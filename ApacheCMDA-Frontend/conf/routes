@@ -42,8 +42,7 @@ GET         /assets/*file                                    controllers.Assets.
 ##Map sns
 GET         /sns/home                                        controllers.MainController.home()
 GET         /sns/main                                        controllers.MainController.main()
-POST        /sns/posts/add                                   controllers.PostController.newPost()
-GET         /sns/posts/add                                   controllers.PostController.addPost()
+GET         /sns/posts/add                                   controllers.PostController.newPost()
 
 GET         /sns/login                                       controllers.Application.login()
 GET         /sns/logout                                      controllers.Application.logout()

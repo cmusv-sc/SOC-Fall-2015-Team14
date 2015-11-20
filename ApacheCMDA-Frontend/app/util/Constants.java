@@ -61,5 +61,6 @@ public class Constants {
     public static final String GET_USER_BY_USERNAME = "/users/username/";
     public static final String UPLOAD_IMAGE = "/users/uploadPhoto/";
     public static final String USER_API = "/users/";
+    public static final String ADD_POST = "/posts/add";
 
 }

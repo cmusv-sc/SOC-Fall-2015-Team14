@@ -1,4 +1,4 @@
-@(title: String, moreScripts: Html = Html(""))(content: Html)
+@(title: String, moreScripts: Html = Html(""))(nav: Html)(content: Html)
 
 <!DOCTYPE html>
 <html>
@@ -27,13 +27,15 @@
     @moreScripts
 </head>
 <body>
-    @*refer to header.scala.html*@
-    @header()
 
-    <div class="container">
-        @content
-    </div>
-
+    <section class="sidebar">
+        @nav
+    </section>
+    <section class="content">
+        <div class="container">
+          @content
+        </div>
+    </section>
 
 </body>
 </html>

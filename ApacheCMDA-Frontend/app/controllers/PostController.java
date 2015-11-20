@@ -2,15 +2,14 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import models.metadata.Post;
+import models.Post;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-//import views.sns.*;
-//import views.html.*;
-import views.html.sns.main;
+import util.APICall;
+import util.Constants;
 import views.html.sns.*;
 
 import java.text.DateFormat;
@@ -27,26 +26,29 @@ public class PostController extends Controller {
     final static Form<Post> postForm = Form.form(Post.class);
 
     public static Result getAllPosts() {
-        return ok(posts.render(Post.getAllPosts(), postForm));
+        return null;
+//        return ok(posts.render(Post.getAllPosts(), postForm));
     }
-
-    public static Result addPost() {
-        return ok(addPost.render(postForm));
-    }
-
 
     public static Result newPost() {
+        System.out.println("new post");
         Form<Post> dc = postForm.bindFromRequest();
         ObjectNode jsonData = Json.newObject();
-        jsonData.put("userId", 1);
+        jsonData.put("userId", session().get("userId"));
+        System.out.println("content is " + dc.field("content").value());
         jsonData.put("content", dc.field("content").value());
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         jsonData.put("time", dateFormat.format(date));
-        jsonData.put("visibility", "public");
-        JsonNode response = Post.addPost(jsonData);
+        //Todo get value from check box
+        System.out.println("visibility is " + dc.field("visibility").value());
+        jsonData.put("visibility", dc.field("visibility").value());
+
+        JsonNode response = APICall.postAPI(Constants.NEW_BACKEND + Constants.ADD_POST, jsonData);
         Application.flashMsg(response);
+        System.out.println(response.toString());
         return redirect("/sns/home");
+//        return ok(header.render(dc));
     }
 
 }

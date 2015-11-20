@@ -27,6 +27,7 @@ public class UserController extends Controller{
     public static Result updateUser() {
         Http.RequestBody body = request().body();
         JsonNode json = body.asJson();
+        JsonNode response = null;
 
         try {
             user.setUserName(json.path("userName").asText());
@@ -34,7 +35,7 @@ public class UserController extends Controller{
             user.setEmail(json.path("email").asText());
             user.setPhoneNumber(json.path("phoneNumber").asText());
             user.setResearchInterests(json.path("researchInterests").asText());
-            JsonNode response = APICall.putAPI(Constants.NEW_BACKEND + Constants.USER_API + user.getId(), json);
+            response = APICall.putAPI(Constants.NEW_BACKEND + Constants.USER_API + user.getId(), json);
         } catch (IllegalStateException e) {
             e.printStackTrace();
 
@@ -42,7 +43,8 @@ public class UserController extends Controller{
             e.printStackTrace();
         } finally {
             System.out.println("finally" + user.getAffiliation());
-            return ok(home.render(user));
+//            return redirect(routes.MainController.main());
+            return ok(response);
         }
     }
 
