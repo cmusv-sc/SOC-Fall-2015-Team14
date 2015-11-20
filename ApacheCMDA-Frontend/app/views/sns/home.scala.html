@@ -129,20 +129,53 @@
         </div>
 
         <div class="col col-md-8 content-container">
+            <!--<h1>@posts.size() Posts</h1>-->
+            <!--<span class="col-md-2">User Id:</span>-->
+            <!--<span class="col-md-8">Content:</span>-->
+            <!--<span class="col-md-2">Time</span>-->
+            <!--<ul>-->
+                <!--<div class="comments">-->
+                    <!--<ol class="comment-list">-->
+                        <!--@for(post <- posts){-->
+                            <!--<li class="comment depth-1">-->
+                                <!--<div class="avatar"><a href="#"><img src="http://avatarbox.net/avatars/img32/ned_flanders_avatar_picture_23953.gif" alt="" /></a></div>-->
+                                <!--<div class="comment-box">-->
+                                    <!--<div class="comment-author meta">-->
+                                        <!--<strong>Tony</strong>@post.getTime<a href="#" class="btn small color"> Reply</a>-->
+                                    <!--</div>-->
+                                    <!--<div class="comment-text">-->
+                                        <!--<p>@post.getContent</p>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</li>-->
+                        <!--}-->
+                    <!--</ol>-->
+                <!--</div>-->
+            <!--</ul>-->
 
-            <h1>@posts.size() Posts</h1>
-            <span class="col-md-2">User Id:</span>
-            <span class="col-md-8">Content:</span>
-            <span class="col-md-2">Time</span>
-            <ul>
-            @for(post <- posts){
-                <li>
-                    <span class="col-md-2">@post.getUserName</span>
-                    <span class="col-md-8">@post.getContent</span>
-                    <span class="col-md-2">@post.getTime</span>
-                </li>
-            }
-            </ul>
+            <div class="wrap">
+                <div class="row">
+                    <!--- Content -->
+                    <div class="three-fourth content">
+                        <div class="comments">
+                            <ol class="comment-list">
+                                @for(post <- posts){
+                                <li class="comment depth-1">
+                                    <div class="avatar"><a href="#"><img src="http://avatarbox.net/avatars/img32/ned_flanders_avatar_picture_23953.gif" alt="" /></a></div>
+                                    <div class="comment-box">
+                                        <div class="comment-author meta">
+                                            <strong>Tony</strong>@post.getTime<a href="#" class="btn small color"> Reply</a>
+                                        </div>
+                                        <div class="comment-text">
+                                            <p>@post.getContent</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                }
+                            </ol>
+                        </div>
+                    </div>
+                </div>
         </div>
 
     </div>
