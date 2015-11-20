@@ -8,8 +8,34 @@ $(document).ready(function() {
         $(".profile-edit-container").show();
     });
 
-    var userId = $("#hiddenSession").val();
-    $(".profile-image")
+    $("#profile-form").submit(function(e) {
+        e.preventDefault();
+    })
+
+
+    $("#save-profile").click(function() {
+        var obj = {
+            userName : $("#profile-form .profile-name input").val(),
+            affiliation : $("#profile-form .profile-affiliation input").val(),
+            email : $("#profile-form .profile-email input").val(),
+            researchInterests : $("#profile-form .profile-interest input").val(),
+            phoneNumber : $("#profile-form .profile-phone input").val()
+        }
+
+        $.ajax({
+            url: "/sns/users/updateUser",
+            type: "POST",
+            data: JSON.stringify(obj),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).done(function(data) {
+            console.log(data);
+            window.location.reload();
+        }).error(function(error) {
+            console.log(error);
+        })
+    })
 })
 
 
@@ -58,3 +84,4 @@ function sub(obj){
         reader.readAsDataURL(obj.files[0]);
     }
 }
+

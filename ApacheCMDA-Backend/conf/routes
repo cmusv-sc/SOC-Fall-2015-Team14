@@ -69,7 +69,7 @@ GET           /users/:id                                                        
 GET           /users/username/:username                                                                 @controllers.UserController.getUserByUserName(username: String, format: String="json")
 POST          /users/add                                                                                @controllers.UserController.addUser
 POST          /users/uploadPhoto/:id                                                                    @controllers.UserController.uploadUserPhoto(id: Long)
-PUT           /users/update/:id                                                                         @controllers.UserController.updateUser(id: Long)
+PUT           /users/:id                                                                         @controllers.UserController.updateUser(id: Long)
 DELETE        /users/delete/:id                                                                         @controllers.UserController.deleteUser(id: Long)
 GET           /users/getPhoto/:id                                                                       @controllers.UserController.getUserPhoto(id: Long)
 GET			  /users/getAllUsers/json																	@controllers.UserController.getAllUsers(format: String="json")

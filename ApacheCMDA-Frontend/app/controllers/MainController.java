@@ -22,7 +22,8 @@ public class MainController extends Controller {
             System.out.println(user.toString());
             session("userId", String.valueOf(user.getId()));
         } else {
-            System.out.println("exisited" + user.toString());
+            //update user
+            user = user.getUserById(session("userId"));
         }
 
         return ok(home.render(user));
@@ -33,6 +34,9 @@ public class MainController extends Controller {
         if (user == null) {
             user = User.getUserByUserName(session().get("userName"));
             session("userId", String.valueOf(user.getId()));
+        } else {
+            //update user
+            user = user.getUserById(session("userId"));
         }
 
         return ok(main.render(user));

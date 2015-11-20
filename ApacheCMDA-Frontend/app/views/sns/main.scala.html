@@ -55,28 +55,30 @@
                         </div>
                     </div>
                 </form>
-                <form>
-                    <div class="profile-name form-group">
-                        <input type="text" value="@user.getUserName()" placeholder="name"/>
-                    </div>
 
-                    <div class="profile-affiliation form-group">
-                        <input type="text" value="@user.getAffiliation()" placeholder="affiliation"/>
-                    </div>
-                    <div class="profile-interest form-group">
-                        <input type="text" value="@user.getResearchInterests()" placeholder="interest"/>
-                    </div>
-                    <div class="profile-email form-group">
-                        <input type="email" value="@user.getEmail()" placeholder="email"/>
-                    </div>
-                    <div class="profile-phone form-group">
-                        <input type="tel" value="@user.getPhoneNumber()" placeholder="phone number"/>
-                    </div>
-                    <button class="btn btn-primary" type="submit">
-                        Submit
-                    </button>
-                    <button class="btn btn-default">Cancel</button>
-                </form>
+                    <form id="profile-form" method="post">
+                        <div class="profile-name form-group">
+                            <input type="text" name="userName" value="@user.getUserName()" placeholder="name"/>
+                        </div>
+
+                        <div class="profile-affiliation form-group">
+                            <input type="text" name="affiliation" value="@user.getAffiliation()" placeholder="affiliation"/>
+                        </div>
+                        <div class="profile-interest form-group">
+                            <input type="text" name="researchInterests" value="@user.getResearchInterests()" placeholder="interest"/>
+                        </div>
+                        <div class="profile-email form-group">
+                            <input type="email" name="email" value="@user.getEmail()" placeholder="email"/>
+                        </div>
+                        <div class="profile-phone form-group">
+                            <input type="tel" name="phoneNumber" value="@user.getPhoneNumber()" placeholder="phone number"/>
+                        </div>
+                        <button id="save-profile" class="btn btn-primary" type="button">
+                            Submit
+                        </button>
+                        <button class="btn btn-default">Cancel</button>
+                    </form>
+
             </div>
 
 
