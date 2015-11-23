@@ -68,12 +68,11 @@ public class User {
 	@ManyToMany (fetch = FetchType.EAGER, mappedBy = "followers" )
 	private Set<User> followedUsers;
 
+	@ManyToMany (fetch = FetchType.EAGER, mappedBy = "likeUsers" )
+	private Set<Post> likePosts;
+
 	@ManyToMany (fetch = FetchType.EAGER, mappedBy = "sharedUsers" )
 	private Set<Post> sharedPosts;
-
-	// @OneToMany(mappedBy = "user", cascade={CascadeType.ALL})
-	// private Set<ClimateService> climateServices = new
-	// HashSet<ClimateService>();
 
 	public User() {
 	}
@@ -99,7 +98,8 @@ public class User {
 		this.highestDegree = highestDegree;
 		this.followers = new HashSet<>();
 		this.followedUsers = new HashSet<>();
-		this.sharedPosts = new HashSet<>();
+		this.likePosts = new HashSet<>()
+;		this.sharedPosts = new HashSet<>();
 	}
 
 	public long getId() {
@@ -232,6 +232,12 @@ public class User {
 
 	public void removeAllFollowedUser() { followedUsers.clear(); };
 
+	public void addLikePosts(Post post) { likePosts.add(post); }
+
+	public void removeLikePosts(Post post) { likePosts.remove(post); }
+
+	public void removeAllLikePosts() { likePosts.clear(); }
+
 	public void addSharedPost(Post post) { sharedPosts.add(post); }
 
 	public void removeSharedPost(Post post) { sharedPosts.remove(post); }
@@ -241,6 +247,7 @@ public class User {
 	public void cleanUpBeforeDelete() {
 		removeAllFollower();
 		removeAllFollowedUser();
+		removeAllLikePosts();
 		removeAllSharedPost();
 	}
 

@@ -221,19 +221,25 @@ public class PostController extends Controller {
         }
     }
 
-    public Result addPostLike(Long id) {
-        if (id == null) {
+    public Result addPostLike(Long postId, Long userId) {
+        if (postId == null) {
             System.out.println("Post id is null or empty!");
             return badRequest("Post id is null or empty!");
         }
 
-        Post post = postRepository.findOne(id);
+        Post post = postRepository.findOne(postId);
         if (post == null) {
-            System.out.println("Post not found with with id: " + id);
-            return notFound("Post not found with with id: " + id);
+            System.out.println("Post not found with with id: " + postId);
+            return notFound("Post not found with with id: " + postId);
         }
 
-        post.addOneToLikeCount();
+        User user = userRepository.findOne(userId);
+        if (user == null) {
+            System.out.println("User not found with with id: " + userId);
+            return notFound("User not found with with id: " + userId);
+        }
+
+        post.addLikeUsers(user);
 
         try {
             Post savedPost = postRepository.save(post);
@@ -241,8 +247,8 @@ public class PostController extends Controller {
             return ok("Post updated: " + savedPost.getId());
         } catch (PersistenceException pe) {
             pe.printStackTrace();
-            System.out.println("Post not updated: " + id);
-            return badRequest("Post not updated: " + id);
+            System.out.println("Post not updated: " + postId);
+            return badRequest("Post not updated: " + postId);
         }
     }
 
@@ -300,7 +306,6 @@ public class PostController extends Controller {
 
         String result = new String();
         if (format.equals("json")) {
-            //result = new Gson().toJson(posts);
             Gson gson = new GsonBuilder().serializeNulls()
                     .setExclusionStrategies(new CustomExclusionStrategy(Post.class))
                     .excludeFieldsWithoutExposeAnnotation().create();
@@ -326,6 +331,79 @@ public class PostController extends Controller {
                     .excludeFieldsWithoutExposeAnnotation().create();
 
             result = gson.toJson(new ArrayList<User>(users));
+        }
+        return ok(result);
+    }
+
+    public Result getSharedPosts(Long userId, String format) {
+        User user = userRepository.findOne(userId);
+        if (user == null) {
+            System.out.println("User not found with with id: " + userId);
+            return notFound("User not found with with id: " + userId);
+        }
+
+        List<Post> posts = postRepository.findBySharedUsersOrderByTimeDesc(user);
+
+        String result = new String();
+        if (format.equals("json")) {
+            Gson gson = new GsonBuilder().serializeNulls()
+                    .setExclusionStrategies(new CustomExclusionStrategy(Post.class))
+                    .excludeFieldsWithoutExposeAnnotation().create();
+
+            result = gson.toJson(posts);
+        }
+        return ok(result);
+    }
+
+    public Result getLikeUsers(Long id, String format) {
+        if (id == null) {
+            System.out.println("Post id is null or empty!");
+            return badRequest("Post id is null or empty!");
+        }
+
+        Post post = postRepository.findOne(id);
+        if (post == null) {
+            System.out.println("Post not found with with id: " + id);
+            return notFound("Post not found with with id: " + id);
+        }
+
+        Set<User> users = post.getLikeUsers();
+
+        String result = new String();
+        if (format.equals("json")) {
+            Gson gson = new GsonBuilder().serializeNulls()
+                    .setExclusionStrategies(new CustomExclusionStrategy(User.class))
+                    .excludeFieldsWithoutExposeAnnotation().create();
+
+            result = gson.toJson(new ArrayList<User>(users));
+        }
+        return ok(result);
+    }
+
+    public Result getMostPopularPosts(String format) {
+        List<Post> posts = postRepository.findTop10UsersOrderByLikeCountDesc();
+
+        String result = new String();
+        if (format.equals("json")) {
+            Gson gson = new GsonBuilder().serializeNulls()
+                    .setExclusionStrategies(new CustomExclusionStrategy(User.class))
+                    .excludeFieldsWithoutExposeAnnotation().create();
+
+            result = gson.toJson(posts);
+        }
+        return ok(result);
+    }
+
+    public Result searchPosts(String key, String format) {
+        List<Post> posts = postRepository.findByTitleContainsOrContentContains(key);
+
+        String result = new String();
+        if (format.equals("json")) {
+            Gson gson = new GsonBuilder().serializeNulls()
+                    .setExclusionStrategies(new CustomExclusionStrategy(User.class))
+                    .excludeFieldsWithoutExposeAnnotation().create();
+
+            result = gson.toJson(posts);
         }
         return ok(result);
     }

@@ -20,6 +20,8 @@ import javax.inject.Singleton;
 public interface PostRepository extends CrudRepository<Post, Long> {
     List<Post> findByUserOrderByTimeDesc(User user);
     List<Post> findBySharedUsersOrderByTimeDesc(User user);
+    List<Post> findTop10UsersOrderByLikeCountDesc();
+    List<Post> findByTitleContainsOrContentContains(String key);
     Post findOne(Long Id);
 }
 
