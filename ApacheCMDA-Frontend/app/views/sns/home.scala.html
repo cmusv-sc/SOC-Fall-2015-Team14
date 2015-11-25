@@ -18,22 +18,34 @@
                         <a href="@routes.MainController.main()">Main</a>
                     </li>
                 </ul>
+
+                <div class="col-sm-3 col-md-3 pull-left">
+                    <form class="navbar-form" role="search">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
                 <div class="nav navbar-right">
-                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newPostModal">
+                    <button type="button" class="btn btn-default navbar-btn buttonLow" data-toggle="modal" data-target="#newPostModal">
                         <span class="glyphicon glyphicon-edit"></span>
                         Post
                     </button>
-                </div>
 
-                @if(!session.get("userName")) {
+                    @if(!session.get("userName")) {
                     <form class="navbar-form navbar-right" action="@routes.Application.login()">
-                        <button type="submit" class="btn btn-success">Log in</button>
+                        <button type="submit" class="btn btn-default navbar-btn pull-right">Log in</button>
                     </form>
-                } else {
+                    } else {
                     <form class="navbar-form navbar-right" action="@routes.Application.logout()">
-                        <button type="submit" class="btn btn-success">Log out</button>
+                        <button type="submit" class="btn btn-default navbar-btn pull-right">Log out</button>
                     </form>
-                }
+                    }
+                </div>
 
             </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
@@ -129,30 +141,6 @@
         </div>
 
         <div class="col col-md-8 content-container">
-            <!--<h1>@posts.size() Posts</h1>-->
-            <!--<span class="col-md-2">User Id:</span>-->
-            <!--<span class="col-md-8">Content:</span>-->
-            <!--<span class="col-md-2">Time</span>-->
-            <!--<ul>-->
-                <!--<div class="comments">-->
-                    <!--<ol class="comment-list">-->
-                        <!--@for(post <- posts){-->
-                            <!--<li class="comment depth-1">-->
-                                <!--<div class="avatar"><a href="#"><img src="http://avatarbox.net/avatars/img32/ned_flanders_avatar_picture_23953.gif" alt="" /></a></div>-->
-                                <!--<div class="comment-box">-->
-                                    <!--<div class="comment-author meta">-->
-                                        <!--<strong>Tony</strong>@post.getTime<a href="#" class="btn small color"> Reply</a>-->
-                                    <!--</div>-->
-                                    <!--<div class="comment-text">-->
-                                        <!--<p>@post.getContent</p>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</li>-->
-                        <!--}-->
-                    <!--</ol>-->
-                <!--</div>-->
-            <!--</ul>-->
-
             <div class="wrap">
                 <div class="row">
                     <!--- Content -->

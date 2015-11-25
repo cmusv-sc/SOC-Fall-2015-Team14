@@ -33,8 +33,7 @@
 /* 01 RESET */
 
 *,*:before,*:after {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
-body {font:15px/1.42 'Raleway',Arial,Helvetica,sans-serif;text-align:center;color:#191F26;background:#EDEDDC;word-wrap:break-word;text-rendering:optimizeLegibility;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;}
-html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,address,cite,code,del,dfn,em,img,ins,q,small,strong,sub,sup,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,input,table,caption,tbody,tfoot,thead,tr,th,td,figure{border:0;margin:0;padding:0}
+body {font:15px/1.42 'Raleway',Arial,Helvetica,sans-serif;color:#191F26;background:#EDEDDC;word-wrap:break-word;text-rendering:optimizeLegibility;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;}
 html {overflow-y: scroll;-webkit-text-size-adjust:auto;-webkit-overflow-scrolling: touch;}
 
 img,fieldset,abbr,acronym{border:0;}
@@ -47,18 +46,7 @@ figure img 	{display:block;}
 
 input,button,select,textarea {font-family: inherit;font-size: inherit;line-height: inherit;}
 
-/* 02 GLOBAL STYLES */
 
-ul 				{margin:0 0 20px;}
-ul > li	  		{list-style:none;position:relative;padding:0 0 10px 15px;}
-ul > li:before 	{content:"\2022";font-size:30px;color:#DBBC94;position:absolute;top:-10px;left:0;}
-ul ul 				{margin:10px 0 -10px 2px;}
-ul ul li:before		{content:"\00af";font-size:25px;top:0;left:-2px;} 			
-ol				{margin:0 0 20px 25px;}
-ol li 	  			{list-style:decimal outside;padding:0 0 10px 5px;}
-ol ol 			{margin:10px 0 -10px 15px;}
-nav ul 			{margin:0;}
-nav li:before 		{display:none;}
 
 p {padding:0 0 17px;}
 
@@ -72,16 +60,6 @@ a:active,a:hover 	{outline: 0;}
 .right 		{float:right !important;}
 .center,
 .center .wrap	{text-align:center;}
-
-/* 03 TYPOGRAPHY */
-h1,h2,h3,h4,h5,h6,.header,.intro,label,input,textarea,select,table,dl,option,optgroup,.selector,.btn,.f-title,.pager,.contact-data,.categories,.meta,.tabs,.price,.trigger,.close,.output,.xdsoft_datetimepicker,.slicknav_menu,.readonly .f-row,.infoBox, #message		 {font-family: 'Montserrat', sans-serif;font-weight:400;}
-
-h1 {font-size:24px;}
-h2 {font-size:24px;padding:0 0 28px;}
-h3 {font-size:19px;padding:0 0 15px;}
-h4 {font-size:17px;padding:0 0 15px;}
-h5 {font-size:15px;padding:0 0 15px;}
-h6 {font-size:17px;text-transform:uppercase;padding:0 0 23px;}
 
 /* 04 COLOR SPECIFICS */       
 .black	{background-color:#191F26 !important;}
@@ -144,7 +122,6 @@ h6 {font-size:17px;text-transform:uppercase;padding:0 0 23px;}
 .telephone	{background-position:-80px -135px;width:25px;}
 .people		{width:35px;height:40px;}
 .luggage	{width:35px;height:40px;}
-.time		{width:33px;height:40px;}
 
 
 /* 08 HEADER */
@@ -438,14 +415,14 @@ blockquote:before			{content:"";width:41px;height:29px;}
 .depth-2 .avatar			{left:100px;}
 .comments .depth-3 		{padding-left:300px;margin-left:0;width:auto;}
 .depth-3 .avatar			{left:200px;}
-.comment-box			{float:left;width:100%;background:#fff;min-height:100px;padding:15px 15px 0;border:1px solid #DFDFD0;border-left:0;-webkit-border-radius:0 3px 3px 0;-moz-border-radius:0 3px 3px 0;border-radius:0 3px 3px 0;}
-.comment-box .meta 			{color:#999;padding:0 0 8px;}
+.comment-box			{float:left;width:150%;background:#fff;min-height:100px;padding:15px 15px 0;border:1px solid #DFDFD0;border-left:0;-webkit-border-radius:0 3px 3px 0;-moz-border-radius:0 3px 3px 0;border-radius:0 3px 3px 0;}
+.comment-box .meta 			{color:#999;padding:0 0 8px;float:left}
 .comment-box a 				{color:#F2716A;}
 .meta 						{font-size:13px;color:#858585}
 .meta strong 					{font-size:15px;font-weight:400;color:#191F26;padding:0 3px 0 0;}
 .comment-text				{float:left;}
-.comment-text p 				{font-size:14px;padding:0 0 14px;max-width:86%;}
-.comments .btn 				{float:right;position:absolute;top:15px;right:15px;}
+.comment-text p 				{font-size:14px;padding:0 0 14px;max-width:150%;}
+.comments .btn 				{float:right;position:absolute;top:15px;right:-150px;}
 
 .box 					{float:left;width:100%;background:#fff;padding:20px 25px 25px;color:#34394A;-webkit-box-shadow:inset 0 0 0 1px #DFDFD0;-moz-box-shadow:inset 0 0 0 1px #DFDFD0;box-shadow:inset 0 0 0 1px #DFDFD0;margin:0 0 30px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
 .comment-respond h3 		{padding:0 0 20px;}

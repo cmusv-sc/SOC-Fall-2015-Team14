@@ -18,23 +18,34 @@
                         <a href="@routes.MainController.main()">Main</a>
                     </li>
                 </ul>
+
+                <div class="col-sm-3 col-md-3 pull-left">
+                    <form class="navbar-form" role="search">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
                 <div class="nav navbar-right">
-                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newPostModal">
+                    <button type="button" class="btn btn-default navbar-btn buttonLow" data-toggle="modal" data-target="#newPostModal">
                         <span class="glyphicon glyphicon-edit"></span>
                         Post
                     </button>
-                </div>
 
-                @if(!session.get("userName")) {
+                    @if(!session.get("userName")) {
                     <form class="navbar-form navbar-right" action="@routes.Application.login()">
-                        <button type="submit" class="btn btn-success">Log in</button>
+                        <button type="submit" class="btn btn-default navbar-btn pull-right">Log in</button>
                     </form>
-                } else {
+                    } else {
                     <form class="navbar-form navbar-right" action="@routes.Application.logout()">
-                        <button type="submit" class="btn btn-success">Log out</button>
+                        <button type="submit" class="btn btn-default navbar-btn pull-right">Log out</button>
                     </form>
-                }
-
+                    }
+                </div>
             </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
     </nav>
@@ -193,84 +204,81 @@
 
             <div class="tab-content clearfix">
                 <div class="tab-pane active" id="timeline">
-                    <div class="row">
-                        <!--- Content -->
-                        <div class="three-fourth content">
-                            <!--comments-->
-                            <div class="comments">
-                                <ol class="comment-list">
-                                    <!--comment-->
-                                    <li class="comment depth-1">
-                                        <div class="avatar"><a href="#"><img src="http://avatarbox.net/avatars/img32/ned_flanders_avatar_picture_23953.gif" alt="" /></a></div>
-                                        <div class="comment-box">
-                                            <div class="comment-author meta" style="">
-                                                <strong>Tony</strong> now
-                                            </div>
-                                            <div class="comment-text">
-                                                <p>Hi, I am happy today! </p>
-                                            </div>
+                    <div class="container bootstrap snippet">
+                        <div class="col-sm-8">
+                            <div class="panel panel-white post panel-shadow">
+                                <div class="post-heading">
+                                    <div class="pull-left image">
+                                        <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar" alt="user profile image">
+                                    </div>
+                                    <div class="pull-left meta">
+                                        <div class="title h5">
+                                            <a href="#"><b>Ryan Haywood</b></a>
+                                            made a post.
                                         </div>
-                                    </li>
-                                    <!--//comment-->
-
-                                    <!--comment-->
-                                    <li class="comment depth-1">
-                                        <div class="avatar"><a href="#"><img src="http://avatarbox.net/avatars/img32/ned_flanders_avatar_picture_23953.gif" alt="" /></a></div>
-                                        <div class="comment-box">
-                                            <div class="comment-author meta">
-                                                <strong>Tony</strong> said 30 minutes ago
+                                        <h6 class="text-muted time">1 minute ago</h6>
+                                    </div>
+                                </div>
+                                <div class="post-description">
+                                    <p>Hahahahahahahahahhahahahahahhahahahahahahahahahahahahahahahahah, I am so happy</p>
+                                    <div class="stats">
+                                        <a href="#" class="btn btn-default stat-item">
+                                            <i class="fa fa-thumbs-up icon"></i>2
+                                        </a>
+                                        <a href="#" class="btn btn-default stat-item">
+                                            <i class="fa fa-share icon"></i>12
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="post-footer">
+                                    <div class="input-group">
+                                        <input class="form-control" placeholder="Add a comment" type="text">
+                                        <span class="input-group-addon">
+                                            <a href="#"><i class="fa fa-edit"></i></a>
+                                        </span>
+                                    </div>
+                                    <ul class="comments-list">
+                                        <li class="comment">
+                                            <a class="pull-left" href="#">
+                                                <img class="avatar" src="http://bootdey.com/img/Content/user_1.jpg" alt="avatar">
+                                            </a>
+                                            <div class="comment-body">
+                                                <div class="comment-heading">
+                                                    <h4 class="user">Gavino Free</h4>
+                                                    <h5 class="time">5 minutes ago</h5>
+                                                </div>
+                                                <p>Sure, oooooooooooooooohhhhhhhhhhhhhhhh</p>
                                             </div>
-                                            <div class="comment-text">
-                                                <p> Saaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad day </p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!--//comment-->
-
-                                    <!--comment-->
-                                    <li class="comment depth-1">
-                                        <div class="avatar"><a href="#"><img src="http://avatarbox.net/avatars/img32/ned_flanders_avatar_picture_23953.gif" alt="" /></a></div>
-                                        <div class="comment-box">
-                                            <div class="comment-author meta">
-                                                <strong>Tony</strong> said 1 hour ago
-                                            </div>
-                                            <div class="comment-text">
-                                                <p>Lalalalalalalalalalalalalalalalalalalalalalalalalala</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!--//comment-->
-
-                                    <!--comment-->
-                                    <li class="comment depth-1">
-                                        <div class="avatar"><a href="#"><img src="http://avatarbox.net/avatars/img32/ned_flanders_avatar_picture_23953.gif" alt="" /></a></div>
-                                        <div class="comment-box">
-                                            <div class="comment-author meta">
-                                                <strong>Tony</strong> said 6 hours ago
-                                            </div>
-                                            <div class="comment-text">
-                                                <p>Asher needs to have so much grief sex now. Also, his whole family sucks.</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!--//comment-->
-
-                                    <!--comment-->
-                                    <li class="comment depth-1">
-                                        <div class="avatar"><a href="#"><img src="http://avatarbox.net/avatars/img32/ned_flanders_avatar_picture_23953.gif" alt="" /></a></div>
-                                        <div class="comment-box">
-                                            <div class="comment-author meta">
-                                                <strong>Tony</strong> said 5 days ago
-                                            </div>
-                                            <div class="comment-text">
-                                                <p>Weirdly happy that Asher finally committed a murder. I feel like a proud parent. </p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!--//comment-->
-                                </ol>
+                                            <ul class="comments-list">
+                                                <li class="comment">
+                                                    <a class="pull-left" href="#">
+                                                        <img class="avatar" src="http://bootdey.com/img/Content/user_3.jpg" alt="avatar">
+                                                    </a>
+                                                    <div class="comment-body">
+                                                        <div class="comment-heading">
+                                                            <h4 class="user">Ryan Haywood</h4>
+                                                            <h5 class="time">3 minutes ago</h5>
+                                                        </div>
+                                                        <p>Relax my friend</p>
+                                                    </div>
+                                                </li>
+                                                <li class="comment">
+                                                    <a class="pull-left" href="#">
+                                                        <img class="avatar" src="http://bootdey.com/img/Content/user_2.jpg" alt="avatar">
+                                                    </a>
+                                                    <div class="comment-body">
+                                                        <div class="comment-heading">
+                                                            <h4 class="user">Gavino Free</h4>
+                                                            <h5 class="time">3 minutes ago</h5>
+                                                        </div>
+                                                        <p>Ok, cool.</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                            <!--//comments-->
                         </div>
                     </div>
                 </div>
@@ -282,11 +290,11 @@
                             <div class="comments">
                                 <ol class="comment-list">
                                     <!--comment-->
-                                    <li class="comment depth-1">
+                                    <li class="comment depth-1">git
                                         <div class="avatar"><a href="#"><img src="http://media.koreus.com/uploads/cavt4cb82f54eac31.gif" alt="" /></a></div>
                                         <div class="comment-box">
                                             <div class="comment-text">
-                                                <strong>Justin</strong><a href="#" class="btn small color"> Following</a>
+                                                <strong>Justin</strong><a href="#" class="btn small color">Following</a>
                                             </div>
                                         </div>
                                     </li>
@@ -296,7 +304,7 @@
                                         <div class="avatar"><a href="#"><img src="http://static.extratorrent.cc/images/avatars/1417729582.gif" alt="" /></a></div>
                                         <div class="comment-box">
                                             <div class="comment-text">
-                                                <strong>Bob</strong><a href="#" class="btn small color"> Following</a>
+                                                <strong>Bob</strong><a href="#" class="btn small color">Following</a>
                                             </div>
                                         </div>
                                     </li>
