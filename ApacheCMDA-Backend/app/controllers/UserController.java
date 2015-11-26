@@ -581,7 +581,7 @@ public class UserController extends Controller {
 		}
 		return ok(result);
 	}
-
+/*
 	public Result fuzzySearchUsers(String key, String format) {
 		List<User> users = new ArrayList<>();
 		users.addAll(userRepository.findByFirstNameContainsOrLastNameContains(key));
@@ -640,7 +640,7 @@ public class UserController extends Controller {
 		}
 		return ok(result);
 	}
-
+*/
 	class PostComparator implements Comparator<Post> {
 		@Override
 		public int compare(Post post1, Post post2) {

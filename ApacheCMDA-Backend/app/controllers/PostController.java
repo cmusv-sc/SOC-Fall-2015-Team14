@@ -379,7 +379,7 @@ public class PostController extends Controller {
         }
         return ok(result);
     }
-
+/*
     public Result getMostPopularPosts(String format) {
         List<Post> posts = postRepository.findTop10UsersOrderByLikeCountDesc();
 
@@ -406,5 +406,5 @@ public class PostController extends Controller {
             result = gson.toJson(posts);
         }
         return ok(result);
-    }
+    }*/
 }
