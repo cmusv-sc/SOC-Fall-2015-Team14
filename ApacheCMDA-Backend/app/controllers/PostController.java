@@ -379,14 +379,14 @@ public class PostController extends Controller {
         }
         return ok(result);
     }
-/*
+
     public Result getMostPopularPosts(String format) {
-        List<Post> posts = postRepository.findTop10UsersOrderByLikeCountDesc();
+        List<Post> posts = postRepository.findTop10ByOrderByLikeCountDesc();
 
         String result = new String();
         if (format.equals("json")) {
             Gson gson = new GsonBuilder().serializeNulls()
-                    .setExclusionStrategies(new CustomExclusionStrategy(User.class))
+                    .setExclusionStrategies(new CustomExclusionStrategy(Post.class))
                     .excludeFieldsWithoutExposeAnnotation().create();
 
             result = gson.toJson(posts);
@@ -395,16 +395,16 @@ public class PostController extends Controller {
     }
 
     public Result searchPosts(String key, String format) {
-        List<Post> posts = postRepository.findByTitleContainsOrContentContains(key);
+        List<Post> posts = postRepository.findByTitleContainingOrContentContaining(key, key);
 
         String result = new String();
         if (format.equals("json")) {
             Gson gson = new GsonBuilder().serializeNulls()
-                    .setExclusionStrategies(new CustomExclusionStrategy(User.class))
+                    .setExclusionStrategies(new CustomExclusionStrategy(Post.class))
                     .excludeFieldsWithoutExposeAnnotation().create();
 
             result = gson.toJson(posts);
         }
         return ok(result);
-    }*/
+    }
 }

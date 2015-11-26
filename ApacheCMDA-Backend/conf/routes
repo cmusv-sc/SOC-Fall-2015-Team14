@@ -49,7 +49,7 @@ DELETE        /parameter/deleteParameter/service/:id/name/:name                 
 GET           /posts/postId/:id                                                                         @controllers.PostController.getPost(id: Long, format: String="json")
 GET           /posts/userId/:id                                                                         @controllers.PostController.getAllPostsByUser(id: Long, format: String="json")
 GET           /posts/getAllPosts/json                                                                   @controllers.PostController.getAllPosts(format: String="json")
-#GET           /posts/getMostPopularPosts                                                                @controllers.PostController.getMostPopularPosts(format: String="json")
+GET           /posts/getMostPopularPosts                                                                @controllers.PostController.getMostPopularPosts(format: String="json")
 POST          /posts/add                                                                                @controllers.PostController.addPost
 PUT           /posts/addLike/:postId/user/:userId                                                       @controllers.PostController.addPostLike(postId: Long, userId: Long)
 GET           /posts/getLikeUsers/:id                                                                   @controllers.PostController.getLikeUsers(id: Long, format: String="json")
@@ -60,7 +60,7 @@ GET           /posts/getSharedUser/:postId                                      
 GET           /posts/getSharedPosts/:userId                                                             @controllers.PostController.getSharedPosts(userId: Long, format: String="json")
 DELETE        /posts/delete/:id                                                                         @controllers.PostController.deletePost(id: Long)
 DELETE        /posts/deleteByUser/:id                                                                   @controllers.PostController.deletePostsByUser(id: Long)
-#GET           /posts/searchPosts/:key                                                                   @controllers.PostController.searchPosts(key: String, format: String="json")
+GET           /posts/searchPosts/:key                                                                   @controllers.PostController.searchPosts(key: String, format: String="json")
 
 #Comments
 POST          /comments/add                                                                             @controllers.CommentController.addComment
