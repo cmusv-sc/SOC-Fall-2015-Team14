@@ -88,7 +88,8 @@ POST          /users/isUserNameExisted                                          
 POST		  /users/isEmailExisted                                                                     @controllers.UserController.isEmailExisted()
 GET           /users/getFollowingPosts/:id                                                              @controllers.UserController.getFollowingPosts(id:Long, format: String="json")
 GET           /users/fuzzySearch/:key                                                                   @controllers.UserController.fuzzySearchUsers(key: String, format: String="json")
-#GET           /users/exactSearch                                                                        @controllers.UserController.exactSearchUsers(format: String="json")
+GET           /users/exactSearch/                                                                       @controllers.UserController.exactSearchUsers(format: String="json")
+#GET           /users/exactSearch/firstName/:firstName/lastName/:lastName                                @controllers.UserController.exactSearchUsers(firstName: String, lastName : String, format: String="json")
 
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                                                                             controllers.Assets.at(path="/public", file)

@@ -600,11 +600,53 @@ public class UserController extends Controller {
 		return ok(result);
 	}
 
+
+	public Result exactSearchUsers(String format) {
+
+		String firstName = request().getQueryString("firstName");
+		String lastName = request().getQueryString("lastName");
+		String email = request().getQueryString("email");
+		String phoneNumber = request().getQueryString("phoneNumber");
+
+
+		if((firstName == null) || (lastName == null)) {
+			System.out.println("FirstName and LastName are required!");
+			return badRequest("FirstName and LastName are required!");
+		}
+
+		List<User> users = userRepository.findByFirstNameAndLastName(firstName, lastName);
+
+		List<User> matchUsers = new ArrayList<>();
+		for (User user : users) {
+			boolean match = true;
+			if (match && (email != null) && !email.equals(user.getEmail())) {
+				match = false;
+			}
+			if (match && (phoneNumber != null) && !phoneNumber.equals(user.getPhoneNumber())) {
+				match = false;
+			}
+			if (match) {
+				matchUsers.add(user);
+			}
+		}
+
+		String result = new String();
+		if (format.equals("json")) {
+			Gson gson = new GsonBuilder().serializeNulls()
+					.setExclusionStrategies(new CustomExclusionStrategy(User.class))
+					.excludeFieldsWithoutExposeAnnotation().create();
+
+			result = gson.toJson(matchUsers);
+		}
+		return ok(result);
+	}
+
+/*
 	public Result exactSearchUsers(String format) {
 		JsonNode json = request().body().asJson();
 		if (json == null) {
-			System.out.println("User not created, expecting Json data");
-			return badRequest("User not created, expecting Json data");
+			System.out.println(" expecting Json data");
+			return badRequest(" expecting Json data");
 		}
 
 		// Parse JSON file
@@ -642,7 +684,7 @@ public class UserController extends Controller {
 		}
 		return ok(result);
 	}
-
+*/
 	class PostComparator implements Comparator<Post> {
 		@Override
 		public int compare(Post post1, Post post2) {
