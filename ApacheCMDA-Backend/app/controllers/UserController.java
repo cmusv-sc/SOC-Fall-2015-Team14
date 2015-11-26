@@ -581,11 +581,13 @@ public class UserController extends Controller {
 		}
 		return ok(result);
 	}
-/*
+
 	public Result fuzzySearchUsers(String key, String format) {
 		List<User> users = new ArrayList<>();
-		users.addAll(userRepository.findByFirstNameContainsOrLastNameContains(key));
-		users.addAll(userRepository.findByAffiliationContainsOrResearchInterestsContains(key));
+		//users.addAll(userRepository.findByFirstNameContainsOrLastNameContains(key));
+		//users.addAll(userRepository.findByAffiliationContainsOrResearchInterestsContains(key));
+
+		users.addAll(userRepository.findByFirstNameContainingOrLastNameContainingOrAffiliationContainingOrResearchInterestsContaining(key, key, key, key));
 
 		String result = new String();
 		if (format.equals("json")) {
@@ -612,7 +614,7 @@ public class UserController extends Controller {
 		String title = json.path("title").asText();
 		String researchInterests = json.path("researchInterests").asText();
 
-		List<User> users = userRepository.findByFirstNameEqualsAndLastNameEquals(firstName, lastName);
+		List<User> users = userRepository.findByFirstNameAndLastName(firstName, lastName);
 		List<User> matchUsers = new ArrayList<>();
 		for (User user : users) {
 			boolean match = true;
@@ -640,7 +642,7 @@ public class UserController extends Controller {
 		}
 		return ok(result);
 	}
-*/
+
 	class PostComparator implements Comparator<Post> {
 		@Override
 		public int compare(Post post1, Post post2) {

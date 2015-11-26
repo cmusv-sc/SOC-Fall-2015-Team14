@@ -87,7 +87,7 @@ DELETE        /users/:followerID/unfollow/:followeeID                           
 POST          /users/isUserNameExisted                                                                  @controllers.UserController.isUserNameExisted()
 POST		  /users/isEmailExisted                                                                     @controllers.UserController.isEmailExisted()
 GET           /users/getFollowingPosts/:id                                                              @controllers.UserController.getFollowingPosts(id:Long, format: String="json")
-#GET           /users/fuzzySearch/:key                                                                   @controllers.UserController.fuzzySearchUsers(key: String, format: String="json")
+GET           /users/fuzzySearch/:key                                                                   @controllers.UserController.fuzzySearchUsers(key: String, format: String="json")
 #GET           /users/exactSearch                                                                        @controllers.UserController.exactSearchUsers(format: String="json")
 
 # Map static resources from the /public folder to the /assets URL path
