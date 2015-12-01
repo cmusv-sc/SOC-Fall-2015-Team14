@@ -21,6 +21,7 @@ public class Post {
 
     private String userId;
     private String userName;
+    private String userPhotoType;
     private String content;
     private String time;
     private Boolean visibility = false;
@@ -65,6 +66,13 @@ public class Post {
         this.visibility = visibility;
     }
 
+    public String getUserPhotoType() {
+        return userPhotoType;
+    }
+
+    public void setUserPhotoType(String userPhotoType) {
+        this.userPhotoType = userPhotoType;
+    }
 
     public static Post find(String id) {
         Post post = new Post();
@@ -77,7 +85,7 @@ public class Post {
      */
     public static ArrayList<Post> getAllPosts() {
         ArrayList<Post> posts = new ArrayList<Post>();
-        JsonNode postsNode = APICall.callAPI(GET_POST_BY_USER_SERVICES_CALL);
+        JsonNode postsNode = APICall.callAPI(GET_POST_SERVICES_CALL);
 
         if (postsNode == null || postsNode.has("error") || !postsNode.isArray()) {
             return posts;
@@ -86,7 +94,11 @@ public class Post {
         for (int i = 0; i < postsNode.size(); i++) {
             JsonNode json = postsNode.path(i);
             Post newPost = new Post();
-            newPost.setUserId(json.path("userId").asText());
+            JsonNode userJson = json.path("user");
+            newPost.setUserName(userJson.path("userName").asText());
+            newPost.setUserId(userJson.path("id").asText());
+            System.out.println("type" + userJson.path("photoContentType").asText());
+            newPost.setUserPhotoType(userJson.path("photoContentType").asText());
             newPost.setContent(json.path("content").asText());
             newPost.setTime(json.path("time").asText());
             if (json.path("visibility").asText().equals("true")) {
@@ -102,7 +114,6 @@ public class Post {
 
     /*
         get user posts
-
      */
 
     public static ArrayList<Post> getUserPosts(String id) {
@@ -121,6 +132,9 @@ public class Post {
             Post newPost = new Post();
             JsonNode userJson = json.path("user");
             newPost.setUserName(userJson.path("userName").asText());
+            newPost.setUserId(userJson.path("id").asText());
+            System.out.println("type" + userJson.path("photoContentType").asText());
+            newPost.setUserPhotoType(userJson.path("photoContentType").asText());
             newPost.setContent(json.path("content").asText());
             newPost.setTime(json.path("time").asText());
             if (json.path("visibility").asText().equals("true")) {

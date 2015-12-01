@@ -43,7 +43,7 @@ public class UserController extends Controller{
             e.printStackTrace();
         } finally {
             System.out.println("finally" + user.getAffiliation());
-//            return redirect(routes.MainController.main());
+//            return redirect(routes.MainController.home());
             return ok(response);
         }
     }
@@ -61,7 +61,7 @@ public class UserController extends Controller{
 
         } else {
             flash("error", "Missing image");
-            return redirect(routes.MainController.main());
+            return redirect(routes.MainController.home());
         }
 
     }

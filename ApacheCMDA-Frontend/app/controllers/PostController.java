@@ -25,11 +25,6 @@ import java.util.Date;
 public class PostController extends Controller {
     final static Form<Post> postForm = Form.form(Post.class);
 
-    public static Result getAllPosts() {
-        return null;
-//        return ok(posts.render(Post.getAllPosts(), postForm));
-    }
-
     public static Result newPost() {
         System.out.println("new post");
         Form<Post> dc = postForm.bindFromRequest();
@@ -47,8 +42,6 @@ public class PostController extends Controller {
         JsonNode response = APICall.postAPI(Constants.NEW_BACKEND + Constants.ADD_POST, jsonData);
         Application.flashMsg(response);
         System.out.println(response.toString());
-        return redirect("/sns/home");
-//        return ok(header.render(dc));
+        return redirect("/sns/main");
     }
-
 }

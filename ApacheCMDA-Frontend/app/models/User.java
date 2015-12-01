@@ -65,7 +65,7 @@ public class User {
 			String lastName, String middleInitial, String affiliation,
 			String title, String email, String mailingAddress,
 			String phoneNumber, String faxNumber, String researchInterests,
-			String highestDegree) {
+			String highestDegree, String photoContentType) {
 		super();
 		this.userName = userName;
 		this.password = password;
@@ -80,7 +80,10 @@ public class User {
 		this.faxNumber = faxNumber;
 		this.researchInterests = researchInterests;
 		this.highestDegree = highestDegree;
+        this.photoContentType = photoContentType;
 	}
+
+
 
 	public long getId() {
 		return id;
@@ -204,16 +207,26 @@ public class User {
     }
 
     @Override
-	public String toString() {
-		return "User [id=" + id + ", userName=" + userName + ", password="
-				+ password + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", middleInitial=" + middleInitial
-				+ ", affiliation=" + affiliation + ", title=" + title
-				+ ", email=" + email + ", mailingAddress=" + mailingAddress
-				+ ", phoneNumber=" + phoneNumber + ", faxNumber=" + faxNumber
-				+ ", researchFields=" + researchInterests + ", highestDegree="
-				+ highestDegree + "]";
-	}
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("User{");
+        sb.append("id=").append(id);
+        sb.append(", userName='").append(userName).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", firstName='").append(firstName).append('\'');
+        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", middleInitial='").append(middleInitial).append('\'');
+        sb.append(", affiliation='").append(affiliation).append('\'');
+        sb.append(", title='").append(title).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", mailingAddress='").append(mailingAddress).append('\'');
+        sb.append(", phoneNumber='").append(phoneNumber).append('\'');
+        sb.append(", faxNumber='").append(faxNumber).append('\'');
+        sb.append(", researchInterests='").append(researchInterests).append('\'');
+        sb.append(", highestDegree='").append(highestDegree).append('\'');
+        sb.append(", photoContentType='").append(photoContentType).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 
     public static User getUserById(String id) {
         JsonNode response = APICall.callAPI(Constants.NEW_BACKEND + "/users/" + id);

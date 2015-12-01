@@ -62,7 +62,6 @@ public class Application extends Controller {
             }
             return null;
         }
-
     }
 
     public static Result home() {
@@ -97,9 +96,9 @@ public class Application extends Controller {
         } else {
             session().clear();
             session("userName", loginForm.get().username);
-//            JsonNode response = APICall.callAPI(Constants.NEW_BACKEND + Constants.GET_USER_API + userId);
 
-            return redirect(routes.MainController.home());
+            user = User.getUserByUserName(loginForm.get().username);
+            return redirect(routes.MainController.main());
         }
     }
 

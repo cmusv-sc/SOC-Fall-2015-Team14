@@ -25,17 +25,19 @@ public class MainController extends Controller {
     public static Result home() {
 
         if (user == null) {
+            System.out.println("userName " + session().get("userName"));
             user = User.getUserByUserName(session().get("userName"));
             System.out.println(user.toString());
             session("userId", String.valueOf(user.getId()));
         } else {
             //update user
+            System.out.println("userId " + session().get("userId"));
             user = user.getUserById(session("userId"));
         }
 
         posts = Post.getUserPosts(String.valueOf(user.getId()));
-
         return ok(home.render(user, postForm, posts));
+
     }
 
     public static Result main() {
@@ -47,8 +49,7 @@ public class MainController extends Controller {
             //update user
             user = user.getUserById(session("userId"));
         }
-
-        posts = Post.getUserPosts(String.valueOf(user.getId()));
+        posts = Post.getAllPosts();
 
         return ok(main.render(user, postForm, posts));
     }
