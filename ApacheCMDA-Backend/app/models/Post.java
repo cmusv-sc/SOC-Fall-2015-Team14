@@ -4,9 +4,7 @@ import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by dachengwen on 11/3/15.
@@ -51,6 +49,12 @@ public class Post {
             inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
     private Set<User> sharedUsers;
 
+    @Expose
+    @OneToMany(mappedBy="post")
+    private Set<Comment> comments;
+    @Expose
+    private int commentCount;
+
 
     // @OneToMany(mappedBy = "user", cascade={CascadeType.ALL})
     // private Set<ClimateService> climateServices = new
@@ -71,6 +75,7 @@ public class Post {
         this.likeUsers = new HashSet<>();
         this.shareCount = 0;
         this.sharedUsers = new HashSet<>();
+        this.comments = new TreeSet<Comment>();
     }
 
     public long getId() {
@@ -151,6 +156,40 @@ public class Post {
         this.sharedUsers = sharedUsers;
     }
 
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+        commentCount = comments.size();
+    }
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    //https://en.wikibooks.org/wiki/Java_Persistence/OneToMany
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+        if (comment.getPost() != this) {
+            comment.setPost(this);
+        }
+        commentCount = comments.size();
+    }
+
+    //don't invoke this from Comment.setPost!
+    public void removeComment(Comment comment) {
+        if(comment.getPost() == this) {
+            comment.setPost(null);
+            this.comments.remove(comment);
+            commentCount = comments.size();
+        }
+    }
     @Override
     public String toString() {
         return "Post [id=" + id + ", user=" + user + ", title="
