@@ -34,13 +34,17 @@ public class Post {
     private String visibility;
     @Expose
     private int likeCount;
+    @Expose
+    private int shareCount;
 
+    @Expose
     @ManyToMany (fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinTable(name = "LikePost",
             joinColumns = {@JoinColumn(name = "post_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
     private Set<User> likeUsers;
 
+    @Expose
     @ManyToMany (fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinTable(name = "SharedPost",
             joinColumns = {@JoinColumn(name = "post_id", referencedColumnName = "id")},
@@ -65,6 +69,7 @@ public class Post {
         this.title = title;
         this.likeCount = 0;
         this.likeUsers = new HashSet<>();
+        this.shareCount = 0;
         this.sharedUsers = new HashSet<>();
     }
 
@@ -116,11 +121,35 @@ public class Post {
 
     public Set<User> getLikeUsers() { return likeUsers; }
 
-    public void addLikeUsers(User user) { likeUsers.add(user); likeCount++; }
+    public void addLikeUsers(User user) { likeUsers.add(user); likeCount = likeUsers.size(); }
 
     public Set<User> getSharedUsers() { return sharedUsers; }
 
-    public void addSharedUsers(User user) { sharedUsers.add(user); }
+    public void addSharedUsers(User user) { sharedUsers.add(user); shareCount = sharedUsers.size();}
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public int getShareCount() {
+        return shareCount;
+    }
+
+    public void setShareCount(int shareCount) {
+        this.shareCount = shareCount;
+    }
+
+    public void setLikeUsers(Set<User> likeUsers) {
+        this.likeUsers = likeUsers;
+    }
+
+    public void setSharedUsers(Set<User> sharedUsers) {
+        this.sharedUsers = sharedUsers;
+    }
 
     @Override
     public String toString() {

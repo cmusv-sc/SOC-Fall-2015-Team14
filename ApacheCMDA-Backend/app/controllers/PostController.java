@@ -66,12 +66,12 @@ public class PostController extends Controller {
         }
 
         Date time = new Date();
-        SimpleDateFormat format = new SimpleDateFormat(Common.DATE_PATTERN);
+        /*SimpleDateFormat format = new SimpleDateFormat(Common.DATE_PATTERN);
         try {
             time = format.parse(json.findPath("time").asText());
         } catch (ParseException e) {
             System.out.println("No creation date specified, set to current time");
-        }
+        }*/
 
         try {
             Post post = new Post(user, title, content, time, visibility);
@@ -130,12 +130,12 @@ public class PostController extends Controller {
         String visibility = json.path("visibility").asText();
 
         Date time = new Date();
-        SimpleDateFormat format = new SimpleDateFormat(Common.DATE_PATTERN);
+        /*SimpleDateFormat format = new SimpleDateFormat(Common.DATE_PATTERN);
         try {
             time = format.parse(json.findPath("time").asText());
         } catch (ParseException e) {
             System.out.println("No creation date specified, set to current time");
-        }
+        }*/
 
         try {
             Post updatePost = postRepository.findOne(id);
