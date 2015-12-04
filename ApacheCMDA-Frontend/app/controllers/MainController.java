@@ -38,6 +38,8 @@ public class MainController extends Controller {
         }
 
         posts = Post.getUserPosts(String.valueOf(user.getId()));
+        followingUsers = User.getFollowingUsers(String.valueOf(user.getId()));
+        followedUsers = User.getFollowedUsers(String.valueOf(user.getId()));
 
         return ok(home.render(user, postForm, posts, followingUsers, followedUsers));
 

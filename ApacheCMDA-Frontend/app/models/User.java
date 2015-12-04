@@ -25,6 +25,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import play.data.validation.Constraints;
+import play.libs.Json;
 import util.APICall;
 import util.Constants;
 
@@ -257,15 +258,29 @@ public class User {
 
     public static ArrayList<User> getFollowingUsers(String userId) {
         ArrayList<User> users = new ArrayList<>();
-        JsonNode response = APICall.callAPI(Constants.NEW_BACKEND + Constants.GET_FOLLOWING_USERS + userId);
+        JsonNode userNodes = APICall.callAPI(Constants.NEW_BACKEND + Constants.GET_FOLLOWING_USERS + userId);
 
+        for (int i = 0; i < userNodes.size(); i++) {
+            JsonNode json = userNodes.path(i);
+            User newUser = Json.fromJson(json, User.class);
+            users.add(newUser);
+        }
 
-
+        return users;
     }
 
     public static ArrayList<User> getFollowedUsers(String userId) {
-        JsonNode response = APICall.callAPI(Constants.NEW_BACKEND + Constants.GET_FOLLOWED_USERS + userId);
+        ArrayList<User> users = new ArrayList<>();
+        JsonNode userNodes = APICall.callAPI(Constants.NEW_BACKEND + Constants.GET_FOLLOWED_USERS + userId);
 
+        for (int i = 0; i < userNodes.size(); i++) {
+            JsonNode json = userNodes.path(i);
+            User newUser = Json.fromJson(json, User.class);
+            users.add(newUser);
+        }
+
+        return users;
     }
+
 }
 
