@@ -35,14 +35,16 @@ public class PostController extends Controller {
 
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
 
     // We are using constructor injection to receive a repository to support our
     // desire for immutability.
     @Inject
     public PostController(final PostRepository postRepository,
-                           UserRepository userRepository) {
+                           UserRepository userRepository, CommentRepository commentRepository) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.commentRepository = commentRepository;
     }
 
 
@@ -66,12 +68,12 @@ public class PostController extends Controller {
         }
 
         Date time = new Date();
-        SimpleDateFormat format = new SimpleDateFormat(Common.DATE_PATTERN);
+        /*SimpleDateFormat format = new SimpleDateFormat(Common.DATE_PATTERN);
         try {
             time = format.parse(json.findPath("time").asText());
         } catch (ParseException e) {
             System.out.println("No creation date specified, set to current time");
-        }
+        }*/
 
         try {
             Post post = new Post(user, title, content, time, visibility);
@@ -130,12 +132,12 @@ public class PostController extends Controller {
         String visibility = json.path("visibility").asText();
 
         Date time = new Date();
-        SimpleDateFormat format = new SimpleDateFormat(Common.DATE_PATTERN);
+        /*SimpleDateFormat format = new SimpleDateFormat(Common.DATE_PATTERN);
         try {
             time = format.parse(json.findPath("time").asText());
         } catch (ParseException e) {
             System.out.println("No creation date specified, set to current time");
-        }
+        }*/
 
         try {
             Post updatePost = postRepository.findOne(id);
@@ -252,6 +254,19 @@ public class PostController extends Controller {
         }
     }
 
+
+    public List<Comment> getCommentsByPost(Long id) {
+        List<Comment> comments = null;
+
+        Post post = postRepository.findOne(id);
+        if (post == null) {
+            System.out.println("Post not found with with id: " + post);
+        } else {
+            comments = commentRepository.findByPostOrderByTimeDesc(post);
+        }
+        return comments;
+    }
+
     public Result getPost(Long id, String format) {
         if (id == null) {
             System.out.println("Post id is null or empty!");
@@ -263,6 +278,8 @@ public class PostController extends Controller {
             System.out.println("Post not found with with id: " + id);
             return notFound("Post not found with with id: " + id);
         }
+
+
 
         String result = new String();
         if (format.equals("json")) {
