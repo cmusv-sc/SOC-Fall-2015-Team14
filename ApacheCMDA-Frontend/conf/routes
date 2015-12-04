@@ -48,6 +48,7 @@ POST        /sns/posts/newComment                            controllers.PostCon
 POST        /sns/posts/newLike                               controllers.PostController.newLike()
 POST        /sns/posts/newShare                              controllers.PostController.newShare()
 GET         /sns/posts/:id/delete/                           controllers.PostController.deletePost(id: String)
+GET         //sns/users/follow/:id                           controllers.UserController.addFollowee(id: String)
 
 GET         /sns/login                                       controllers.Application.login()
 GET         /sns/logout                                      controllers.Application.logout()

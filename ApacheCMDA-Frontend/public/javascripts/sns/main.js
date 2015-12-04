@@ -134,13 +134,12 @@ $(document).ready(function() {
         shareCount++;
         var that = $(this);
 
-        var obj = {
-            postId: id
-        }
         $.ajax({
             url: "/sns/posts/newShare",
             type: "POST",
-            data: JSON.stringify(obj),
+            data: JSON.stringify({
+                postId: id
+            }),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -164,6 +163,8 @@ $(document).ready(function() {
             }
         })
     })
+
+
 })
 
 

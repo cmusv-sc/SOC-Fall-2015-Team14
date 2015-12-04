@@ -66,7 +66,9 @@ public class Constants {
     public static final String GET_FOLLOWING_USERS = "/users/getFollowingUsers/";
     public static final String GET_FOLLOWED_USERS = "/users/getFollowers/";
     public static final String ADD_LIKE = "/posts/addLike";
-    public static final String ADD_SHARE = "/posts/addShare";
+    public static final String ADD_SHARE = "/posts/addSharedUser";
     public static final String DELETE_POST = "/posts/delete/";
+    public static final String GET_SHARED_POST = "/users/getSharedPosts/";
+    public static final String ADD_FOLLOWEE = "/users/addFollowee/";
 
 }

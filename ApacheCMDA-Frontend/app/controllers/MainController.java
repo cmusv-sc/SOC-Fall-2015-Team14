@@ -39,6 +39,10 @@ public class MainController extends Controller {
         }
 
         posts = Post.getUserPosts(String.valueOf(user.getId()));
+        ArrayList<Post> sharedPosts = Post.getSharedPosts(String.valueOf(user.getId()));
+        System.out.println("share" + sharedPosts.toString());
+        posts.addAll(sharedPosts);
+
         followingUsers = User.getFollowingUsers(String.valueOf(user.getId()));
         followedUsers = User.getFollowedUsers(String.valueOf(user.getId()));
 

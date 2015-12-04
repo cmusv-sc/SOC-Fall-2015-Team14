@@ -262,6 +262,7 @@ public class User {
 
         for (int i = 0; i < userNodes.size(); i++) {
             JsonNode json = userNodes.path(i);
+
             User newUser = Json.fromJson(json, User.class);
             users.add(newUser);
         }

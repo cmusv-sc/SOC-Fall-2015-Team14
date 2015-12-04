@@ -104,11 +104,11 @@
     </div>
 }
 
-@index("Home Page")(header) {
+@index("Other Page")(header) {
 
     <div class="container main-content">
 
-        <input type="hidden" id="hiddenSession" value="@session.get("userId")">
+        <input type="hidden" id="hiddenSession" value="@user.getId">
 
         <div class="col col-md-4">
             <div class="profile-container">
@@ -121,6 +121,7 @@
 
                 <div class="profile-name">
                     @user.getUserName()
+                    <span class="glyphicon glyphicon-plus">Follow</span>
                 </div>
 
                 <div class="profile-affiliation">

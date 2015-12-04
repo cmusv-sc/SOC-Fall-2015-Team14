@@ -176,10 +176,26 @@ public class Post {
         for (int i = 0; i < postNodes.size(); i++) {
             JsonNode json = postNodes.path(i);
             Post newPost = Json.fromJson(json, Post.class);
-
-            System.out.println(posts.toString());
             posts.add(newPost);
 
+        }
+        return posts;
+    }
+
+    public static ArrayList<Post> getSharedPosts(String id) {
+        ArrayList<Post> posts = new ArrayList<>();
+        JsonNode postNodes = APICall.callAPI(Constants.NEW_BACKEND + Constants.GET_SHARED_POST + id);
+
+        if (postNodes == null || postNodes.has("error") || !postNodes.isArray()) {
+            return posts;
+        }
+
+        System.out.println("get shared posts");
+
+        for (int i = 0; i < postNodes.size(); i++) {
+            JsonNode json = postNodes.path(i);
+            Post newPost = Json.fromJson(json, Post.class);
+            posts.add(newPost);
         }
         return posts;
     }

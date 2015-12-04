@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.User;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -63,5 +64,15 @@ public class UserController extends Controller{
             return redirect(routes.MainController.home());
         }
 
+    }
+
+    public static Result addFollowee(String followeeID) {
+
+        ObjectNode jsonData = Json.newObject();
+        jsonData.put("followerID", session().get("userId"));
+        jsonData.put("followeeID", followeeID);
+
+        APICall.postAPI(Constants.NEW_BACKEND + Constants.ADD_FOLLOWEE, jsonData);
+        return ok();
     }
 }
