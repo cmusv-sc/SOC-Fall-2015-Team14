@@ -2,10 +2,12 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import models.Comment;
 import models.Post;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 
 import util.APICall;
@@ -24,9 +26,10 @@ import java.util.Date;
  */
 public class PostController extends Controller {
     final static Form<Post> postForm = Form.form(Post.class);
+    final static Form<Comment> commentForm = Form.form(Comment.class);
 
     public static Result newPost() {
-        System.out.println("new post");
+
         Form<Post> dc = postForm.bindFromRequest();
         ObjectNode jsonData = Json.newObject();
         jsonData.put("userId", session().get("userId"));
@@ -43,5 +46,30 @@ public class PostController extends Controller {
         Application.flashMsg(response);
         System.out.println(response.toString());
         return redirect("/sns/main");
+    }
+
+    public static void getComment() {
+        //get current post
+
+        //get comment by id
+
+    }
+
+    public static Result newComment() {
+
+        Http.RequestBody body = request().body();
+        JsonNode json = body.asJson();
+
+        ObjectNode jsonData = Json.newObject();
+        jsonData.put("userId", session().get("userId"));
+        //get current post
+        jsonData.put("postId", json.path("postId"));
+        //get content from json
+        jsonData.put("content", json.path("content"));
+
+        System.out.println(jsonData.toString());
+
+        APICall.postAPI(Constants.NEW_BACKEND + Constants.ADD_COMMENT, jsonData);
+        return ok();
     }
 }

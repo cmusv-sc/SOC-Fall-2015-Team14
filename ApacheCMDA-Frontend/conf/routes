@@ -43,6 +43,7 @@ GET         /assets/*file                                    controllers.Assets.
 GET         /sns/home                                        controllers.MainController.home()
 GET         /sns/main                                        controllers.MainController.main()
 GET         /sns/posts/add                                   controllers.PostController.newPost()
+POST        /sns/posts/newComment                            controllers.PostController.newComment()
 
 GET         /sns/login                                       controllers.Application.login()
 GET         /sns/logout                                      controllers.Application.logout()

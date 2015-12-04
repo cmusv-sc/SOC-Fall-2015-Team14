@@ -36,6 +36,12 @@ public class Post {
     private int likeCount;
 
     @ManyToMany (fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinTable(name = "LikePost",
+            joinColumns = {@JoinColumn(name = "post_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
+    private Set<User> likeUsers;
+
+    @ManyToMany (fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinTable(name = "SharedPost",
             joinColumns = {@JoinColumn(name = "post_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
@@ -58,6 +64,7 @@ public class Post {
         this.visibility = visibility;
         this.title = title;
         this.likeCount = 0;
+        this.likeUsers = new HashSet<>();
         this.sharedUsers = new HashSet<>();
     }
 
@@ -107,9 +114,9 @@ public class Post {
         this.visibility = visibility;
     }
 
-    public int getLikeCount() { return likeCount; }
+    public Set<User> getLikeUsers() { return likeUsers; }
 
-    public void addOneToLikeCount() { likeCount++; }
+    public void addLikeUsers(User user) { likeUsers.add(user); likeCount++; }
 
     public Set<User> getSharedUsers() { return sharedUsers; }
 

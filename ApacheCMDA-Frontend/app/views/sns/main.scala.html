@@ -18,23 +18,36 @@
                         <a href="@routes.MainController.main()">Main</a>
                     </li>
                 </ul>
+
+                <div class="col-sm-3 col-md-3 pull-left">
+                    <form class="navbar-form" role="search">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
                 <div class="nav navbar-right">
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#newPostModal">
+                    <button type="button" class="btn btn-default navbar-btn buttonLow" data-toggle="modal" data-target="#newPostModal">
                         <span class="glyphicon glyphicon-edit"></span>
                         Post
                     </button>
+
+
+                    @if(!session.get("userName")) {
+                    <form class="navbar-form navbar-right" action="@routes.Application.login()">
+                        <button type="submit" class="btn btn-default navbar-btn pull-right">Log in</button>
+                    </form>
+                    } else {
+                    <form class="navbar-form navbar-right" action="@routes.Application.logout()">
+                        <button type="submit" class="btn btn-default navbar-btn pull-right">Log out</button>
+
+                    </form>
+                    }
                 </div>
-
-                @if(!session.get("userName")) {
-                    <form class="navbar-form navbar-left" action="@routes.Application.login()">
-                        <button type="submit" class="btn btn-success">Log in</button>
-                    </form>
-                } else {
-                    <form class="navbar-form navbar-left" action="@routes.Application.logout()">
-                        <button type="submit" class="btn btn-success">Log out</button>
-                    </form>
-                }
-
             </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
     </nav>
@@ -98,6 +111,10 @@
 }
 
 @index("Main Page")(header) {
+
+    <input type="hidden" id="hiddenUserName" value="@user.getUserName"/>
+    <input type="hidden" id="hiddenUserId" value="@user.getId">
+
     <div class="container main-content">
 
         <div class="col col-md-4">
@@ -134,39 +151,85 @@
         <div class="col col-md-8 content-container">
 
             <div class="wrap">
+
                 <div class="row">
                     <!--- Content -->
                     <div class="three-fourth content">
-                        <div class="comments">
-                            <ol class="comment-list">
-                                @for(post <- posts){
-                                <li class="comment depth-1">
-                                    <div class="avatar">
-                                        <a href="#">
-                                        @if(post.getUserId == null || post.getUserPhotoType == null
-                                                || post.getUserPhotoType == "" || post.getUserPhotoType.equals("null")) {
-                                            <img src="http://avatarbox.net/avatars/img32/ned_flanders_avatar_picture_23953.gif" alt="" />
-                                        } else {
-                                            <img src="http://localhost:9034/users/getPhoto/@post.getUserId" alt="" />
-                                        }
-                                        </a>
-                                    </div>
-                                    <div class="comment-box">
-                                        <div class="comment-author meta">
-                                            <strong>@post.getUserName</strong>@post.getTime<a href="#" class="btn small color"> Reply</a>
-                                        </div>
-                                        <div class="comment-text">
-                                            <p>@post.getContent</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                }
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-        </div>
+                        @for(post <- posts){
+                            <div class="container bootstrap snippet">
+                                <div class="col-sm-8">
+                                    <div class="panel panel-white post panel-shadow">
+                                        <div class="post-heading">
+                                            <div class="pull-left image">
+                                                <a href="#">
+                                                @if(post.getUserId == null || post.getUserPhotoType == null
+                                                        || post.getUserPhotoType == "" || post.getUserPhotoType.equals("null")) {
+                                                    <img src="http://avatarbox.net/avatars/img32/ned_flanders_avatar_picture_23953.gif" alt="user profile image" class="img-circle avatar"/>
+                                                } else {
+                                                    <img class="img-circle avatar" src="http://localhost:9034/users/getPhoto/@post.getUserId" alt="user profile image" />
+                                                }
+                                                </a>
+                                            </div>
 
+                                            <div class="pull-left meta">
+                                                <div class="title h5">
+                                                    <a href="#"><b>@post.getUserName</b></a>
+                                                    made a post.
+                                                </div>
+                                                <h6 class="text-muted time">@post.getTime</h6>
+                                            </div>
+                                        </div>
+                                        <div class="post-description">
+                                            <p>@post.getContent</p>
+                                            <div class="stats">
+                                                <a href="#" class="btn btn-default stat-item">
+                                                    <i class="fa fa-thumbs-up icon"></i>@post.getLikeCount
+                                                </a>
+
+                                                <a href="#" class="btn btn-default stat-item">
+                                                    <i class="fa fa-share icon"></i>@post.getShareCount
+                                                </a>
+                                                <a href="#" class="btn btn-default stat-item comment-btn">
+                                                    <i class="fa fa-comment icon"></i>@post.getCommentCount
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="post-footer">
+                                            <div class="input-group">
+                                                <input class="form-control" placeholder="Add a comment" type="text">
+
+                                                <span class="input-group-addon">
+                                                    <a href="#" class="submit-comment" id="comment-@post.getPostId"><i class="fa fa-edit"></i></a>
+                                                </span>
+                                            </div>
+                                            <ul class="comments-list">
+                                                @for(comment <- post.getComments) {
+                                                <li class="comment">
+                                                    <a class="pull-left" href="#">
+                                                        <img class="avatar" src="http://localhost:9034/users/getPhoto/@comment.getUser.getId" alt="avatar">
+                                                    </a>
+                                                    <div class="comment-body">
+                                                        <div class="comment-heading">
+                                                            <h4 class="user">@comment.getUser.getUserName</h4>
+                                                            <h5 class="time">@comment.getTime</h5>
+                                                        </div>
+                                                        <p>@comment.getContent</p>
+                                                    </div>
+                                                </li>
+                                            }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div> @*row*@
+            </div> @*wrap*@
+        </div> @*content-container*@
     </div>
 }
+
+
 

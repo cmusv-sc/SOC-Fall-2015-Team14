@@ -17,11 +17,11 @@
 package controllers;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import com.google.gson.GsonBuilder;
 import models.Post;
+import models.PostRepository;
 import models.User;
 import models.UserRepository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -49,12 +49,14 @@ import util.CustomExclusionStrategy;
 public class UserController extends Controller {
 
 	private final UserRepository userRepository;
+	private final PostRepository postRepository;
 
 	// We are using constructor injection to receive a repository to support our
 	// desire for immutability.
 	@Inject
-	public UserController(final UserRepository userRepository) {
+	public UserController(final UserRepository userRepository, final PostRepository postRepository) {
 		this.userRepository = userRepository;
+		this.postRepository = postRepository;
 	}
 
 	public Result addUser() {
@@ -548,4 +550,145 @@ public class UserController extends Controller {
         return ok();
     }
 
+	public Result getFollowingPosts(Long id, String format) {
+		if (id == null) {
+			System.out.println("User id is null or empty!");
+			return badRequest("User id is null or empty!");
+		}
+
+		User user = userRepository.findOne(id);
+
+		if (user == null) {
+			System.out.println("User not found with with id: " + id);
+			return notFound("User not found with with id: " + id);
+		}
+
+		Set<User> followedUsers = user.getFollowedUsers();
+		List<Post> posts = new ArrayList<>();
+		for (User followedUser : followedUsers) {
+			posts.addAll(postRepository.findByUserOrderByTimeDesc(followedUser));
+		}
+
+		Collections.sort(posts, new PostComparator());
+
+		String result = new String();
+		if (format.equals("json")) {
+			Gson gson = new GsonBuilder().serializeNulls()
+					.setExclusionStrategies(new CustomExclusionStrategy(User.class))
+					.excludeFieldsWithoutExposeAnnotation().create();
+
+			result = gson.toJson(posts);
+		}
+		return ok(result);
+	}
+
+	public Result fuzzySearchUsers(String key, String format) {
+		List<User> users = new ArrayList<>();
+		//users.addAll(userRepository.findByFirstNameContainsOrLastNameContains(key));
+		//users.addAll(userRepository.findByAffiliationContainsOrResearchInterestsContains(key));
+
+		users.addAll(userRepository.findByFirstNameContainingOrLastNameContainingOrAffiliationContainingOrResearchInterestsContaining(key, key, key, key));
+
+		String result = new String();
+		if (format.equals("json")) {
+			Gson gson = new GsonBuilder().serializeNulls()
+					.setExclusionStrategies(new CustomExclusionStrategy(User.class))
+					.excludeFieldsWithoutExposeAnnotation().create();
+
+			result = gson.toJson(users);
+		}
+		return ok(result);
+	}
+
+
+	public Result exactSearchUsers(String format) {
+
+		String firstName = request().getQueryString("firstName");
+		String lastName = request().getQueryString("lastName");
+		String email = request().getQueryString("email");
+		String phoneNumber = request().getQueryString("phoneNumber");
+
+
+		if((firstName == null) || (lastName == null)) {
+			System.out.println("FirstName and LastName are required!");
+			return badRequest("FirstName and LastName are required!");
+		}
+
+		List<User> users = userRepository.findByFirstNameAndLastName(firstName, lastName);
+
+		List<User> matchUsers = new ArrayList<>();
+		for (User user : users) {
+			boolean match = true;
+			if (match && (email != null) && !email.equals(user.getEmail())) {
+				match = false;
+			}
+			if (match && (phoneNumber != null) && !phoneNumber.equals(user.getPhoneNumber())) {
+				match = false;
+			}
+			if (match) {
+				matchUsers.add(user);
+			}
+		}
+
+		String result = new String();
+		if (format.equals("json")) {
+			Gson gson = new GsonBuilder().serializeNulls()
+					.setExclusionStrategies(new CustomExclusionStrategy(User.class))
+					.excludeFieldsWithoutExposeAnnotation().create();
+
+			result = gson.toJson(matchUsers);
+		}
+		return ok(result);
+	}
+
+/*
+	public Result exactSearchUsers(String format) {
+		JsonNode json = request().body().asJson();
+		if (json == null) {
+			System.out.println(" expecting Json data");
+			return badRequest(" expecting Json data");
+		}
+
+		// Parse JSON file
+		String firstName = json.path("firstName").asText();
+		String lastName = json.path("lastName").asText();
+		String affiliation = json.path("affiliation").asText();
+		String title = json.path("title").asText();
+		String researchInterests = json.path("researchInterests").asText();
+
+		List<User> users = userRepository.findByFirstNameAndLastName(firstName, lastName);
+		List<User> matchUsers = new ArrayList<>();
+		for (User user : users) {
+			boolean match = true;
+			if (match && affiliation.length() > 0 && !affiliation.equals(user.getAffiliation())) {
+				match = false;
+			}
+			if (match && title.length() > 0 && !title.equals(user.getTitle())) {
+				match = false;
+			}
+			if (match && researchInterests.length() > 0 && !researchInterests.equals(user.getResearchInterests())) {
+				match = false;
+			}
+			if (match) {
+				matchUsers.add(user);
+			}
+		}
+
+		String result = new String();
+		if (format.equals("json")) {
+			Gson gson = new GsonBuilder().serializeNulls()
+					.setExclusionStrategies(new CustomExclusionStrategy(User.class))
+					.excludeFieldsWithoutExposeAnnotation().create();
+
+			result = gson.toJson(matchUsers);
+		}
+		return ok(result);
+	}
+*/
+	class PostComparator implements Comparator<Post> {
+		@Override
+		public int compare(Post post1, Post post2) {
+			return post2.getTime().compareTo(post1.getTime());
+		}
+	}
 }

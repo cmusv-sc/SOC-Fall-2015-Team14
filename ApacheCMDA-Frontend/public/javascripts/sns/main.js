@@ -2,6 +2,11 @@
  * Created by lixunrong on 11/17/15.
  */
 $(document).ready(function() {
+
+    //store the session
+    var userName = $("input#hiddenUserName").val();
+    var userId = $("input#hiddenUserId").val();
+
     //edit profile
     $("#edit_btn").on("click", function() {
         $(".profile-container").hide();
@@ -36,6 +41,63 @@ $(document).ready(function() {
             console.log(error);
         })
     })
+
+    //click comment to slide down
+    $(".comment-btn").click(function() {
+        var post = $(this).closest(".post");
+        var comment = $(post).find(".post-footer");
+
+        if ($(comment).is(':hidden')) {
+            $(comment).slideDown(400);
+        } else {
+            $(comment).slideUp(400);
+        }
+    })
+
+
+    //submit comment
+    $(".submit-comment").click(function() {
+        var comment = $(this).closest(".post-footer");
+        var id = $(this).attr('id').split('-')[1];
+        var content = $(this).parent().prev("input.form-control");
+        var text = content.val();
+        console.log(id + content);
+        var obj = {
+            content: text,
+            postId: id
+        }
+
+        //send ajax request to create new comment
+        $.ajax({
+            url: "/sns/posts/newComment",
+            type: "POST",
+            data: JSON.stringify(obj),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).done(function(data) {
+
+            content.val("");
+            //display the comment on the screen
+            var list = $(comment).find("ul.comments-list");
+            var dt = new Date();
+            var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+
+
+            $(list).append(
+                '<li class="comment"> <a class="pull-left" href="#">' +
+                '<img class="avatar" src="http://localhost:9034/users/getPhoto/' + userId +'" alt="avatar"> </a>' +
+                '<div class="comment-body"> <div class="comment-heading"> <h4 class="user">'+ userName + '</h4>' +
+                '<h5 class="time">' + time + '</h5> </div>' +
+                '<p>' + text + '</p> </div> </li>'
+            )
+
+
+        }).error(function(error) {
+            console.log(error);
+        })
+
+    })
 })
 
 
@@ -58,13 +120,6 @@ function sub(obj){
         $.ajax({
             url: "http://localhost:9034/users/uploadPhoto/" + userId,
             type: "POST",
-            //xhr: function() {  // Custom XMLHttpRequest
-            //    var myXhr = $.ajaxSettings.xhr();
-            //    if(myXhr.upload){ // Check if upload property exists
-            //        //myXhr.upload.addEventListener('progress',progressHandlingFunction, false); // For handling the progress of the upload
-            //    }
-            //    return myXhr;
-            //},
             data: formData,
             //Options to tell jQuery not to process data or worry about content-type.
             cache: false,
