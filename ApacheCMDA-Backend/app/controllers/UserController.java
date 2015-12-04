@@ -262,7 +262,7 @@ public class UserController extends Controller {
 		return ok(result);
 	}
 
-	public Result getFollowedUsers(Long id, String format) {
+	public Result getFollowingUsers(Long id, String format) {
 		if (id == null) {
 			System.out.println("User id is null or empty!");
 			return badRequest("User id is null or empty!");

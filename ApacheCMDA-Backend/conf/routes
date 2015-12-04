@@ -78,7 +78,7 @@ DELETE        /users/delete/:id                                                 
 GET           /users/getPhoto/:id                                                                       @controllers.UserController.getUserPhoto(id: Long)
 GET			  /users/getAllUsers/json																	@controllers.UserController.getAllUsers(format: String="json")
 GET           /users/getFollowers/:id                                                                   @controllers.UserController.getFollowers(id: Long, format: String="json")
-GET           /users/getFollowedUsers/:id                                                               @controllers.UserController.getFollowedUsers(id: Long, format: String="json")
+GET           /users/getFollowingUsers/:id                                                              @controllers.UserController.getFollowingUsers(id: Long, format: String="json")
 GET           /users/getSharedPosts/:id                                                                 @controllers.UserController.getSharedPosts(id:Long, format: String="json")
 POST		  /users/isUserValid																		@controllers.UserController.isUserValid
 DELETE		  /users/delete/userName/:userName/password/:password										@controllers.UserController.deleteUserByUserNameandPassword(userName: String, password: String)
