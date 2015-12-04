@@ -100,22 +100,24 @@ $(document).ready(function() {
     //click like
     $(".like-btn").click(function() {
         var post = $(this).closest(".post");
-        var postId = $(post).attr('id').split('-')[1];
-        var likeCount = $(this).textContent;
+        var id = $(post).attr('id').split('-')[1];
+        var likeCount = $(this).text();
         likeCount++;
 
-        var obj = {
-            postId: postId
-        }
+        var that = $(this);
+
         $.ajax({
             url: "/sns/posts/newLike",
             type: "POST",
-            date: JSON.stringify(obj),
+            data: JSON.stringify({
+                postId: id
+            }),
             headers: {
                 'Content-Type': 'application/json'
             }
         }).done(function(data) {
-            $(this).html(
+
+            $(that).html(
                 '<i class="fa fa-thumbs-up icon"></i>' + likeCount
             );
 
@@ -124,30 +126,42 @@ $(document).ready(function() {
         })
     })
 
-    //click like
+    //click share
     $(".share-btn").click(function() {
         var post = $(this).closest(".post");
-        var postId = $(post).attr('id').split('-')[1];
-        var shareCount = $(this).textContent;
+        var id = $(post).attr('id').split('-')[1];
+        var shareCount = $(this).text();
         shareCount++;
+        var that = $(this);
 
         var obj = {
-            postId: postId
+            postId: id
         }
         $.ajax({
             url: "/sns/posts/newShare",
             type: "POST",
-            date: JSON.stringify(obj),
+            data: JSON.stringify(obj),
             headers: {
                 'Content-Type': 'application/json'
             }
         }).done(function(data) {
-            $(this).html(
+            $(that).html(
                 '<i class="fa fa-share icon"></i>' + shareCount
             );
 
         }).error(function(error) {
             console.log(error);
+        })
+    })
+
+    //click more btn
+    $(".more-btn").click(function() {
+        $(this).hide();
+        var posts = $(".container.bootstrap.snippet");
+        posts.each(function() {
+            if ($(this).is(':hidden')) {
+                $(this).show();
+            }
         })
     })
 })

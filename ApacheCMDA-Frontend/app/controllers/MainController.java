@@ -8,6 +8,7 @@ import play.mvc.Controller;
 
 import views.html.sns.home;
 import views.html.sns.main;
+import views.html.sns.other;
 
 import java.util.ArrayList;
 
@@ -34,7 +35,7 @@ public class MainController extends Controller {
         } else {
             //update user
             System.out.println("userId " + session().get("userId"));
-            user = user.getUserById(session("userId"));
+            user = User.getUserById(session("userId"));
         }
 
         posts = Post.getUserPosts(String.valueOf(user.getId()));
@@ -52,11 +53,20 @@ public class MainController extends Controller {
             session("userId", String.valueOf(user.getId()));
         } else {
             //update user
-            user = user.getUserById(session("userId"));
+            user = User.getUserById(session("userId"));
         }
         posts = Post.getAllPosts();
 
         return ok(main.render(user, postForm, posts));
+    }
+
+    public static Result other(String userId) {
+        User otherUser = User.getUserById(userId);
+        ArrayList<Post> otherPosts = Post.getUserPosts(userId);
+        ArrayList<User> otherFollowingUser = User.getFollowingUsers(userId);
+        ArrayList<User> otherFollowedUser = User.getFollowedUsers(userId);
+
+        return ok(other.render(otherUser, postForm, otherPosts, otherFollowingUser, otherFollowedUser));
     }
 
 }

@@ -1,4 +1,5 @@
-@(user: models.User, postForm: play.data.Form[models.Post], posts: java.util.ArrayList[Post])
+@(user: models.User, postForm: play.data.Form[models.Post], posts: java.util.ArrayList[Post],
+        followingUsers: java.util.ArrayList[User], followedUsers: java.util.ArrayList[User])
 @import helper._
 @import sns._
 
@@ -36,18 +37,17 @@
                         Post
                     </button>
 
-
                     @if(!session.get("userName")) {
-                    <form class="navbar-form navbar-right" action="@routes.Application.login()">
-                        <button type="submit" class="btn btn-default navbar-btn pull-right">Log in</button>
-                    </form>
+                        <form class="navbar-form navbar-right" action="@routes.Application.login()">
+                            <button type="submit" class="btn btn-default navbar-btn pull-right">Log in</button>
+                        </form>
                     } else {
-                    <form class="navbar-form navbar-right" action="@routes.Application.logout()">
-                        <button type="submit" class="btn btn-default navbar-btn pull-right">Log out</button>
-
-                    </form>
+                        <form class="navbar-form navbar-right" action="@routes.Application.logout()">
+                            <button type="submit" class="btn btn-default navbar-btn pull-right">Log out</button>
+                        </form>
                     }
                 </div>
+
             </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
     </nav>
@@ -77,17 +77,16 @@
 
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control"
-                                    id="post-input" name="content" value='@postForm("content").value' placeholder="What's happening"/>
+                                    id="post-input" value='@postForm("content").value' placeholder="What's happending"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <label for="">
-                                        <input type="checkbox"
-                                        name="@postForm("visibility").name"
-                                        value="true"
-                                            @if(postForm("visibility").valueOr("false") == "true"){checked="checked"}> Private
-                                    </label>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" value='@postForm("visibility")'/> Private
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <button type="button" class="btn btn-default"
@@ -105,55 +104,66 @@
     </div>
 }
 
-@index("Main Page")(header) {
-
-    <input type="hidden" id="hiddenUserName" value="@user.getUserName"/>
-    <input type="hidden" id="hiddenUserId" value="@user.getId">
+@index("Home Page")(header) {
 
     <div class="container main-content">
 
+        <input type="hidden" id="hiddenSession" value="@session.get("userId")">
+
         <div class="col col-md-4">
             <div class="profile-container">
+
                 @if(user.getPhotoContentType == null || user.getPhotoContentType.equals("null")) {
                     <div class="profile-image img-rounded" style="background-image: url('http://avatarbox.net/avatars/img32/ned_flanders_avatar_picture_23953.gif')"></div>
                 } else {
                     <div class="profile-image img-rounded" style="background-image: url('http://localhost:9034/users/getPhoto/@user.getId')"></div>
-                        }
+                }
 
-                <div class="profile-username">
-                    @user.getUserName
+                <div class="profile-name">
+                    @user.getUserName()
                 </div>
 
                 <div class="profile-affiliation">
                     <span class="glyphicon glyphicon-briefcase"></span>
-                    @user.getAffiliation
+                    @user.getAffiliation()
                 </div>
                 <div class="profile-interest">
                     <span class="glyphicon glyphicon-book"></span>
-                    @user.getResearchInterests
+                    @user.getResearchInterests()
                 </div>
                 <div class="profile-email">
                     <span class="glyphicon glyphicon-envelope"></span>
-                    @user.getEmail
+                    @user.getEmail()
                 </div>
                 <div class="profile-phone">
                     <span class="glyphicon glyphicon-phone"></span>
-                    @user.getPhoneNumber
+                    @user.getPhoneNumber()
                 </div>
             </div>
+
         </div>
 
         <div class="col col-md-8 content-container">
-            <div class="wrap">
-                <div class="row">
-                    <!--- Content -->
-                    <div class="three-fourth content">
-                        @for((post, index) <- posts.zipWithIndex) {
-                            <div class="container bootstrap snippet"
-                                @if(index >= 10) {
-                                    style="display: none"
-                                }
-                            >
+
+            <ul class="nav nav-tabs nav-justified">
+                <li class="active">
+                    <a  href="#timeline" data-toggle="tab">TimeLine</a>
+                </li>
+                <li>
+                    <a  href="#following" data-toggle="tab">Following</a>
+                </li>
+                <li>
+                    <a  href="#followers" data-toggle="tab">Followers</a>
+                </li>
+            </ul>
+
+            <div class="tab-content clearfix">
+                <div class="tab-pane active" id="timeline">
+                    <div class="row">
+                            <!--- Content -->
+                        <div class="three-fourth content">
+                        @for(post <- posts){
+                            <div class="container bootstrap snippet">
                                 <div class="col-sm-8">
                                     <div class="panel panel-white post panel-shadow" id="post-@post.getId">
                                         <div class="post-heading">
@@ -169,13 +179,7 @@
 
                                             <div class="pull-left meta">
                                                 <div class="title h5">
-                                                    @if(post.getUser.getId.equals(session.get("userId"))
-                                                      ||post.getUser.getId == Long.parseLong(session.get("userId"))
-                                                    ) {
-                                                        <a href="/sns/home">
-                                                    } else {
-                                                      <a href="/sns/user/@post.getUser.getId">
-                                                      }<b>@post.getUser.getUserName</b></a>
+                                                    <a href="#"><b>@post.getUser.getUserName</b></a>
                                                     made a post.
                                                 </div>
                                                 <h6 class="text-muted time">@post.getTime</h6>
@@ -206,22 +210,14 @@
                                                 </span>
                                             </div>
                                             <ul class="comments-list">
-                                                @for(comment <- post.getComments) {
+                                            @for(comment <- post.getComments) {
                                                 <li class="comment">
                                                     <a class="pull-left" href="#">
                                                         <img class="avatar" src="http://localhost:9034/users/getPhoto/@comment.getUser.getId" alt="avatar">
                                                     </a>
                                                     <div class="comment-body">
                                                         <div class="comment-heading">
-                                                            @if(comment.getUser.getId.equals(session.get("userId"))
-                                                                    ||comment.getUser.getId == session.get("userId")
-                                                            ) {
-                                                                  <a href="/sns/home">
-                                                                } else {
-                                                                    <a href="/sns/user/@comment.getUser.getId">
-                                                                }
-                                                                <h4 class="user">@comment.getUser.getUserName</h4>
-                                                            </a>
+                                                            <h4 class="user">@comment.getUser.getUserName</h4>
                                                             <h5 class="time">@comment.getTime</h5>
                                                         </div>
                                                         <p>@comment.getContent</p>
@@ -234,15 +230,58 @@
                                 </div>
                             </div>
                         }
-                        @if(posts.size() >= 10) {
-                            <a href="#" class="more-btn"> more >>></a>
-                        }
+                        </div>
                     </div>
-                </div> @*row*@
-            </div> @*wrap*@
-        </div> @*content-container*@
+                </div>
+                <div class="tab-pane" id="following">
+                    <div class="row">
+                            <!--- Content -->
+                        <div class="three-fourth content">
+                                <!--comments-->
+                            <div class="comments">
+                                <ol class="comment-list">
+                                @for(user <- followingUsers) {
+                                    <li class="comment depth-1">
+                                        <div class="avatar"><a href="#"><img src="http://localhost:9034/users/getPhoto/@user.getId" alt="" /></a></div>
+                                        <div class="comment-box">
+                                            <div class="comment-text">
+                                                <strong>@user.getUserName</strong><a href="#" class="btn small color"> Following</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                                </ol>
+                            </div>
+                                <!--//comments-->
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="followers">
+                    <div class="row">
+                            <!--- Content -->
+                        <div class="three-fourth content">
+                                <!--comments-->
+                            <div class="comments">
+                                <ol class="comment-list">
+                                @for(user <- followedUsers) {
+                                        <!--comment-->
+                                    <li class="comment depth-1">
+                                        <div class="avatar"><a href="#"><img src="http://localhost:9034/users/getPhoto/@user.getId" alt="" /></a></div>
+                                        <div class="comment-box">
+                                            <div class="comment-text">
+                                                <strong>Justin</strong>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                                </ol>
+                            </div>
+                                <!--//comments-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 }
-
-
-

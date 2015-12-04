@@ -74,14 +74,16 @@ public class PostController extends Controller {
     }
 
     public static Result newLike() {
+        System.out.println("add like");
         Http.RequestBody body = request().body();
         JsonNode json = body.asJson();
 
         ObjectNode jsonData = Json.newObject();
-        jsonData.put("userId", session().get("userId"));
         jsonData.put("postId", json.path("postId"));
+        jsonData.put("userId", session().get("userId"));
 
-        APICall.postAPI(Constants.NEW_BACKEND, jsonData);
+        APICall.postAPI(Constants.NEW_BACKEND + Constants.ADD_LIKE, jsonData);
+        System.out.println(Constants.NEW_BACKEND + Constants.ADD_LIKE + jsonData.toString());
         return ok();
     }
 
@@ -90,10 +92,16 @@ public class PostController extends Controller {
         JsonNode json = body.asJson();
 
         ObjectNode jsonData = Json.newObject();
-        jsonData.put("userId", session().get("userId"));
         jsonData.put("postId", json.path("postId"));
+        jsonData.put("userId", session().get("userId"));
 
-        APICall.postAPI(Constants.NEW_BACKEND, jsonData);
+        APICall.postAPI(Constants.NEW_BACKEND + Constants.ADD_SHARE, jsonData);
         return ok();
+    }
+
+    public static Result deletePost(String id) {
+        System.out.println("delete");
+        APICall.deleteAPI(Constants.NEW_BACKEND + Constants.DELETE_POST + id);
+        return redirect("/sns/home");
     }
 }

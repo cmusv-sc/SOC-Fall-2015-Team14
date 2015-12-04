@@ -41,11 +41,13 @@ GET         /assets/*file                                    controllers.Assets.
 #
 ##Map sns
 GET         /sns/home                                        controllers.MainController.home()
+GET         /sns/user/:id                                    controllers.MainController.other(id: String)
 GET         /sns/main                                        controllers.MainController.main()
 GET         /sns/posts/add                                   controllers.PostController.newPost()
 POST        /sns/posts/newComment                            controllers.PostController.newComment()
 POST        /sns/posts/newLike                               controllers.PostController.newLike()
 POST        /sns/posts/newShare                              controllers.PostController.newShare()
+GET         /sns/posts/:id/delete/                           controllers.PostController.deletePost(id: String)
 
 GET         /sns/login                                       controllers.Application.login()
 GET         /sns/logout                                      controllers.Application.logout()

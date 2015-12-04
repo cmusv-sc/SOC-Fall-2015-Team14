@@ -77,16 +77,17 @@
 
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control"
-                                    id="post-input" value='@postForm("content").value' placeholder="What's happending"/>
+                                    id="post-input" name="content" value='@postForm("content").value' placeholder="What's happening"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" value='@postForm("visibility")'/> Private
-                                        </label>
-                                    </div>
+                                    <label for="">
+                                        <input type="checkbox"
+                                        name="@postForm("visibility").name"
+                                        value="true"
+                                            @if(postForm("visibility").valueOr("false") == "true"){checked="checked"}> Private
+                                    </label>
                                 </div>
                             </div>
                             <button type="button" class="btn btn-default"
@@ -105,7 +106,7 @@
 }
 
 @index("Home Page")(header) {
-
+    <script src='@routes.Assets.at("javascripts/sns/home.js")' type="text/javascript"></script>
     <div class="container main-content">
 
         <input type="hidden" id="hiddenSession" value="@session.get("userId")">
@@ -216,8 +217,7 @@
                                         <div class="post-heading">
                                             <div class="pull-left image">
                                                 <a href="#">
-                                                @if(post.getUser.getId == null || post.getTitle == null
-                                                        || post.getTitle == "" || post.getTitle.equals("null")) {
+                                                @if(post.getUser.getId == null) {
                                                     <img src="http://avatarbox.net/avatars/img32/ned_flanders_avatar_picture_23953.gif" alt="user profile image" class="img-circle avatar"/>
                                                 } else {
                                                     <img class="img-circle avatar" src="http://localhost:9034/users/getPhoto/@post.getUser.getId" alt="user profile image" />
@@ -231,6 +231,9 @@
                                                     made a post.
                                                 </div>
                                                 <h6 class="text-muted time">@post.getTime</h6>
+                                            </div>
+                                            <div class="pull-right meta remove-div" style="display: none">
+                                                  <span class="glyphicon glyphicon-remove remove-btn"></span>
                                             </div>
                                         </div>
                                         <div class="post-description">
@@ -314,7 +317,7 @@
                                     @for(user <- followedUsers) {
                                             <!--comment-->
                                         <li class="comment depth-1">
-                                            <div class="avatar"><a href="#"><img src="http://media.koreus.com/uploads/cavt4cb82f54eac31.gif" alt="" /></a></div>
+                                            <div class="avatar"><a href="#"><img src="http://localhost:9034/users/getPhoto/@user.getId" alt="" /></a></div>
                                             <div class="comment-box">
                                                 <div class="comment-text">
                                                     <strong>Justin</strong>
