@@ -492,7 +492,16 @@ public class UserController extends Controller {
 		
 	}
 
-	public Result addFollowee(long followerID, long followeeID) {
+	public Result addFollowee() {
+		JsonNode json = request().body().asJson();
+		if (json == null) {
+			System.out.println("User not saved, expecting Json data");
+			return badRequest("User not saved, expecting Json data");
+		}
+
+		long followerID = json.path("followerID").asLong();
+		long followeeID = json.path("followeeID").asLong();
+
 		if(followerID == followeeID) {
 			String response = "Cannot follow yourself!";
 			return badRequest(response);
