@@ -51,11 +51,11 @@ GET           /posts/userId/:id                                                 
 GET           /posts/getAllPosts/json                                                                   @controllers.PostController.getAllPosts(format: String="json")
 GET           /posts/getMostPopularPosts                                                                @controllers.PostController.getMostPopularPosts(format: String="json")
 POST          /posts/add                                                                                @controllers.PostController.addPost
-PUT           /posts/addLike/:postId/user/:userId                                                       @controllers.PostController.addPostLike(postId: Long, userId: Long)
+PUT           /posts/addLike                                                                            @controllers.PostController.addPostLike
 GET           /posts/getLikeUsers/:id                                                                   @controllers.PostController.getLikeUsers(id: Long, format: String="json")
 PUT           /posts/update/:id                                                                         @controllers.PostController.updatePost(id: Long)
 PUT           /posts/updateVisibility/:id                                                               @controllers.PostController.updatePostVisibility(id: Long)
-PUT           /posts/addSharedUser/:userId                                                              @controllers.PostController.addSharedUser(userId: Long)
+PUT           /posts/addSharedUser                                                                      @controllers.PostController.addSharedUser
 GET           /posts/getSharedUser/:postId                                                              @controllers.PostController.getSharedUser(postId: Long, format: String="json")
 GET           /posts/getSharedPosts/:userId                                                             @controllers.PostController.getSharedPosts(userId: Long, format: String="json")
 DELETE        /posts/delete/:id                                                                         @controllers.PostController.deletePost(id: Long)
