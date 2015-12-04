@@ -451,7 +451,7 @@ public class PostController extends Controller {
             post.setComments(comments);
         }
 
-        
+
         String result = new String();
         if (format.equals("json")) {
             Gson gson = new GsonBuilder().serializeNulls()
