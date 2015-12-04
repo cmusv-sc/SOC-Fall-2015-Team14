@@ -72,4 +72,28 @@ public class PostController extends Controller {
         APICall.postAPI(Constants.NEW_BACKEND + Constants.ADD_COMMENT, jsonData);
         return ok();
     }
+
+    public static Result newLike() {
+        Http.RequestBody body = request().body();
+        JsonNode json = body.asJson();
+
+        ObjectNode jsonData = Json.newObject();
+        jsonData.put("userId", session().get("userId"));
+        jsonData.put("postId", json.path("postId"));
+
+        APICall.postAPI(Constants.NEW_BACKEND, jsonData);
+        return ok();
+    }
+
+    public static Result newShare() {
+        Http.RequestBody body = request().body();
+        JsonNode json = body.asJson();
+
+        ObjectNode jsonData = Json.newObject();
+        jsonData.put("userId", session().get("userId"));
+        jsonData.put("postId", json.path("postId"));
+
+        APICall.postAPI(Constants.NEW_BACKEND, jsonData);
+        return ok();
+    }
 }

@@ -12,11 +12,11 @@ public class Comment {
     private User user;
     private Post post;
     private String content;
-    private Date time;
+    private String time;
 
     public Comment() {}
 
-    public Comment(User user, Post post, String content, Date time) {
+    public Comment(User user, Post post, String content, String time) {
         super();
         this.user = user;
         this.post = post;
@@ -38,9 +38,9 @@ public class Comment {
 
     public void setContent(String content) { this.content = content; }
 
-    public Date getTime() { return time; }
+    public String getTime() { return time; }
 
-    public void setTime(Date time) { this.time = time; }
+    public void setTime(String time) { this.time = time; }
 
     @Override
     public String toString() {

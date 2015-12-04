@@ -63,5 +63,7 @@ public class Constants {
     public static final String USER_API = "/users/";
     public static final String ADD_POST = "/posts/add";
     public static final String ADD_COMMENT = "/comments/add";
+    public static final String GET_FOLLOWING_USERS = "/users/getFollowing/";
+    public static final String GET_FOLLOWED_USERS = "/users/getFollowers/";
 
 }

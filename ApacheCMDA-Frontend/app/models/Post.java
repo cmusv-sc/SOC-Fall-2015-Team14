@@ -1,11 +1,8 @@
 package models;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import play.api.libs.json.Json;
-import scala.collection.immutable.Map;
-import scala.util.parsing.json.JSONArray;
-import scala.util.parsing.json.JSONObject;
+
+import play.libs.Json;
 import util.APICall;
 import util.Constants;
 
@@ -20,14 +17,13 @@ public class Post {
 
     //restful uris
     private static final String GET_POST_SERVICES_CALL = Constants.NEW_BACKEND+"/posts/getAllPosts/json";
-    private static final String GET_POST_BY_ID_SERVICES_CALL = Constants.NEW_BACKEND+"/posts/postId/";
+    private static final String GET_POST_BY_ID_SERVICES_CALL = Constants.NEW_BACKEND+"/posts/id/";
     private static final String GET_POST_BY_USER_SERVICES_CALL = Constants.NEW_BACKEND+"/posts/userId/";
     private static final String ADD_POST_SERVICE_CALL = Constants.NEW_BACKEND+"/posts/add";
 
-    private String postId;
-    private String userId;
-    private String userName;
-    private String userPhotoType;
+    private String id;
+    private User user;
+    private String title;
     private String content;
     private String time;
     private int likeCount;
@@ -36,32 +32,25 @@ public class Post {
 
     private Boolean visibility = false;
     private ArrayList<User> likeUsers;
-    private ArrayList<User> shareUsers;
+    private ArrayList<User> sharedUsers;
     private ArrayList<Comment> comments;
 
-    public String getPostId() {
-        return postId;
+    public String getId() {
+        return id;
     }
 
-    public void setPostId(String postId) {
-        this.postId = postId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public String getContent() {
         return content;
@@ -111,12 +100,12 @@ public class Post {
         this.likeUsers = likeUsers;
     }
 
-    public ArrayList<User> getShareUsers() {
-        return shareUsers;
+    public ArrayList<User> getSharedUsers() {
+        return sharedUsers;
     }
 
-    public void setShareUsers(ArrayList<User> shareUsers) {
-        this.shareUsers = shareUsers;
+    public void setSharedUsers(ArrayList<User> sharedUsers) {
+        this.sharedUsers = sharedUsers;
     }
 
     public Boolean getVisibility() {
@@ -127,12 +116,12 @@ public class Post {
         this.visibility = visibility;
     }
 
-    public String getUserPhotoType() {
-        return userPhotoType;
+    public String getTitle() {
+        return title;
     }
 
-    public void setUserPhotoType(String userPhotoType) {
-        this.userPhotoType = userPhotoType;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public ArrayList<Comment> getComments() {
@@ -145,7 +134,7 @@ public class Post {
 
     public static Post find(String id) {
         Post post = new Post();
-        post.setUserId(id);
+        post.getUser().setId(Integer.parseInt(id));
         return post;
     }
 
@@ -162,21 +151,9 @@ public class Post {
 
         for (int i = 0; i < postsNode.size(); i++) {
             JsonNode json = postsNode.path(i);
-            Post newPost = new Post();
-            JsonNode userJson = json.path("user");
-            newPost.setUserName(userJson.path("userName").asText());
-            newPost.setUserId(userJson.path("id").asText());
-            newPost.setPostId(json.path("id").asText());
-            System.out.println("type" + userJson.path("photoContentType").asText());
-            newPost.setUserPhotoType(userJson.path("photoContentType").asText());
-            newPost.setContent(json.path("content").asText());
-            newPost.setTime(json.path("time").asText());
-            if (json.path("visibility").asText().equals("true")) {
-                newPost.setVisibility(true);
-            } else {
-                newPost.setVisibility(false);
-            }
-            
+
+            Post newPost = Json.fromJson(json, Post.class);
+            System.out.println(newPost.toString());
             posts.add(newPost);
         }
         return posts;
@@ -198,42 +175,11 @@ public class Post {
 
         for (int i = 0; i < postNodes.size(); i++) {
             JsonNode json = postNodes.path(i);
+            Post newPost = Json.fromJson(json, Post.class);
 
-            //Post newPost = Json.fromJson(json, Post.class);
-
-
-            Post newPost = new Post();
-            JsonNode userJson = json.path("user");
-
-            newPost.setUserName(userJson.path("userName").asText());
-            newPost.setUserId(userJson.path("id").asText());
-
-            newPost.setUserPhotoType(userJson.path("photoContentType").asText());
-            newPost.setContent(json.path("content").asText());
-            newPost.setTime(json.path("time").asText());
-            newPost.setCommentCount(Integer.parseInt(json.path("commentCount").asText()));
-            newPost.setLikeCount(Integer.parseInt(json.path("likeCount").asText()));
-            newPost.setShareCount(Integer.parseInt(json.path("shareCount").asText()));
-
-            //set comment list
-            JsonNode commentNodes = json.path("comments");
-            for (int j = 0; j < commentNodes.size(); j++) {
-                JsonNode commentJson = commentNodes.path(j);
-
-            }
-
-
-            //set share user list
-
-            //set like user list
-
-            if (json.path("visibility").asText().equals("true")) {
-                newPost.setVisibility(true);
-            } else {
-                newPost.setVisibility(false);
-            }
-
+            System.out.println(posts.toString());
             posts.add(newPost);
+
         }
         return posts;
     }

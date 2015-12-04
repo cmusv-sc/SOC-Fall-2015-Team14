@@ -83,8 +83,7 @@ $(document).ready(function() {
             var dt = new Date();
             var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
 
-
-            $(list).append(
+            $(list).prependTo(
                 '<li class="comment"> <a class="pull-left" href="#">' +
                 '<img class="avatar" src="http://localhost:9034/users/getPhoto/' + userId +'" alt="avatar"> </a>' +
                 '<div class="comment-body"> <div class="comment-heading"> <h4 class="user">'+ userName + '</h4>' +
@@ -92,11 +91,64 @@ $(document).ready(function() {
                 '<p>' + text + '</p> </div> </li>'
             )
 
+        }).error(function(error) {
+            console.log(error);
+        })
+    })
+
+
+    //click like
+    $(".like-btn").click(function() {
+        var post = $(this).closest(".post");
+        var postId = $(post).attr('id').split('-')[1];
+        var likeCount = $(this).textContent;
+        likeCount++;
+
+        var obj = {
+            postId: postId
+        }
+        $.ajax({
+            url: "/sns/posts/newLike",
+            type: "POST",
+            date: JSON.stringify(obj),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).done(function(data) {
+            $(this).html(
+                '<i class="fa fa-thumbs-up icon"></i>' + likeCount
+            );
 
         }).error(function(error) {
             console.log(error);
         })
+    })
 
+    //click like
+    $(".share-btn").click(function() {
+        var post = $(this).closest(".post");
+        var postId = $(post).attr('id').split('-')[1];
+        var shareCount = $(this).textContent;
+        shareCount++;
+
+        var obj = {
+            postId: postId
+        }
+        $.ajax({
+            url: "/sns/posts/newShare",
+            type: "POST",
+            date: JSON.stringify(obj),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).done(function(data) {
+            $(this).html(
+                '<i class="fa fa-share icon"></i>' + shareCount
+            );
+
+        }).error(function(error) {
+            console.log(error);
+        })
     })
 })
 

@@ -43,7 +43,6 @@ public class UserController extends Controller{
             e.printStackTrace();
         } finally {
             System.out.println("finally" + user.getAffiliation());
-//            return redirect(routes.MainController.home());
             return ok(response);
         }
     }

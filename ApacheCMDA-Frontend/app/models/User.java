@@ -28,6 +28,8 @@ import play.data.validation.Constraints;
 import util.APICall;
 import util.Constants;
 
+import java.util.ArrayList;
+
 @Entity
 public class User {
 
@@ -253,5 +255,17 @@ public class User {
         return user;
     }
 
+    public static ArrayList<User> getFollowingUsers(String userId) {
+        ArrayList<User> users = new ArrayList<>();
+        JsonNode response = APICall.callAPI(Constants.NEW_BACKEND + Constants.GET_FOLLOWING_USERS + userId);
+
+
+
+    }
+
+    public static ArrayList<User> getFollowedUsers(String userId) {
+        JsonNode response = APICall.callAPI(Constants.NEW_BACKEND + Constants.GET_FOLLOWED_USERS + userId);
+
+    }
 }
 

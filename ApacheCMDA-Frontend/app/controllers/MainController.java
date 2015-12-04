@@ -21,6 +21,8 @@ public class MainController extends Controller {
     private static User user;
     final static Form<Post> postForm = Form.form(Post.class);
     private static ArrayList<Post> posts = new ArrayList<>();
+    private static ArrayList<User> followingUsers = new ArrayList<>();
+    private static ArrayList<User> followedUsers = new ArrayList<>();
 
     public static Result home() {
 
@@ -36,7 +38,8 @@ public class MainController extends Controller {
         }
 
         posts = Post.getUserPosts(String.valueOf(user.getId()));
-        return ok(home.render(user, postForm, posts));
+
+        return ok(home.render(user, postForm, posts, followingUsers, followedUsers));
 
     }
 
