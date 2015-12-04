@@ -19,10 +19,7 @@ import javax.inject.Singleton;
 import javax.persistence.PersistenceException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by dachengwen on 11/3/15.
@@ -274,6 +271,11 @@ public class PostController extends Controller {
         }
 
         Post post = postRepository.findOne(id);
+
+        List<Comment> comments = post.getComments();
+        Collections.sort(comments);
+        post.setComments(comments);
+
         if (post == null) {
             System.out.println("Post not found with with id: " + id);
             return notFound("Post not found with with id: " + id);
@@ -298,9 +300,17 @@ public class PostController extends Controller {
         Iterable<Post> postIterable = postRepository.findAll();
         List<Post> postList = new ArrayList<Post>();
         for (Post post : postIterable) {
+            List<Comment> comments = post.getComments();
+            Collections.sort(comments);
+            post.setComments(comments);
+
             postList.add(post);
         }
+
         String result = new String();
+
+
+
         if (format.equals("json")) {
             //result = new Gson().toJson(postList);
             Gson gson = new GsonBuilder().serializeNulls()
@@ -320,6 +330,13 @@ public class PostController extends Controller {
         }
 
         List<Post> posts = postRepository.findByUserOrderByTimeDesc(user);
+
+        for(Post post: posts) {
+            List<Comment> comments = post.getComments();
+            Collections.sort(comments);
+            post.setComments(comments);
+        }
+
 
         String result = new String();
         if (format.equals("json")) {
@@ -361,6 +378,13 @@ public class PostController extends Controller {
 
         List<Post> posts = postRepository.findBySharedUsersOrderByTimeDesc(user);
 
+        for(Post post: posts) {
+            List<Comment> comments = post.getComments();
+            Collections.sort(comments);
+            post.setComments(comments);
+        }
+
+
         String result = new String();
         if (format.equals("json")) {
             Gson gson = new GsonBuilder().serializeNulls()
@@ -400,6 +424,13 @@ public class PostController extends Controller {
     public Result getMostPopularPosts(String format) {
         List<Post> posts = postRepository.findTop10ByOrderByLikeCountDesc();
 
+        for(Post post: posts) {
+            List<Comment> comments = post.getComments();
+            Collections.sort(comments);
+            post.setComments(comments);
+        }
+
+
         String result = new String();
         if (format.equals("json")) {
             Gson gson = new GsonBuilder().serializeNulls()
@@ -414,6 +445,13 @@ public class PostController extends Controller {
     public Result searchPosts(String key, String format) {
         List<Post> posts = postRepository.findByTitleContainingOrContentContaining(key, key);
 
+        for(Post post: posts) {
+            List<Comment> comments = post.getComments();
+            Collections.sort(comments);
+            post.setComments(comments);
+        }
+
+        
         String result = new String();
         if (format.equals("json")) {
             Gson gson = new GsonBuilder().serializeNulls()

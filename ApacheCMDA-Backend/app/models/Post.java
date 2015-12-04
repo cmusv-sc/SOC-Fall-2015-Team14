@@ -51,7 +51,7 @@ public class Post {
 
     @Expose
     @OneToMany(mappedBy="post")
-    private Set<Comment> comments;
+    private List<Comment> comments;
     @Expose
     private int commentCount;
 
@@ -75,7 +75,7 @@ public class Post {
         this.likeUsers = new HashSet<>();
         this.shareCount = 0;
         this.sharedUsers = new HashSet<>();
-        this.comments = new TreeSet<Comment>();
+        this.comments = new LinkedList<>();
     }
 
     public long getId() {
@@ -156,11 +156,11 @@ public class Post {
         this.sharedUsers = sharedUsers;
     }
 
-    public Set<Comment> getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(Set<Comment> comments) {
+    public void setComments(List<Comment> comments) {
         this.comments = comments;
         commentCount = comments.size();
     }
