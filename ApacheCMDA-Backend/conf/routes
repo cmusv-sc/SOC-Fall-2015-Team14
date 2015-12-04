@@ -51,11 +51,11 @@ GET           /posts/userId/:id                                                 
 GET           /posts/getAllPosts/json                                                                   @controllers.PostController.getAllPosts(format: String="json")
 GET           /posts/getMostPopularPosts                                                                @controllers.PostController.getMostPopularPosts(format: String="json")
 POST          /posts/add                                                                                @controllers.PostController.addPost
-PUT           /posts/addLike/:postId/user/:userId                                                       @controllers.PostController.addPostLike(postId: Long, userId: Long)
+PUT           /posts/addLike                                                                            @controllers.PostController.addPostLike
 GET           /posts/getLikeUsers/:id                                                                   @controllers.PostController.getLikeUsers(id: Long, format: String="json")
 PUT           /posts/update/:id                                                                         @controllers.PostController.updatePost(id: Long)
 PUT           /posts/updateVisibility/:id                                                               @controllers.PostController.updatePostVisibility(id: Long)
-PUT           /posts/addSharedUser/:userId                                                              @controllers.PostController.addSharedUser(userId: Long)
+PUT           /posts/addSharedUser                                                                      @controllers.PostController.addSharedUser
 GET           /posts/getSharedUser/:postId                                                              @controllers.PostController.getSharedUser(postId: Long, format: String="json")
 GET           /posts/getSharedPosts/:userId                                                             @controllers.PostController.getSharedPosts(userId: Long, format: String="json")
 DELETE        /posts/delete/:id                                                                         @controllers.PostController.deletePost(id: Long)
@@ -78,17 +78,17 @@ DELETE        /users/delete/:id                                                 
 GET           /users/getPhoto/:id                                                                       @controllers.UserController.getUserPhoto(id: Long)
 GET			  /users/getAllUsers/json																	@controllers.UserController.getAllUsers(format: String="json")
 GET           /users/getFollowers/:id                                                                   @controllers.UserController.getFollowers(id: Long, format: String="json")
-GET           /users/getFollowedUsers/:id                                                               @controllers.UserController.getFollowedUsers(id: Long, format: String="json")
+GET           /users/getFollowingUsers/:id                                                              @controllers.UserController.getFollowingUsers(id: Long, format: String="json")
 GET           /users/getSharedPosts/:id                                                                 @controllers.UserController.getSharedPosts(id:Long, format: String="json")
 POST		  /users/isUserValid																		@controllers.UserController.isUserValid
 DELETE		  /users/delete/userName/:userName/password/:password										@controllers.UserController.deleteUserByUserNameandPassword(userName: String, password: String)
-PUT           /users/:followerID/follow/:followeeID                                                     @controllers.UserController.addFollowee(followerID: Long, followeeID: Long)
+PUT           /users/addFollowee                                                                        @controllers.UserController.addFollowee
 DELETE        /users/:followerID/unfollow/:followeeID                                                   @controllers.UserController.removeFollowee(followerID: Long, followeeID: Long)
 POST          /users/isUserNameExisted                                                                  @controllers.UserController.isUserNameExisted()
 POST		  /users/isEmailExisted                                                                     @controllers.UserController.isEmailExisted()
 GET           /users/getFollowingPosts/:id                                                              @controllers.UserController.getFollowingPosts(id:Long, format: String="json")
 GET           /users/fuzzySearch/:key                                                                   @controllers.UserController.fuzzySearchUsers(key: String, format: String="json")
-GET           /users/exactSearch/                                                                       @controllers.UserController.exactSearchUsers(format: String="json")
+POST          /users/exactSearch/                                                                       @controllers.UserController.exactSearchUsers(format: String="json")
 #GET           /users/exactSearch/firstName/:firstName/lastName/:lastName                                @controllers.UserController.exactSearchUsers(firstName: String, lastName : String, format: String="json")
 
 # Map static resources from the /public folder to the /assets URL path

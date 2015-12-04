@@ -185,25 +185,21 @@ public class PostController extends Controller {
         }
     }
 
-    public Result addSharedUser(Long id) {
-        if (id == null) {
-            System.out.println("Post id is null or empty!");
-            return badRequest("Post id is null or empty!");
-        }
-
-        Post post = postRepository.findOne(id);
-        if (post == null) {
-            System.out.println("Post not found with with id: " + id);
-            return notFound("Post not found with with id: " + id);
-        }
-
+    public Result addSharedUser() {
         JsonNode json = request().body().asJson();
         if (json == null) {
             System.out.println("Post not saved, expecting Json data");
             return badRequest("Post not saved, expecting Json data");
         }
 
+        long id = json.path("postId").asLong();
         long userId = json.path("userId").asLong();
+
+        Post post = postRepository.findOne(id);
+        if (post == null) {
+            System.out.println("Post not found with with id: " + id);
+            return notFound("Post not found with with id: " + id);
+        }
 
         User user = userRepository.findOne(userId);
         if (user == null) {
@@ -223,11 +219,15 @@ public class PostController extends Controller {
         }
     }
 
-    public Result addPostLike(Long postId, Long userId) {
-        if (postId == null) {
-            System.out.println("Post id is null or empty!");
-            return badRequest("Post id is null or empty!");
+    public Result addPostLike() {
+        JsonNode json = request().body().asJson();
+        if (json == null) {
+            System.out.println("Post not saved, expecting Json data");
+            return badRequest("Post not saved, expecting Json data");
         }
+
+        long postId = json.path("postId").asLong();
+        long userId = json.path("userId").asLong();
 
         Post post = postRepository.findOne(postId);
         if (post == null) {

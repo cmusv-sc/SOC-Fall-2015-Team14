@@ -262,7 +262,7 @@ public class UserController extends Controller {
 		return ok(result);
 	}
 
-	public Result getFollowedUsers(Long id, String format) {
+	public Result getFollowingUsers(Long id, String format) {
 		if (id == null) {
 			System.out.println("User id is null or empty!");
 			return badRequest("User id is null or empty!");
@@ -492,7 +492,16 @@ public class UserController extends Controller {
 		
 	}
 
-	public Result addFollowee(long followerID, long followeeID) {
+	public Result addFollowee() {
+		JsonNode json = request().body().asJson();
+		if (json == null) {
+			System.out.println("User not saved, expecting Json data");
+			return badRequest("User not saved, expecting Json data");
+		}
+
+		long followerID = json.path("followerID").asLong();
+		long followeeID = json.path("followeeID").asLong();
+
 		if(followerID == followeeID) {
 			String response = "Cannot follow yourself!";
 			return badRequest(response);
@@ -601,47 +610,46 @@ public class UserController extends Controller {
 	}
 
 
-	public Result exactSearchUsers(String format) {
+//	public Result exactSearchUsers(String format) {
+//
+//		String firstName = request().getQueryString("firstName");
+//		String lastName = request().getQueryString("lastName");
+//		String email = request().getQueryString("email");
+//		String phoneNumber = request().getQueryString("phoneNumber");
+//
+//
+//		if((firstName == null) || (lastName == null)) {
+//			System.out.println("FirstName and LastName are required!");
+//			return badRequest("FirstName and LastName are required!");
+//		}
+//
+//		List<User> users = userRepository.findByFirstNameAndLastName(firstName, lastName);
+//
+//		List<User> matchUsers = new ArrayList<>();
+//		for (User user : users) {
+//			boolean match = true;
+//			if (match && (email != null) && !email.equals(user.getEmail())) {
+//				match = false;
+//			}
+//			if (match && (phoneNumber != null) && !phoneNumber.equals(user.getPhoneNumber())) {
+//				match = false;
+//			}
+//			if (match) {
+//				matchUsers.add(user);
+//			}
+//		}
+//
+//		String result = new String();
+//		if (format.equals("json")) {
+//			Gson gson = new GsonBuilder().serializeNulls()
+//					.setExclusionStrategies(new CustomExclusionStrategy(User.class))
+//					.excludeFieldsWithoutExposeAnnotation().create();
+//
+//			result = gson.toJson(matchUsers);
+//		}
+//		return ok(result);
+//	}
 
-		String firstName = request().getQueryString("firstName");
-		String lastName = request().getQueryString("lastName");
-		String email = request().getQueryString("email");
-		String phoneNumber = request().getQueryString("phoneNumber");
-
-
-		if((firstName == null) || (lastName == null)) {
-			System.out.println("FirstName and LastName are required!");
-			return badRequest("FirstName and LastName are required!");
-		}
-
-		List<User> users = userRepository.findByFirstNameAndLastName(firstName, lastName);
-
-		List<User> matchUsers = new ArrayList<>();
-		for (User user : users) {
-			boolean match = true;
-			if (match && (email != null) && !email.equals(user.getEmail())) {
-				match = false;
-			}
-			if (match && (phoneNumber != null) && !phoneNumber.equals(user.getPhoneNumber())) {
-				match = false;
-			}
-			if (match) {
-				matchUsers.add(user);
-			}
-		}
-
-		String result = new String();
-		if (format.equals("json")) {
-			Gson gson = new GsonBuilder().serializeNulls()
-					.setExclusionStrategies(new CustomExclusionStrategy(User.class))
-					.excludeFieldsWithoutExposeAnnotation().create();
-
-			result = gson.toJson(matchUsers);
-		}
-		return ok(result);
-	}
-
-/*
 	public Result exactSearchUsers(String format) {
 		JsonNode json = request().body().asJson();
 		if (json == null) {
@@ -653,7 +661,6 @@ public class UserController extends Controller {
 		String firstName = json.path("firstName").asText();
 		String lastName = json.path("lastName").asText();
 		String affiliation = json.path("affiliation").asText();
-		String title = json.path("title").asText();
 		String researchInterests = json.path("researchInterests").asText();
 
 		List<User> users = userRepository.findByFirstNameAndLastName(firstName, lastName);
@@ -661,9 +668,6 @@ public class UserController extends Controller {
 		for (User user : users) {
 			boolean match = true;
 			if (match && affiliation.length() > 0 && !affiliation.equals(user.getAffiliation())) {
-				match = false;
-			}
-			if (match && title.length() > 0 && !title.equals(user.getTitle())) {
 				match = false;
 			}
 			if (match && researchInterests.length() > 0 && !researchInterests.equals(user.getResearchInterests())) {
@@ -684,7 +688,7 @@ public class UserController extends Controller {
 		}
 		return ok(result);
 	}
-*/
+
 	class PostComparator implements Comparator<Post> {
 		@Override
 		public int compare(Post post1, Post post2) {
