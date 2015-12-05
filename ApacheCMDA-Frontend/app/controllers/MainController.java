@@ -5,6 +5,7 @@ import models.Post;
 import models.User;
 import play.data.Form;
 import play.libs.Json;
+import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Controller;
 
@@ -13,6 +14,7 @@ import util.Constants;
 import views.html.sns.home;
 import views.html.sns.main;
 import views.html.sns.other;
+import views.html.sns.search;
 
 import java.util.ArrayList;
 
@@ -81,7 +83,12 @@ public class MainController extends Controller {
         return ok(other.render(otherUser, postForm, otherPosts, otherFollowingUser, otherFollowedUser));
     }
 
-    public static Result search(String keyword) {
+    public static Result search() {
+
+        Http.RequestBody body = request().body();
+        JsonNode jsonData = body.asJson();
+        String keyword = jsonData.path("srch-term").asText();
+
         JsonNode userNodes = APICall.callAPI(Constants.NEW_BACKEND + Constants.FUZZY_SEARCH + keyword);
         ArrayList<User> users = new ArrayList<>();
         for (int i = 0; i < userNodes.size(); i++) {
