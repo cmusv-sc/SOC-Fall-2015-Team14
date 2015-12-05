@@ -34,25 +34,13 @@ public class MainController extends Controller {
 
     public static Result home() {
 
-        if (user == null || user.getId() == 0) {
-            System.out.println("user is null");
-            System.out.println("user is null userName " + session().get("userName"));
-            user = User.getUserByUserName(session().get("userName"));
-            System.out.println(user.toString());
-            session("userId", String.valueOf(user.getId()));
-        } else {
-            //update user
-            System.out.println("userId " + user.getId());
-            user = User.getUserById(String.valueOf(user.getId()));
-        }
-
         posts = Post.getUserPosts(String.valueOf(user.getId()));
-//        ArrayList<Post> sharedPosts = Post.getSharedPosts(String.valueOf(user.getId()));
-//        System.out.println("share" + sharedPosts.toString());
-//        posts.addAll(sharedPosts);
+        //ArrayList<Post> sharedPosts = Post.getSharedPosts(String.valueOf(user.getId()));
+        //System.out.println("share" + sharedPosts.toString());
+        //posts.addAll(sharedPosts);
 
-        //followingUsers = User.getFollowingUsers(String.valueOf(user.getId()));
-        //followedUsers = User.getFollowedUsers(String.valueOf(user.getId()));
+        followingUsers = User.getFollowingUsers(String.valueOf(user.getId()));
+        followedUsers = User.getFollowedUsers(String.valueOf(user.getId()));
 
         return ok(home.render(user, postForm, posts, followingUsers, followedUsers));
 
@@ -60,16 +48,8 @@ public class MainController extends Controller {
 
     public static Result main() {
 
-        if (user == null || user.getId() == 0) {
-            System.out.println("user is null");
-            user = User.getUserByUserName(session().get("userName"));
-            session("userId", String.valueOf(user.getId()));
-        } else {
-            //update user
-            System.out.println(user.toString());
-            System.out.println("main is " + user.getId());
-            user = User.getUserById(String.valueOf(user.getId()));
-        }
+        user = User.getUserByUserName(session().get("userName"));
+        session("userId", String.valueOf(user.getId()));
         posts = Post.getAllPosts();
 
         return ok(main.render(user, postForm, posts));

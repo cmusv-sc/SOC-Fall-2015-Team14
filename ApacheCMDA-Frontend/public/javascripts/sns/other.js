@@ -2,7 +2,8 @@
  * Created by lixunrong on 12/4/15.
  */
 $(document).ready(function() {
-    $(".glyphicon.glyphicon-plus").click(function() {
+    $(".glyphicon.glyphicon-plus.follow-btn").click(function() {
+        console.log("click");
         var id = $("#hiddenSession").val();
         $.ajax({
             url: "/sns/users/follow/" + id,

@@ -38,8 +38,7 @@ import views.html.sns.signup;
 
 public class Application extends Controller {
 
-    final static Form<User> userForm = Form
-            .form(User.class);
+    final static Form<User> userForm = Form.form(User.class);
 
     private static User user = null;
     private static String userId;

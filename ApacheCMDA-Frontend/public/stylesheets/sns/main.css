@@ -78,3 +78,8 @@
     display:none;
 }
 
+span.glyphicon.glyphicon-plus.follow-btn {
+    border: 1px solid dodgerblue;
+    color: dodgerblue;
+}
+
