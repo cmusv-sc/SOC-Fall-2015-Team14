@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3ccdd42a-410c-4ab7-bd80-45bd73792d6f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/PostController.java" afterPath="$PROJECT_DIR$/app/controllers/PostController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/Post.java" afterPath="$PROJECT_DIR$/app/models/Post.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/UserController.java" afterPath="$PROJECT_DIR$/app/controllers/UserController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/routes" afterPath="$PROJECT_DIR$/conf/routes" />
     </list>
     <ignored path="ApacheCMDA-Backend.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,11 +38,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PostController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PostController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/PostController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.483871">
-              <caret line="142" column="13" selection-start-line="142" selection-start-column="13" selection-end-line="142" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="246" column="32" selection-start-line="246" selection-start-column="32" selection-end-line="246" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -109,17 +109,17 @@
         <entry file="file://$PROJECT_DIR$/conf/routes">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="59" column="20" selection-start-line="59" selection-start-column="15" selection-end-line="59" selection-end-column="20" />
+              <caret line="91" column="163" selection-start-line="91" selection-start-column="163" selection-end-line="91" selection-end-column="163" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="UserController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/UserController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="42" column="28" selection-start-line="42" selection-start-column="26" selection-end-line="42" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.5748663">
+              <caret line="177" column="44" selection-start-line="177" selection-start-column="44" selection-end-line="177" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -179,11 +179,11 @@
         <option value="$PROJECT_DIR$/app/models/PostRepository.java" />
         <option value="$PROJECT_DIR$/app/controllers/CommentController.java" />
         <option value="$PROJECT_DIR$/app/models/Comment.java" />
-        <option value="$PROJECT_DIR$/conf/routes" />
         <option value="$PROJECT_DIR$/app/models/UserRepository.java" />
-        <option value="$PROJECT_DIR$/app/controllers/UserController.java" />
         <option value="$PROJECT_DIR$/app/models/Post.java" />
         <option value="$PROJECT_DIR$/app/controllers/PostController.java" />
+        <option value="$PROJECT_DIR$/conf/routes" />
+        <option value="$PROJECT_DIR$/app/controllers/UserController.java" />
       </list>
     </option>
   </component>
@@ -840,12 +840,12 @@
       <workItem from="1449274187329" duration="329000" />
       <workItem from="1449274706204" duration="33000" />
       <workItem from="1449290711917" duration="2887000" />
-      <workItem from="1449301782877" duration="396000" />
+      <workItem from="1449301782877" duration="1283000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="84804000" />
+    <option name="totallyTimeSpent" value="85691000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="43" y="23" width="1388" height="872" extended-state="6" />
@@ -1260,14 +1260,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/conf/routes">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="59" column="20" selection-start-line="59" selection-start-column="15" selection-end-line="59" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1275,16 +1267,6 @@
           <folding>
             <element signature="e#3288#3289#0" expanded="true" />
             <element signature="e#3310#3311#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="28" selection-start-line="42" selection-start-column="26" selection-end-line="42" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1301,9 +1283,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/PostController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.483871">
-          <caret line="142" column="13" selection-start-line="142" selection-start-column="13" selection-end-line="142" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="246" column="32" selection-start-line="246" selection-start-column="32" selection-end-line="246" selection-end-column="32" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/routes">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="91" column="163" selection-start-line="91" selection-start-column="163" selection-end-line="91" selection-end-column="163" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5748663">
+          <caret line="177" column="44" selection-start-line="177" selection-start-column="44" selection-end-line="177" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

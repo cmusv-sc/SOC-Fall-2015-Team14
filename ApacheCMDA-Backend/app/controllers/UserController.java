@@ -171,7 +171,17 @@ public class UserController extends Controller {
 		return ok(photo);
 	}
 
-
+	public Result getFrontLayerPhoto(String type) {
+		if (type.equals("France")) {
+			File photo = new File("images/front-layer/france_flag.jpg");
+			if (!photo.exists() || !photo.isFile()) {
+				return notFound("Front layer photo not found with type: " + type);
+			}
+			response().setContentType("image/jpeg");
+			return ok(photo);
+		}
+		return badRequest("Don't support layer for " + type);
+	}
 
 	public Result deleteUser(Long id) {
 		User deleteUser = userRepository.findOne(id);
