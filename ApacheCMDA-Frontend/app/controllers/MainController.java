@@ -77,4 +77,6 @@ public class MainController extends Controller {
         return ok(other.render(otherUser, postForm, otherPosts, otherFollowingUser, otherFollowedUser));
     }
 
+    public static Result search
+
 }

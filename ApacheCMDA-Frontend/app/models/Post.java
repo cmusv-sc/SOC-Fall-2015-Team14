@@ -30,7 +30,7 @@ public class Post {
     private int shareCount;
     private int commentCount;
 
-    private Boolean visibility = false;
+    private String visibility;
     private ArrayList<User> likeUsers;
     private ArrayList<User> sharedUsers;
     private ArrayList<Comment> comments;
@@ -108,12 +108,16 @@ public class Post {
         this.sharedUsers = sharedUsers;
     }
 
-    public Boolean getVisibility() {
+    public String getVisibility() {
         return visibility;
     }
 
     public void setVisibility(Boolean visibility) {
-        this.visibility = visibility;
+        if (visibility) {
+            this.visibility = "public";
+        } else {
+            this.visibility = "private";
+        }
     }
 
     public String getTitle() {
