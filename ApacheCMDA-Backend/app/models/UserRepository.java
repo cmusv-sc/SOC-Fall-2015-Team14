@@ -35,5 +35,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	List<User> findByFirstNameAndLastName(String firstName, String lastName);
 	List<User> findByFirstNameContainingOrLastNameContaining(String firstNameKey, String lastNameKey);
 	List<User> findByAffiliationContainingOrResearchInterestsContaining(String affiliationKey, String interestsKey);
-	List<User> findByFirstNameContainingOrLastNameContainingOrAffiliationContainingOrResearchInterestsContaining(String firstNameKey, String lastNameKey, String affiliationKey, String interestsKey);
+	List<User> findByFirstNameContainingOrLastNameContainingOrAffiliationContainingOrResearchInterestsContainingOrUserNameContaining(String firstNameKey, String lastNameKey, String affiliationKey, String interestsKey, String userNameKey);
 }
