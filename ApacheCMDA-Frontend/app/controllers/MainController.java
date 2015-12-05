@@ -1,11 +1,15 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import models.Post;
 import models.User;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Result;
 import play.mvc.Controller;
 
+import util.APICall;
+import util.Constants;
 import views.html.sns.home;
 import views.html.sns.main;
 import views.html.sns.other;
@@ -77,6 +81,16 @@ public class MainController extends Controller {
         return ok(other.render(otherUser, postForm, otherPosts, otherFollowingUser, otherFollowedUser));
     }
 
-    public static Result search
+    public static Result search(String keyword) {
+        JsonNode userNodes = APICall.callAPI(Constants.NEW_BACKEND + Constants.FUZZY_SEARCH + keyword);
+        ArrayList<User> users = new ArrayList<>();
+        for (int i = 0; i < userNodes.size(); i++) {
+            JsonNode json = userNodes.path(i);
+            User newUser = Json.fromJson(json, User.class);
+            users.add(newUser);
+        }
+
+        return ok(search.render(postForm, users));
+    }
 
 }
