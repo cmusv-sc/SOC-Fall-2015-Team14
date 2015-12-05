@@ -42,6 +42,7 @@ public class Post {
             inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
     private Set<User> likeUsers;
 
+    @Expose
     @ManyToMany (fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinTable(name = "SharedPost",
             joinColumns = {@JoinColumn(name = "post_id", referencedColumnName = "id")},
