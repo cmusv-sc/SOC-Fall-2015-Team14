@@ -50,7 +50,7 @@ POST        /sns/posts/newShare                              controllers.PostCon
 GET         /sns/posts/:id/delete/                           controllers.PostController.deletePost(id: String)
 GET         /sns/users/follow/:id                            controllers.UserController.addFollowee(id: String)
 
-POST         /sns/fuzzySearch/                        controllers.MainController.search()
+POST        /sns/fuzzySearch                                 controllers.MainController.search()
 
 GET         /sns/login                                       controllers.Application.login()
 GET         /sns/logout                                      controllers.Application.logout()

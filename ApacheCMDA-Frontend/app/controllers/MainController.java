@@ -3,6 +3,7 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.Post;
 import models.User;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Http;
@@ -85,9 +86,8 @@ public class MainController extends Controller {
 
     public static Result search() {
 
-        Http.RequestBody body = request().body();
-        JsonNode jsonData = body.asJson();
-        String keyword = jsonData.path("srch-term").asText();
+        DynamicForm dynamicForm = Form.form().bindFromRequest();
+        String keyword = dynamicForm.get("keyword");
 
         JsonNode userNodes = APICall.callAPI(Constants.NEW_BACKEND + Constants.FUZZY_SEARCH + keyword);
         ArrayList<User> users = new ArrayList<>();
