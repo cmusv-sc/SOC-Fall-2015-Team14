@@ -38,7 +38,7 @@ public class PostController extends Controller {
     // desire for immutability.
     @Inject
     public PostController(final PostRepository postRepository,
-                           UserRepository userRepository, CommentRepository commentRepository) {
+                          UserRepository userRepository, CommentRepository commentRepository) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.commentRepository = commentRepository;
@@ -56,7 +56,7 @@ public class PostController extends Controller {
         long userId = json.path("userId").asLong();
         String title = json.path("title").asText();
         String content = json.path("content").asText();
-        String visibility = json.path("visibility").asText();
+        boolean visibility = json.path("visibility").asBoolean();
 
         User user = userRepository.findOne(userId);
         if (user == null) {
@@ -126,7 +126,7 @@ public class PostController extends Controller {
         // Parse JSON file
         String title = json.path("title").asText();
         String content = json.path("content").asText();
-        String visibility = json.path("visibility").asText();
+        boolean visibility = json.path("visibility").asBoolean();
 
         Date time = new Date();
         /*SimpleDateFormat format = new SimpleDateFormat(Common.DATE_PATTERN);
@@ -165,7 +165,7 @@ public class PostController extends Controller {
         }
 
         // Parse JSON file
-        String visibility = json.path("visibility").asText();
+        boolean visibility = json.path("visibility").asBoolean();
 
         try {
             Post updatePost = postRepository.findOne(id);
