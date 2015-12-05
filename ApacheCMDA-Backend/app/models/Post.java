@@ -29,7 +29,7 @@ public class Post {
     @Temporal(TemporalType.TIMESTAMP)
     private Date time;
     @Expose
-    private String visibility;
+    private boolean visibility;
     @Expose
     private int likeCount;
     @Expose
@@ -64,7 +64,7 @@ public class Post {
     }
 
     public Post(User user, String title, String content,
-                Date time, String visibility) {
+                Date time, boolean visibility) {
         super();
         this.user = user;
         this.content = content;
@@ -116,11 +116,11 @@ public class Post {
         this.time = time;
     }
 
-    public String getVisibility() {
+    public boolean getVisibility() {
         return visibility;
     }
 
-    public void setVisibility(String visibility) {
+    public void setVisibility(boolean visibility) {
         this.visibility = visibility;
     }
 
