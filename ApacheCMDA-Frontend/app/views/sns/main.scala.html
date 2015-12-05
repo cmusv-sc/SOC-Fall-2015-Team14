@@ -169,9 +169,7 @@
 
                                             <div class="pull-left meta">
                                                 <div class="title h5">
-                                                    @if(post.getUser.getId.equals(session.get("userId"))
-                                                      ||post.getUser.getId == Long.parseLong(session.get("userId"))
-                                                    ) {
+                                                    @if(post.getUser.getId.equals(user.getId)) {
                                                         <a href="/sns/home">
                                                     } else {
                                                       <a href="/sns/user/@post.getUser.getId">

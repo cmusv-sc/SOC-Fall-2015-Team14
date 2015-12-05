@@ -233,26 +233,24 @@ public class User {
 
     public static User getUserById(String id) {
         JsonNode response = APICall.callAPI(Constants.NEW_BACKEND + "/users/" + id);
-        ObjectMapper mapper = new ObjectMapper();
-        User user = new User();
-        try {
-            user = mapper.treeToValue(response, User.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+        User user;
+        if (response.has("error")) {
+            return null;
+        } else {
+            user = Json.fromJson(response, User.class);
         }
         return user;
     }
 
     public static User getUserByUserName(String userName) {
         JsonNode response = APICall.callAPI(Constants.NEW_BACKEND + Constants.GET_USER_BY_USERNAME + userName);
-        ObjectMapper mapper = new ObjectMapper();
-        User user = new User();
-        try {
-            user = mapper.treeToValue(response, User.class);
-            System.out.println(user.toString());
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+        User user;
+        if (response.has("error")) {
+            return null;
+        } else {
+            user = Json.fromJson(response, User.class);
         }
+
         return user;
     }
 
@@ -262,7 +260,6 @@ public class User {
 
         for (int i = 0; i < userNodes.size(); i++) {
             JsonNode json = userNodes.path(i);
-
             User newUser = Json.fromJson(json, User.class);
             users.add(newUser);
         }
