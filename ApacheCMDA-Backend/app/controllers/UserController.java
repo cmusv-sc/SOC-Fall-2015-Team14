@@ -596,7 +596,7 @@ public class UserController extends Controller {
 		//users.addAll(userRepository.findByFirstNameContainsOrLastNameContains(key));
 		//users.addAll(userRepository.findByAffiliationContainsOrResearchInterestsContains(key));
 
-		users.addAll(userRepository.findByFirstNameContainingOrLastNameContainingOrAffiliationContainingOrResearchInterestsContainingOrUserNameContaining(key, key, key, key));
+		users.addAll(userRepository.findByFirstNameContainingOrLastNameContainingOrAffiliationContainingOrResearchInterestsContainingOrUserNameContaining(key, key, key, key, key));
 
 		String result = new String();
 		if (format.equals("json")) {
