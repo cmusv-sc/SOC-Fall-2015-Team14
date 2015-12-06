@@ -71,7 +71,12 @@
                                         <div class="avatar"><a href="#"><img src="http://localhost:9034/users/getPhoto/@user.getId" alt="" /></a></div>
                                         <div class="comment-box">
                                             <div class="comment-text">
-                                                <strong>@user.getUserName</strong><a href="#" class="btn small color"></a>
+                                                @if(user.getId.equals(session.get("userId"))) {
+                                                    <a href="/sns/home">
+                                                    } else {
+                                                    <a href="/sns/user/@user.getId">
+                                                    }<strong>@user.getUserName</strong></a>
+                                                @user.getFirstName @user.getLastName
                                             </div>
                                         </div>
                                     </li>

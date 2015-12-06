@@ -33,11 +33,11 @@ public class MainController extends Controller {
     private static ArrayList<User> followedUsers = new ArrayList<>();
 
     public static Result home() {
-
+        user = User.getUserByUserName(session().get("userName"));
+        session("userId", String.valueOf(user.getId()));
         posts = Post.getUserPosts(String.valueOf(user.getId()));
-        //ArrayList<Post> sharedPosts = Post.getSharedPosts(String.valueOf(user.getId()));
-        //System.out.println("share" + sharedPosts.toString());
-        //posts.addAll(sharedPosts);
+        ArrayList<Post> sharedPosts = Post.getSharedPosts(String.valueOf(user.getId()));
+        posts.addAll(sharedPosts);
 
         followingUsers = User.getFollowingUsers(String.valueOf(user.getId()));
         followedUsers = User.getFollowedUsers(String.valueOf(user.getId()));
@@ -47,10 +47,16 @@ public class MainController extends Controller {
     }
 
     public static Result main() {
-
         user = User.getUserByUserName(session().get("userName"));
         session("userId", String.valueOf(user.getId()));
-        posts = Post.getAllPosts();
+        posts = Post.getFollowingPosts(String.valueOf(user.getId()));
+
+        for (int i = 0; i < posts.size(); i++) {
+            if (posts.get(i).getVisibility()) {
+                //if it is private
+                posts.remove(i);
+            }
+        }
 
         return ok(main.render(user, postForm, posts));
     }

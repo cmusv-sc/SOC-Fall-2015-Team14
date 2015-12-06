@@ -40,7 +40,11 @@ public class PostController extends Controller {
         jsonData.put("time", dateFormat.format(date));
         //Todo get value from check box
         System.out.println("visibility is " + dc.field("visibility").value());
-        jsonData.put("visibility", dc.field("visibility").value());
+        if (dc.field("visibility").value() == null) {
+            jsonData.put("visibility", false);
+        } else {
+            jsonData.put("visibility", true);
+        }
 
         JsonNode response = APICall.postAPI(Constants.NEW_BACKEND + Constants.ADD_POST, jsonData);
         Application.flashMsg(response);

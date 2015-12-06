@@ -119,9 +119,13 @@
                     <div class="profile-image img-rounded" style="background-image: url('http://localhost:9034/users/getPhoto/@user.getId')"></div>
                 }
 
+                <div class="profile-username">
+                @@@user.getUserName()
+                    <span class="glyphicon glyphicon-edit" id="edit_btn"></span>
+                </div>
+
                 <div class="profile-name">
-                    @user.getUserName()
-                    <span class="glyphicon glyphicon-plus follow-btn">Follow</span>
+                    @user.getFirstName() @user.getLastName()
                 </div>
 
                 <div class="profile-affiliation">
@@ -246,7 +250,12 @@
                                         <div class="avatar"><a href="#"><img src="http://localhost:9034/users/getPhoto/@user.getId" alt="" /></a></div>
                                         <div class="comment-box">
                                             <div class="comment-text">
-                                                <strong>@user.getUserName</strong><a href="#" class="btn small color"> Following</a>
+                                                @if(user.getId.equals(session.get("userId"))) {
+                                                    <a href="/sns/home">
+                                                    } else {
+                                                    <a href="/sns/user/@user.getId">
+                                                    }<strong>@user.getUserName</strong></a>
+                                                @user.getFirstName @user.getLastName
                                             </div>
                                         </div>
                                     </li>
@@ -270,7 +279,12 @@
                                         <div class="avatar"><a href="#"><img src="http://localhost:9034/users/getPhoto/@user.getId" alt="" /></a></div>
                                         <div class="comment-box">
                                             <div class="comment-text">
-                                                <strong>Justin</strong>
+                                                @if(user.getId.equals(session.get("userId"))) {
+                                                      <a href="/sns/home">
+                                                    } else {
+                                                        <a href="/sns/user/@user.getId">
+                                                    }<strong>@user.getUserName</strong></a>
+                                                @user.getFirstName @user.getLastName
                                             </div>
                                         </div>
                                     </li>

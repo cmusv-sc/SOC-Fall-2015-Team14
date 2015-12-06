@@ -30,7 +30,7 @@ public class Post {
     private int shareCount;
     private int commentCount;
 
-    private String visibility;
+    private Boolean visibility;
     private ArrayList<User> likeUsers;
     private ArrayList<User> sharedUsers;
     private ArrayList<Comment> comments;
@@ -108,16 +108,12 @@ public class Post {
         this.sharedUsers = sharedUsers;
     }
 
-    public String getVisibility() {
+    public Boolean getVisibility() {
         return visibility;
     }
 
     public void setVisibility(Boolean visibility) {
-        if (visibility) {
-            this.visibility = "public";
-        } else {
-            this.visibility = "private";
-        }
+        this.visibility = visibility;
     }
 
     public String getTitle() {
@@ -157,7 +153,26 @@ public class Post {
             JsonNode json = postsNode.path(i);
 
             Post newPost = Json.fromJson(json, Post.class);
-            System.out.println(newPost.toString());
+            posts.add(newPost);
+        }
+        return posts;
+    }
+
+    /*
+        get following posts
+     */
+    public static ArrayList<Post> getFollowingPosts(String userId) {
+        ArrayList<Post> posts = new ArrayList<Post>();
+        JsonNode postsNode = APICall.callAPI(Constants.NEW_BACKEND + Constants.GET_FOLLOWING_POSTS + userId);
+
+        if (postsNode == null || postsNode.has("error") || !postsNode.isArray()) {
+            return posts;
+        }
+
+        for (int i = 0; i < postsNode.size(); i++) {
+            JsonNode json = postsNode.path(i);
+
+            Post newPost = Json.fromJson(json, Post.class);
             posts.add(newPost);
         }
         return posts;
@@ -188,7 +203,7 @@ public class Post {
 
     public static ArrayList<Post> getSharedPosts(String id) {
         ArrayList<Post> posts = new ArrayList<>();
-        JsonNode postNodes = APICall.callAPI(Constants.NEW_BACKEND + Constants.GET_SHARED_POST + id);
+        JsonNode postNodes = APICall.callAPI("http://localhost:9034/posts/getSharedPosts/" + id);
 
         if (postNodes == null || postNodes.has("error") || !postNodes.isArray()) {
             return posts;

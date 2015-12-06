@@ -59,6 +59,7 @@ public class Constants {
 
     //sns
     public static final String GET_USER_BY_USERNAME = "/users/username/";
+    public static final String GET_FOLLOWING_POSTS = "/users/getFollowingPosts/";
     public static final String UPLOAD_IMAGE = "/users/uploadPhoto/";
     public static final String USER_API = "/users/";
     public static final String ADD_POST = "/posts/add";
@@ -68,8 +69,8 @@ public class Constants {
     public static final String ADD_LIKE = "/posts/addLike";
     public static final String ADD_SHARE = "/posts/addSharedUser";
     public static final String DELETE_POST = "/posts/delete/";
-    public static final String GET_SHARED_POST = "/users/getSharedPosts/";
-    public static final String ADD_FOLLOWEE = "/users/addFollowee/";
+    public static final String GET_SHARED_POST = "/posts/getSharedPosts/";
+    public static final String ADD_FOLLOWEE = "/users/addFollowee";
     public static final String FUZZY_SEARCH= "/users/fuzzySearch/";
 
 }

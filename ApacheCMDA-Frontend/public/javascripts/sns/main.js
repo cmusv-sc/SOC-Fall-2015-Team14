@@ -20,7 +20,9 @@ $(document).ready(function() {
 
     $("#save-profile").click(function() {
         var obj = {
-            userName : $("#profile-form .profile-name input").val(),
+            userName : $("#profile-form .profile-username input").val(),
+            firstName: $("#profile-form .profile-name input[name='firstName']").val(),
+            lastName: $("#profile-form .profile-name input[name='lastName']").val(),
             affiliation : $("#profile-form .profile-affiliation input").val(),
             email : $("#profile-form .profile-email input").val(),
             researchInterests : $("#profile-form .profile-interest input").val(),

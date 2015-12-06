@@ -32,10 +32,13 @@ public class UserController extends Controller{
 
         try {
             user.setUserName(json.path("userName").asText());
+            user.setFirstName(json.path("firstName").asText());
+            user.setLastName(json.path("lastName").asText());
             user.setAffiliation(json.path("affiliation").asText());
             user.setEmail(json.path("email").asText());
             user.setPhoneNumber(json.path("phoneNumber").asText());
             user.setResearchInterests(json.path("researchInterests").asText());
+
             response = APICall.putAPI(Constants.NEW_BACKEND + Constants.USER_API + user.getId(), json);
         } catch (IllegalStateException e) {
             e.printStackTrace();
@@ -67,12 +70,13 @@ public class UserController extends Controller{
     }
 
     public static Result addFollowee(String followeeID) {
-
         ObjectNode jsonData = Json.newObject();
         jsonData.put("followerID", session().get("userId"));
         jsonData.put("followeeID", followeeID);
 
-        APICall.postAPI(Constants.NEW_BACKEND + Constants.ADD_FOLLOWEE, jsonData);
+        System.out.println(" add followee" + jsonData.toString());
+        String response = String.valueOf(APICall.postAPI(Constants.NEW_BACKEND + Constants.ADD_FOLLOWEE, jsonData));
+        System.out.println(response);
         return ok();
     }
 }

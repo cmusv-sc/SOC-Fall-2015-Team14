@@ -11,16 +11,27 @@ $(document).ready(function() {
         if ($(removeBtn).is(":hidden")) {
             $(removeBtn).show();
         }
+
+        var editBtn = $(this).find(".pull-right.meta.edit-div");
+        if ($(editBtn).is(":hidden")) {
+            $(editBtn).show();
+        }
+
     }, function () {
         var removeBtn = $(this).find(".pull-right.meta.remove-div");
         if (!$(removeBtn).is(":hidden")) {
             $(removeBtn).hide();
         }
+
+        var editBtn = $(this).find(".pull-right.meta.edit-div");
+        if (!$(editBtn).is(":hidden")) {
+            $(editBtn).hide();
+        }
     })
 
     //click delete button
     $(".remove-btn").click(function() {
-        console.log("click");
+
         var post = $(this).closest(".panel.panel-white.post.panel-shadow");
         var postId = $(post).attr('id').split('-')[1];
         $.ajax({
@@ -29,5 +40,14 @@ $(document).ready(function() {
         })
 
         $(post).remove();
+    })
+
+
+    //click edit button
+    $(".edit-btn").click(function() {
+        var post = $(this).closest(".panel.panel-white.post.panel-shadow");
+        var postId = $(post).attr('id').split('-')[1];
+
+        
     })
 })

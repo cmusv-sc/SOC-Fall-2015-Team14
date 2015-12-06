@@ -5,12 +5,13 @@ $(document).ready(function() {
     $(".glyphicon.glyphicon-plus.follow-btn").click(function() {
         console.log("click");
         var id = $("#hiddenSession").val();
+        var that = $(this);
         $.ajax({
             url: "/sns/users/follow/" + id,
             type: "GET"
         }).done(function() {
-            $(this).removeClass("glyphicon-plus");
-            $(this).addClass("glyphicon-ok");
+            $(that).removeClass("glyphicon-plus");
+            $(that).addClass("glyphicon-ok");
         });
     })
 })

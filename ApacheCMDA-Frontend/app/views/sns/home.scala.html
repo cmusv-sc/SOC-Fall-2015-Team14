@@ -21,9 +21,9 @@
                 </ul>
 
                 <div class="col-sm-3 col-md-3 pull-left">
-                    <form class="navbar-form" role="search">
+                    <form class="navbar-form" role="search" action="@routes.MainController.search()" method="post">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                            <input type="text" class="form-control" placeholder="Search" name="keyword" id="srch-term">
                             <div class="input-group-btn">
                                 <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                             </div>
@@ -120,10 +120,15 @@
                     <div class="profile-image img-rounded" style="background-image: url('http://localhost:9034/users/getPhoto/@session.get("userId")')"></div>
                     }
 
-                <div class="profile-name">
-                    @user.getUserName()
+                <div class="profile-username">
+                    @@@user.getUserName()
                     <span class="glyphicon glyphicon-edit" id="edit_btn"></span>
                 </div>
+
+                <div class="profile-name">
+                    @user.getFirstName() @user.getLastName()
+                </div>
+
 
                 <div class="profile-affiliation">
                     <span class="glyphicon glyphicon-briefcase"></span>
@@ -167,8 +172,13 @@
                     </div>
                 </form>
                     <form id="profile-form" method="post">
-                        <div class="profile-name form-group">
+                        <div class="profile-username form-group">
                             <input type="text" name="userName" value="@user.getUserName()" placeholder="name"/>
+                        </div>
+
+                        <div class="profile-name form-group">
+                            <input type="text" name="firstName" value="@user.getFirstName()" placeholder="First Name"/>
+                            <input type="text" name="lastName" value="@user.getLastName()" placeholder="Last Name"/>
                         </div>
 
                         <div class="profile-affiliation form-group">
@@ -231,6 +241,9 @@
                                                     made a post.
                                                 </div>
                                                 <h6 class="text-muted time">@post.getTime</h6>
+                                            </div>
+                                            <div class="pull-right meta edit-div" style="display: none">
+                                                <span class="glyphicon glyphicon-edit edit-btn"></span>
                                             </div>
                                             <div class="pull-right meta remove-div" style="display: none">
                                                   <span class="glyphicon glyphicon-remove remove-btn"></span>
@@ -296,7 +309,13 @@
                                             <div class="avatar"><a href="#"><img src="http://localhost:9034/users/getPhoto/@user.getId" alt="" /></a></div>
                                             <div class="comment-box">
                                                 <div class="comment-text">
-                                                    <strong>@user.getUserName</strong><a href="#" class="btn small color"> Following</a>
+                                                    @if(user.getId.equals(session.get("userId"))) {
+                                                        <a href="/sns/home">
+                                                        } else {
+                                                        <a href="/sns/user/@user.getId">
+                                                        }<strong>@user.getUserName</strong></a>
+                                                    @user.getFirstName @user.getLastName
+                                                    <a href="#" class="btn small color"> Following</a>
                                                 </div>
                                             </div>
                                         </li>
@@ -320,7 +339,12 @@
                                             <div class="avatar"><a href="#"><img src="http://localhost:9034/users/getPhoto/@user.getId" alt="" /></a></div>
                                             <div class="comment-box">
                                                 <div class="comment-text">
-                                                    <strong>Justin</strong>
+                                                    @if(user.getId.equals(session.get("userId"))) {
+                                                        <a href="/sns/home">
+                                                        } else {
+                                                        <a href="/sns/user/@user.getId">
+                                                        }<strong>@user.getUserName</strong></a>
+                                                    @user.getFirstName @user.getLastName
                                                 </div>
                                             </div>
                                         </li>
