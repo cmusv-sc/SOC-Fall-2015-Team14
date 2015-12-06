@@ -57,6 +57,8 @@ public class PostController extends Controller {
         String title = json.path("title").asText();
         String content = json.path("content").asText();
         boolean visibility = json.path("visibility").asBoolean();
+        double latitude = json.path("latitude").asDouble();
+        double longitude = json.path("longitude").asDouble();
 
         User user = userRepository.findOne(userId);
         if (user == null) {
@@ -73,7 +75,7 @@ public class PostController extends Controller {
         }*/
 
         try {
-            Post post = new Post(user, title, content, time, visibility);
+            Post post = new Post(user, title, content, time, visibility, latitude, longitude);
 
             postRepository.save(post);
             System.out.println("Post saved: " + post.getId());
@@ -127,6 +129,8 @@ public class PostController extends Controller {
         String title = json.path("title").asText();
         String content = json.path("content").asText();
         boolean visibility = json.path("visibility").asBoolean();
+        double latitude = json.path("latitude").asDouble();
+        double longitude = json.path("longitude").asDouble();
 
         Date time = new Date();
         /*SimpleDateFormat format = new SimpleDateFormat(Common.DATE_PATTERN);
@@ -143,6 +147,8 @@ public class PostController extends Controller {
             updatePost.setContent(content);
             updatePost.setTime(time);
             updatePost.setVisibility(visibility);
+            updatePost.setLatitude(latitude);
+            updatePost.setLongitude(longitude);
 
             Post savedPost = postRepository.save(updatePost);
             System.out.println("Post updated: " + savedPost.getId()
