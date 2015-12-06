@@ -3,28 +3,53 @@
  */
 $(document).ready(function() {
 
-    var allUsers = prepAutoCompleteUser();
-    var allPosts = prepAutoCompletePost();
+    var d1 = prepAutoCompleteUser();
+    var d2 = prepAutoCompletePost();
 
-    //merge two arrays to a new one
-    var all = $.merge($.merge([], allUsers), allPosts);
+    $.when(d1, d2).done(function(data1, data2) {
 
-    $("#srch-term").autocomplete({
-        source: all
-    }).data("autocomplete")._renderItem = function(ul, item) {
-        if('user' in item) {
-            //posts
-            //to search page search
-            return $("<li>").data("item.autocomplete", item).append(
-                "<a href=''><strong>" + item.user.userName
-                + "</strong>" + item.content + "</a>").appendTo(ul);
-        } else {
-            //users
-            return $("<li>").data("item.autocomplete", item).append(
-                "<a href=''><strong>" + item.user.userName
-                + "</strong></a>").appendTo(ul);
+        var allUsers = [];
+        var allPosts = [];
+        data1[0].forEach(function(item) {
+            allUsers.push({
+                id: item.id,
+                label: item.userName,
+                value: item.userName,
+                desc: item.firstName + " " + item.lastName,
+                origin: "user"
+            })
+        })
+
+        data2[0].forEach(function(item) {
+            allPosts.push({
+                id: item.id,
+                label: item.user.userName,
+                value: item.content,
+                desc: item.content,
+                origin: "posts"
+            })
+        })
+
+        //merge two arrays to a new one
+        var all = allUsers.concat(allPosts);
+        $("#srch-term").autocomplete({
+            source: all,
+            minLength: 0
+        }).data("ui-autocomplete")._renderItem = function(ul, item) {
+            if(item.origin == "posts") {
+                //posts
+                //to search page search
+                return $("<li>").data("item.autocomplete", item).append(
+                    "<a href='/sns/post/'"+ item.id + "><strong>" + item.label
+                    + "</strong><br>" + item.desc + "</a>").appendTo(ul);
+            } else {
+                //users
+                return $("<li>").data("item.autocomplete", item).append(
+                    "<a href='/sns/user/"+ item.id + "'><strong>" + item.label
+                    + "</strong><br>" + item.desc + "</a>").appendTo(ul);
+            }
         }
-    }
+    })
 
     commentPost();
     likePost();
@@ -33,28 +58,19 @@ $(document).ready(function() {
 })
 
 function prepAutoCompleteUser() {
-    var allUsers = [];
-    $.ajax({
+
+    return $.ajax({
         url: "/sns/autocomplete/users",
         type: "GET"
-    }).done(function(data){
-        allUsers = data;
-        return allUsers;
-    }).error(function(error) {
-        console.log(error);
-    })
+    });
 }
 
 function prepAutoCompletePost() {
-    var allPosts = [];
-    $.ajax({
+
+    return $.ajax({
         url: "/sns/autocomplete/posts",
         type: "GET"
-    }).done(function(data){
-        allPosts = data;
-    }).error(function(error) {
-        console.log(error);
-    })
+    });
 }
 
 function editProfile() {

@@ -34,7 +34,7 @@ public class MainController extends Controller {
 
     public static Result home() {
         if(session().get("userName") == null) {
-            redirect("/sns/login");
+            return redirect("/sns/login");
         }
 
         user = User.getUserByUserName(session().get("userName"));
@@ -52,7 +52,7 @@ public class MainController extends Controller {
 
     public static Result main() {
         if(session().get("userName") == null) {
-            redirect("/sns/login");
+            return redirect("/sns/login");
         }
         user = User.getUserByUserName(session().get("userName"));
         session("userId", String.valueOf(user.getId()));

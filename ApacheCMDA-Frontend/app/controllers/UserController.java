@@ -81,7 +81,8 @@ public class UserController extends Controller{
     }
 
     public static Result getAllUsers() {
-        JsonNode response = APICall.callAPI(Constants.NEW_BACKEND + Constants.GET_ALL_USERS);
+
+        JsonNode response = APICall.callAPI(Constants.NEW_BACKEND + "/users/getAllUsers/json");
         return ok(response);
     }
 }
