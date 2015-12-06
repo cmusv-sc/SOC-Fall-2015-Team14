@@ -313,9 +313,9 @@ public class PostController extends Controller {
             postList.add(post);
         }
 
+        Collections.sort(postList, new PostComparator());
+
         String result = new String();
-
-
 
         if (format.equals("json")) {
             //result = new Gson().toJson(postList);
@@ -449,7 +449,7 @@ public class PostController extends Controller {
     }
 
     public Result searchPosts(String key, String format) {
-        List<Post> posts = postRepository.findByTitleContainingOrContentContaining(key, key);
+        List<Post> posts = postRepository.findByTitleContainingOrContentContainingOrderByTimeDesc(key, key);
 
         for(Post post: posts) {
             List<Comment> comments = post.getComments();
@@ -467,5 +467,12 @@ public class PostController extends Controller {
             result = gson.toJson(posts);
         }
         return ok(result);
+    }
+
+    class PostComparator implements Comparator<Post> {
+        @Override
+        public int compare(Post post1, Post post2) {
+            return post2.getTime().compareTo(post1.getTime());
+        }
     }
 }
