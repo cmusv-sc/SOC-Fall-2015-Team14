@@ -23,7 +23,7 @@ public interface PostRepository extends CrudRepository<Post, Long> {
     //List<Post> findTop10UsersOrderByLikeCountDesc();
     List<Post> findTop10ByOrderByLikeCountDesc();
     //List<Post> findByTitleContainsOrContentContains(String key);
-    List<Post> findByTitleContainingOrContentContaining(String titleKey, String contentKey);
+    List<Post> findByTitleContainingOrContentContainingOrderByTimeDesc(String titleKey, String contentKey);
     Post findOne(Long Id);
 }
 
