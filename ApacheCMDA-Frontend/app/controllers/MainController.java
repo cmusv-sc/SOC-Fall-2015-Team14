@@ -33,6 +33,10 @@ public class MainController extends Controller {
     private static ArrayList<User> followedUsers = new ArrayList<>();
 
     public static Result home() {
+        if(session().get("userName") == null) {
+            redirect("/sns/login");
+        }
+
         user = User.getUserByUserName(session().get("userName"));
         session("userId", String.valueOf(user.getId()));
         posts = Post.getUserPosts(String.valueOf(user.getId()));
@@ -47,6 +51,9 @@ public class MainController extends Controller {
     }
 
     public static Result main() {
+        if(session().get("userName") == null) {
+            redirect("/sns/login");
+        }
         user = User.getUserByUserName(session().get("userName"));
         session("userId", String.valueOf(user.getId()));
         posts = Post.getFollowingPosts(String.valueOf(user.getId()));

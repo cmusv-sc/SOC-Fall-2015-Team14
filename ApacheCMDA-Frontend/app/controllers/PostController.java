@@ -109,4 +109,9 @@ public class PostController extends Controller {
         APICall.deleteAPI(Constants.NEW_BACKEND + Constants.DELETE_POST + id);
         return redirect("/sns/home");
     }
+
+    public static Result getAllPosts() {
+        JsonNode response = APICall.callAPI(Constants.NEW_BACKEND + Constants.GET_ALL_POSTS);
+        return ok(response);
+    }
 }

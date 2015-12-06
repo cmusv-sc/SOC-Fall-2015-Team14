@@ -3,10 +3,61 @@
  */
 $(document).ready(function() {
 
-    //store the session
-    var userName = $("input#hiddenUserName").val();
-    var userId = $("input#hiddenUserId").val();
+    var allUsers = prepAutoCompleteUser();
+    var allPosts = prepAutoCompletePost();
 
+    //merge two arrays to a new one
+    var all = $.merge($.merge([], allUsers), allPosts);
+
+    $("#srch-term").autocomplete({
+        source: all
+    }).data("autocomplete")._renderItem = function(ul, item) {
+        if('user' in item) {
+            //posts
+            //to search page search
+            return $("<li>").data("item.autocomplete", item).append(
+                "<a href=''><strong>" + item.user.userName
+                + "</strong>" + item.content + "</a>").appendTo(ul);
+        } else {
+            //users
+            return $("<li>").data("item.autocomplete", item).append(
+                "<a href=''><strong>" + item.user.userName
+                + "</strong></a>").appendTo(ul);
+        }
+    }
+
+    commentPost();
+    likePost();
+    sharePost();
+    morePosts();
+})
+
+function prepAutoCompleteUser() {
+    var allUsers = [];
+    $.ajax({
+        url: "/sns/autocomplete/users",
+        type: "GET"
+    }).done(function(data){
+        allUsers = data;
+        return allUsers;
+    }).error(function(error) {
+        console.log(error);
+    })
+}
+
+function prepAutoCompletePost() {
+    var allPosts = [];
+    $.ajax({
+        url: "/sns/autocomplete/posts",
+        type: "GET"
+    }).done(function(data){
+        allPosts = data;
+    }).error(function(error) {
+        console.log(error);
+    })
+}
+
+function editProfile() {
     //edit profile
     $("#edit_btn").on("click", function() {
         $(".profile-container").hide();
@@ -43,7 +94,9 @@ $(document).ready(function() {
             console.log(error);
         })
     })
+}
 
+function commentPost() {
     //click comment to slide down
     $(".comment-btn").click(function() {
         var post = $(this).closest(".post");
@@ -97,8 +150,9 @@ $(document).ready(function() {
             console.log(error);
         })
     })
+}
 
-
+function likePost() {
     //click like
     $(".like-btn").click(function() {
         var post = $(this).closest(".post");
@@ -127,7 +181,9 @@ $(document).ready(function() {
             console.log(error);
         })
     })
+}
 
+function sharePost() {
     //click share
     $(".share-btn").click(function() {
         var post = $(this).closest(".post");
@@ -154,7 +210,9 @@ $(document).ready(function() {
             console.log(error);
         })
     })
+}
 
+function morePosts() {
     //click more btn
     $(".more-btn").click(function() {
         $(this).hide();
@@ -165,10 +223,7 @@ $(document).ready(function() {
             }
         })
     })
-
-
-})
-
+}
 
 function getFile(){
     $("#upfile").click();
@@ -208,4 +263,6 @@ function sub(obj){
         reader.readAsDataURL(obj.files[0]);
     }
 }
+
+
 

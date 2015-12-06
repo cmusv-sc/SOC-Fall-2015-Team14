@@ -35,6 +35,9 @@ public class Post {
     private ArrayList<User> sharedUsers;
     private ArrayList<Comment> comments;
 
+    private double latitude;
+    private double longitude;
+
     public String getId() {
         return id;
     }
@@ -138,9 +141,25 @@ public class Post {
         return post;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
     /*
-        List all posts
-     */
+            List all posts
+         */
     public static ArrayList<Post> getAllPosts() {
         ArrayList<Post> posts = new ArrayList<Post>();
         JsonNode postsNode = APICall.callAPI(GET_POST_SERVICES_CALL);

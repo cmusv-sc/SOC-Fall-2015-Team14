@@ -51,6 +51,8 @@ GET         /sns/posts/:id/delete/                           controllers.PostCon
 GET         /sns/users/follow/:id                            controllers.UserController.addFollowee(id: String)
 
 POST        /sns/fuzzySearch                                 controllers.MainController.search()
+GET         /sns/autocomplete/users                          controllers.UserController.getAllUsers()
+GET         /sns/autocomplete/posts                          controllers.PostController.getAllPosts()
 
 GET         /sns/login                                       controllers.Application.login()
 GET         /sns/logout                                      controllers.Application.logout()
