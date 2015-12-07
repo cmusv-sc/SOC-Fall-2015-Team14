@@ -73,6 +73,7 @@ public class Constants {
     public static final String DELETE_POST = "/posts/delete/";
     public static final String GET_SHARED_POST = "/posts/getSharedPosts/";
     public static final String ADD_FOLLOWEE = "/users/addFollowee";
-    public static final String FUZZY_SEARCH= "/users/fuzzySearch/";
+    public static final String FUZZY_SEARCH = "/users/fuzzySearch/";
+    public static final String EXACT_SEARCH = "/users/exactSearch";
 
 }

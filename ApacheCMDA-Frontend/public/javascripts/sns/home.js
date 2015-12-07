@@ -47,7 +47,47 @@ $(document).ready(function() {
     $(".edit-btn").click(function() {
         var post = $(this).closest(".panel.panel-white.post.panel-shadow");
         var postId = $(post).attr('id').split('-')[1];
-
-        
     })
+
+    editProfile();
 })
+
+
+function editProfile() {
+    //edit profile
+    $("#edit_btn").on("click", function() {
+        $(".profile-container").hide();
+        $(".profile-edit-container").show();
+    });
+
+    $("#profile-form").submit(function(e) {
+        e.preventDefault();
+    })
+
+
+    $("#save-profile").click(function() {
+        var obj = {
+            userName : $("#profile-form .profile-username input").val(),
+            firstName: $("#profile-form .profile-name input[name='firstName']").val(),
+            lastName: $("#profile-form .profile-name input[name='lastName']").val(),
+            affiliation : $("#profile-form .profile-affiliation input").val(),
+            email : $("#profile-form .profile-email input").val(),
+            researchInterests : $("#profile-form .profile-interest input").val(),
+            phoneNumber : $("#profile-form .profile-phone input").val()
+        }
+
+        $.ajax({
+            url: "/sns/users/updateUser",
+            type: "POST",
+            data: JSON.stringify(obj),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).done(function(data) {
+            console.log(data);
+            window.location.reload();
+        }).error(function(error) {
+            console.log(error);
+        })
+    })
+}

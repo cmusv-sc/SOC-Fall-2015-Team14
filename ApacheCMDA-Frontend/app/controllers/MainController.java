@@ -1,6 +1,8 @@
 package controllers;
 
+import com.amazonaws.util.json.JSONObject;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Post;
 import models.User;
 import play.data.DynamicForm;
@@ -77,10 +79,10 @@ public class MainController extends Controller {
         return ok(other.render(otherUser, postForm, otherPosts, otherFollowingUser, otherFollowedUser));
     }
 
-    public static Result search() {
+    public static Result fuzzySearch() {
 
         DynamicForm dynamicForm = Form.form().bindFromRequest();
-        String keyword = dynamicForm.get("keyword");
+        String keyword = dynamicForm.get("fuzzy-search");
 
         JsonNode userNodes = APICall.callAPI(Constants.NEW_BACKEND + Constants.FUZZY_SEARCH + keyword);
         ArrayList<User> users = new ArrayList<>();
@@ -90,7 +92,27 @@ public class MainController extends Controller {
             users.add(newUser);
         }
 
-        return ok(search.render(postForm, users));
+        return ok(search.render(users));
+    }
+
+    public static Result advancedSearch() {
+        DynamicForm df = Form.form().bindFromRequest();
+
+        ObjectNode jsonData = Json.newObject();
+        jsonData.put("firstName", df.get("firstName-search"));
+        jsonData.put("lastName", df.get("lastName-search"));
+        jsonData.put("affiliation", df.get("affiliation-search"));
+        jsonData.put("researchInterest", df.get("interest-search"));
+
+        JsonNode userNodes = APICall.postAPI(Constants.NEW_BACKEND + Constants.EXACT_SEARCH, jsonData);
+        ArrayList<User> users = new ArrayList<>();
+        for (int i = 0; i < userNodes.size(); i++) {
+            JsonNode json = userNodes.path(i);
+            User newUser = Json.fromJson(json, User.class);
+            users.add(newUser);
+        }
+
+        return ok(search.render(users));
     }
 
 }

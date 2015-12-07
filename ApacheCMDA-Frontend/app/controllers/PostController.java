@@ -33,13 +33,11 @@ public class PostController extends Controller {
         Form<Post> dc = postForm.bindFromRequest();
         ObjectNode jsonData = Json.newObject();
         jsonData.put("userId", session().get("userId"));
-        System.out.println("content is " + dc.field("content").value());
         jsonData.put("content", dc.field("content").value());
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         jsonData.put("time", dateFormat.format(date));
-        //Todo get value from check box
-        System.out.println("visibility is " + dc.field("visibility").value());
+
         if (dc.field("visibility").value() == null) {
             jsonData.put("visibility", false);
         } else {
@@ -48,7 +46,6 @@ public class PostController extends Controller {
 
         JsonNode response = APICall.postAPI(Constants.NEW_BACKEND + Constants.ADD_POST, jsonData);
         Application.flashMsg(response);
-        System.out.println(response.toString());
         return redirect("/sns/main");
     }
 

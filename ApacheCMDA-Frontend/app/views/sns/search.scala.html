@@ -1,4 +1,4 @@
-@(postForm: play.data.Form[models.Post], users: java.util.ArrayList[User])
+@(users: java.util.ArrayList[User])
 @import helper._
 @import sns._
 
@@ -31,11 +31,6 @@
                 </div>
 
                 <div class="nav navbar-right">
-                    <button type="button" class="btn btn-default navbar-btn buttonLow" data-toggle="modal" data-target="#newPostModal">
-                        <span class="glyphicon glyphicon-edit"></span>
-                        Post
-                    </button>
-
                     @if(!session.get("userName")) {
                         <form class="navbar-form navbar-right" action="@routes.Application.login()">
                             <button type="submit" class="btn btn-default navbar-btn pull-right">Log in</button>

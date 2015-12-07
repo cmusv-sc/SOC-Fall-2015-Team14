@@ -34,7 +34,7 @@ $(document).ready(function() {
         var all = allUsers.concat(allPosts);
         $("#srch-term").autocomplete({
             source: all,
-            minLength: 0
+            minLength: 1
         }).data("ui-autocomplete")._renderItem = function(ul, item) {
             if(item.origin == "posts") {
                 //posts
@@ -71,45 +71,6 @@ function prepAutoCompletePost() {
         url: "/sns/autocomplete/posts",
         type: "GET"
     });
-}
-
-function editProfile() {
-    //edit profile
-    $("#edit_btn").on("click", function() {
-        $(".profile-container").hide();
-        $(".profile-edit-container").show();
-    });
-
-    $("#profile-form").submit(function(e) {
-        e.preventDefault();
-    })
-
-
-    $("#save-profile").click(function() {
-        var obj = {
-            userName : $("#profile-form .profile-username input").val(),
-            firstName: $("#profile-form .profile-name input[name='firstName']").val(),
-            lastName: $("#profile-form .profile-name input[name='lastName']").val(),
-            affiliation : $("#profile-form .profile-affiliation input").val(),
-            email : $("#profile-form .profile-email input").val(),
-            researchInterests : $("#profile-form .profile-interest input").val(),
-            phoneNumber : $("#profile-form .profile-phone input").val()
-        }
-
-        $.ajax({
-            url: "/sns/users/updateUser",
-            type: "POST",
-            data: JSON.stringify(obj),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).done(function(data) {
-            console.log(data);
-            window.location.reload();
-        }).error(function(error) {
-            console.log(error);
-        })
-    })
 }
 
 function commentPost() {
