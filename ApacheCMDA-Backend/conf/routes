@@ -88,7 +88,7 @@ POST          /users/isUserNameExisted                                          
 POST		  /users/isEmailExisted                                                                     @controllers.UserController.isEmailExisted()
 GET           /users/getFollowingPosts/:id                                                              @controllers.UserController.getFollowingPosts(id:Long, format: String="json")
 GET           /users/fuzzySearch/:key                                                                   @controllers.UserController.fuzzySearchUsers(key: String, format: String="json")
-POST          /users/exactSearch/                                                                       @controllers.UserController.exactSearchUsers(format: String="json")
+POST          /users/exactSearch                                                                        @controllers.UserController.exactSearchUsers(format: String="json")
 GET           /users/getFrontLayerPhoto/:type                                                           @controllers.UserController.getFrontLayerPhoto(type: String)
 
 # Map static resources from the /public folder to the /assets URL path
