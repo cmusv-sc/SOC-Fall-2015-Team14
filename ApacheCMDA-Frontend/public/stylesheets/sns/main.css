@@ -83,3 +83,13 @@ span.glyphicon.glyphicon-plus.follow-btn {
     color: dodgerblue;
 }
 
+.img-circle.avatar.front-layer-image {
+    background-image: url("http://localhost:9034/users/getFrontLayerPhoto/France");
+    position: absolute;
+    top: -60px;
+    left: 0;
+    opacity: 0.5;
+    background-size: cover;
+    display: none;
+}
+

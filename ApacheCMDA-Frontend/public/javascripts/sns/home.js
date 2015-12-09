@@ -50,6 +50,17 @@ $(document).ready(function() {
     })
 
     editProfile();
+
+
+    //support france
+    $("#support-france-btn").click(function() {
+
+    })
+
+    //remvoe layer
+    $("#remove-layer-btn").click(function(){
+
+    })
 })
 
 

@@ -243,33 +243,39 @@
                         </div>
                     </div>
                 </form>
-                    <form id="profile-form" method="post">
-                        <div class="profile-username form-group">
-                            <input type="text" name="userName" value="@user.getUserName()" placeholder="name"/>
-                        </div>
+                <form id="profile-form" method="post">
+                    <div class="profile-username form-group">
+                        <input type="text" name="userName" value="@user.getUserName()" placeholder="name"/>
+                    </div>
 
-                        <div class="profile-name form-group">
-                            <input type="text" name="firstName" value="@user.getFirstName()" placeholder="First Name"/>
-                            <input type="text" name="lastName" value="@user.getLastName()" placeholder="Last Name"/>
-                        </div>
+                    <div class="profile-name form-group">
+                        <input type="text" name="firstName" value="@user.getFirstName()" placeholder="First Name"/>
+                        <input type="text" name="lastName" value="@user.getLastName()" placeholder="Last Name"/>
+                    </div>
 
-                        <div class="profile-affiliation form-group">
-                            <input type="text" name="affiliation" value="@user.getAffiliation()" placeholder="affiliation"/>
-                        </div>
-                        <div class="profile-interest form-group">
-                            <input type="text" name="researchInterests" value="@user.getResearchInterests()" placeholder="interest"/>
-                        </div>
-                        <div class="profile-email form-group">
-                            <input type="email" name="email" value="@user.getEmail()" placeholder="email"/>
-                        </div>
-                        <div class="profile-phone form-group">
-                            <input type="tel" name="phoneNumber" value="@user.getPhoneNumber()" placeholder="phone number"/>
-                        </div>
-                        <button id="save-profile" class="btn btn-primary" type="button">
-                            Submit
-                        </button>
-                        <button class="btn btn-default">Cancel</button>
-                    </form>
+                    <div class="profile-affiliation form-group">
+                        <input type="text" name="affiliation" value="@user.getAffiliation()" placeholder="affiliation"/>
+                    </div>
+                    <div class="profile-interest form-group">
+                        <input type="text" name="researchInterests" value="@user.getResearchInterests()" placeholder="interest"/>
+                    </div>
+                    <div class="profile-email form-group">
+                        <input type="email" name="email" value="@user.getEmail()" placeholder="email"/>
+                    </div>
+                    <div class="profile-phone form-group">
+                        <input type="tel" name="phoneNumber" value="@user.getPhoneNumber()" placeholder="phone number"/>
+                    </div>
+                    <button id="save-profile" class="btn btn-primary" type="button">
+                        Submit
+                    </button>
+                    <button class="btn btn-default">Cancel</button>
+                </form>
+            </div>
+
+            <!-- Add France -->
+            <div class="image-layer-div">
+                <a style="display: block" id="support-france-btn">Support France</a>
+                <a style="display: block" id="support-france-btn">Remove Layer</a>
             </div>
         </div>
 
@@ -429,6 +435,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 }
