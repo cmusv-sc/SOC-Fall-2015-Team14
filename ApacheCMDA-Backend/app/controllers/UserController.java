@@ -249,6 +249,32 @@ public class UserController extends Controller {
 		}
 	}
 
+	public Result updateFrontLayerPhotoFlag(long id) {
+		JsonNode json = request().body().asJson();
+		if (json == null) {
+			System.out.println("User not saved, expecting Json data");
+			return badRequest("User not saved, expecting Json data");
+		}
+
+		// Parse JSON file
+		boolean hasFrontLayerPhoto = json.path("hasFrontLayerPhoto").asBoolean();
+		try {
+			User updateUser = userRepository.findOne(id);
+
+			updateUser.setHasFrontLayerPhoto(hasFrontLayerPhoto);
+
+			User savedUser = userRepository.save(updateUser);
+			System.out.println("User updated: " + savedUser.getFirstName()
+					+ " " + savedUser.getLastName());
+			return created("User updated: " + savedUser.getFirstName() + " "
+					+ savedUser.getLastName());
+		} catch (PersistenceException pe) {
+			pe.printStackTrace();
+			System.out.println("User not updated for id " + id);
+			return badRequest("User not updated for id " + id);
+		}
+	}
+
 	public Result getFollowers(Long id, String format) {
 		if (id == null) {
 			System.out.println("User id is null or empty!");

@@ -74,6 +74,7 @@ GET           /users/username/:username                                         
 POST          /users/add                                                                                @controllers.UserController.addUser
 POST          /users/uploadPhoto/:id                                                                    @controllers.UserController.uploadUserPhoto(id: Long)
 PUT           /users/:id                                                                                @controllers.UserController.updateUser(id: Long)
+PUT           /users/updateFrontLayerPhotoFlag/:id                                                      @controllers.UserController.updateFrontLayerPhotoFlag(id: Long)
 DELETE        /users/delete/:id                                                                         @controllers.UserController.deleteUser(id: Long)
 GET           /users/getPhoto/:id                                                                       @controllers.UserController.getUserPhoto(id: Long)
 GET			  /users/getAllUsers/json																	@controllers.UserController.getAllUsers(format: String="json")
