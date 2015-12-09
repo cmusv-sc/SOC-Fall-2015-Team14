@@ -16,7 +16,6 @@ public class Post {
 
     //restful uris
     private static final String GET_POST_SERVICES_CALL = Constants.NEW_BACKEND+"/posts/getAllPosts/json";
-    private static final String GET_POST_BY_ID_SERVICES_CALL = Constants.NEW_BACKEND+"/posts/id/";
     private static final String GET_POST_BY_USER_SERVICES_CALL = Constants.NEW_BACKEND+"/posts/userId/";
     private static final String ADD_POST_SERVICE_CALL = Constants.NEW_BACKEND+"/posts/add";
 
@@ -202,7 +201,7 @@ public class Post {
 
     public static ArrayList<Post> getUserPosts(String id) {
         ArrayList<Post> posts = new ArrayList<Post>();
-        JsonNode postNodes = APICall.callAPI(GET_POST_BY_USER_SERVICES_CALL + id);
+        JsonNode postNodes = APICall.callAPI(Constants.NEW_BACKEND + Constants.GET_USER_POSTS + id);
 
         if (postNodes == null || postNodes.has("error") || !postNodes.isArray()) {
             return posts;
@@ -221,7 +220,7 @@ public class Post {
 
     public static ArrayList<Post> getSharedPosts(String id) {
         ArrayList<Post> posts = new ArrayList<>();
-        JsonNode postNodes = APICall.callAPI("http://localhost:9034/posts/getSharedPosts/" + id);
+        JsonNode postNodes = APICall.callAPI(Constants.NEW_BACKEND + Constants.GET_SHARED_POST + id);
 
         if (postNodes == null || postNodes.has("error") || !postNodes.isArray()) {
             return posts;

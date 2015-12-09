@@ -236,11 +236,14 @@
                                     <div class="panel panel-white post panel-shadow" id="post-@post.getId">
                                         <div class="post-heading">
                                             <div class="pull-left image">
-                                                <a href="#">
+                                                <a href="#" style="position: relative">
                                                 @if(post.getUser.getId == null) {
                                                     <img src="http://avatarbox.net/avatars/img32/ned_flanders_avatar_picture_23953.gif" alt="user profile image" class="img-circle avatar"/>
                                                 } else {
-                                                    <img class="img-circle avatar" src="http://localhost:9034/users/getPhoto/@post.getUser.getId" alt="user profile image" />
+                                                    <img class="img-circle avatar" src="http://localhost:9034/users/getPhoto/@post.getUser.getId" alt="user profile image"
+                                                        style="position : absolute; top: 0; left: 0;"/>
+                                                    <img class="img-circle avatar front-layer-image" src="http://localhost:9034/users/getFrontLayerPhoto/France"
+                                                    style="position : absolute; top: 0; left: 0; opacity: 0.5"/>
                                                 }
                                                 </a>
                                             </div>

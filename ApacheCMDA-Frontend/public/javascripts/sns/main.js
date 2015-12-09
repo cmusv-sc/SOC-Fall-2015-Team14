@@ -140,7 +140,7 @@ function autoComplete() {
 function commentPost() {
 
     var userId = $("#hiddenUserId").val();
-    var userName = $("#hiddenUserId").val();
+    var userName = $("#hiddenUserName").val();
 
     //click comment to slide down
     $(".comment-btn").click(function() {
