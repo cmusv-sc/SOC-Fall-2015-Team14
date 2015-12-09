@@ -55,6 +55,8 @@ POST        /sns/advancedSearch                              controllers.MainCon
 GET         /sns/autocomplete/users                          controllers.UserController.getAllUsers()
 GET         /sns/autocomplete/posts                          controllers.PostController.getAllPosts()
 
+GET         /sns/popularPosts                                controllers.MainController.popularPosts()
+
 GET         /sns/login                                       controllers.Application.login()
 GET         /sns/logout                                      controllers.Application.logout()
 POST        /sns/authenticate                                controllers.Application.authenticate()

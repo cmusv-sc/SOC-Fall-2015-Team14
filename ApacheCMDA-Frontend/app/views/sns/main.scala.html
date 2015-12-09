@@ -131,7 +131,6 @@
                         <div class="tab-pane active" id="fuzzy-search-tab">
                             <form class="form-horizontal" role="search" action="@routes.MainController.fuzzySearch()" method="post">
                                 <div class="form-group">
-                                    <label for="fuzzy-search-input">Fuzzy Search</label>
                                     <input type="text" class="form-control" placeholder="Search ..." name="fuzzy-search" id="fuzzy-search-input">
                                 </div>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -146,19 +145,19 @@
                             <form class="form-horizontal" role="search" action="@routes.MainController.advancedSearch()" method="post">
                                 <div class="form-group">
                                     <label for="firstName-input">FirstName</label>
-                                    <input type="text" class="form-control" placeholder="FirstName" name="firstName-search" id="firstName-input">
+                                    <input type="text" required="" class="form-control" placeholder="FirstName" name="firstName-search" id="firstName-input">
                                 </div>
                                 <div class="form-group">
                                     <label for="lastName-input">LastName</label>
-                                    <input type="text" class="form-control" placeholder="LastName" name="lastName-search" id="lastName-input">
+                                    <input type="text" required="" class="form-control" placeholder="LastName" name="lastName-search" id="lastName-input">
                                 </div>
                                 <div class="form-group">
                                     <label for="affiliation-input">Affiliation</label>
                                     <input type="text" class="form-control" placeholder="Affiliation" name="affiliation-search" id="affiliation-input">
                                 </div>
                                 <div class="form-group">
-                                    <label for="interest-input">Research Interest</label>
-                                    <input type="text" class="form-control" placeholder="Research Interest" name="interest-search" id="interest-input">
+                                    <label for="email-input">Email</label>
+                                    <input type="text" class="form-control" placeholder="Email" name="email-search" id="email-input">
                                 </div>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">
                                     Close
@@ -192,7 +191,12 @@
                         }
 
                 <div class="profile-username">
-                    @user.getUserName
+                @@@user.getUserName()
+                    <span class="glyphicon glyphicon-edit" id="edit_btn"></span>
+                </div>
+
+                <div class="profile-name">
+                    @user.getFirstName() @user.getLastName()
                 </div>
 
                 <div class="profile-affiliation">
@@ -211,6 +215,9 @@
                     <span class="glyphicon glyphicon-phone"></span>
                     @user.getPhoneNumber
                 </div>
+            </div>
+            <div class="toprank-container">
+                <a href="/sns/popularPosts"> Top Ten Posts</a>
             </div>
         </div>
 

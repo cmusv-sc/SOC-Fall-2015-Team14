@@ -18,6 +18,7 @@ import views.html.sns.home;
 import views.html.sns.main;
 import views.html.sns.other;
 import views.html.sns.search;
+import views.html.sns.topPosts;
 
 import java.util.ArrayList;
 
@@ -96,15 +97,17 @@ public class MainController extends Controller {
     }
 
     public static Result advancedSearch() {
+
         DynamicForm df = Form.form().bindFromRequest();
 
         ObjectNode jsonData = Json.newObject();
         jsonData.put("firstName", df.get("firstName-search"));
         jsonData.put("lastName", df.get("lastName-search"));
         jsonData.put("affiliation", df.get("affiliation-search"));
-        jsonData.put("researchInterest", df.get("interest-search"));
+        jsonData.put("email", df.get("email-search"));
 
         JsonNode userNodes = APICall.postAPI(Constants.NEW_BACKEND + Constants.EXACT_SEARCH, jsonData);
+
         ArrayList<User> users = new ArrayList<>();
         for (int i = 0; i < userNodes.size(); i++) {
             JsonNode json = userNodes.path(i);
@@ -113,6 +116,12 @@ public class MainController extends Controller {
         }
 
         return ok(search.render(users));
+    }
+
+    public static Result popularPosts() {
+
+        ArrayList<Post> topTenPosts = Post.getTopTenPosts();
+        return ok(topPosts.render(topTenPosts));
     }
 
 }

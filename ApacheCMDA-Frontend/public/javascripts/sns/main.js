@@ -3,53 +3,8 @@
  */
 $(document).ready(function() {
 
-    var d1 = prepAutoCompleteUser();
-    var d2 = prepAutoCompletePost();
-
-    $.when(d1, d2).done(function(data1, data2) {
-
-        var allUsers = [];
-        var allPosts = [];
-        data1[0].forEach(function(item) {
-            allUsers.push({
-                id: item.id,
-                label: item.userName,
-                value: item.userName,
-                desc: item.firstName + " " + item.lastName,
-                origin: "user"
-            })
-        })
-
-        data2[0].forEach(function(item) {
-            allPosts.push({
-                id: item.id,
-                label: item.user.userName,
-                value: item.content,
-                desc: item.content,
-                origin: "posts"
-            })
-        })
-
-        //merge two arrays to a new one
-        var all = allUsers.concat(allPosts);
-        $("#srch-term").autocomplete({
-            source: all,
-            minLength: 1
-        }).data("ui-autocomplete")._renderItem = function(ul, item) {
-            if(item.origin == "posts") {
-                //posts
-                //to search page search
-                return $("<li>").data("item.autocomplete", item).append(
-                    "<a href='/sns/post/'"+ item.id + "><strong>" + item.label
-                    + "</strong><br>" + item.desc + "</a>").appendTo(ul);
-            } else {
-                //users
-                return $("<li>").data("item.autocomplete", item).append(
-                    "<a href='/sns/user/"+ item.id + "'><strong>" + item.label
-                    + "</strong><br>" + item.desc + "</a>").appendTo(ul);
-            }
-        }
-    })
+    autoComplete();
+    filterPost();
 
     commentPost();
     likePost();
@@ -58,22 +13,135 @@ $(document).ready(function() {
 })
 
 function prepAutoCompleteUser() {
-
     return $.ajax({
         url: "/sns/autocomplete/users",
         type: "GET"
     });
 }
 
-function prepAutoCompletePost() {
+function filterPost() {
+    var posts = $(".panel.panel-white.post.panel-shadow");
+    var hiddenPosts = [];
 
-    return $.ajax({
-        url: "/sns/autocomplete/posts",
-        type: "GET"
-    });
+    $("#srch-term").on('input',function() {
+        var keyword = $(this).val();
+        console.log(keyword);
+        if(keyword == "" || keyword == null) {
+            hiddenPosts.forEach(function(item) {
+                if($(item).is(":hidden")) {
+                    $(item).show();
+                }
+            });
+        } else {
+            posts.each(function(index, item) {
+                var content = $(item).find(".post-description").text();
+                if(content.indexOf(keyword) == -1) {
+                    //hidden unrelated posts
+                    $(item).hide();
+                    hiddenPosts.push(item);
+                } else {
+                    $(item).show();
+                }
+            })
+        }
+    })
+
+}
+
+function autoComplete() {
+    var deferred = prepAutoCompleteUser();
+
+    $.when(deferred).done(function(data) {
+
+        var allUsers = [];
+        var allFirstNames = [];
+        var allLastNames = [];
+        var allAffiliations = [];
+        var allEmails = [];
+
+        data.forEach(function(item) {
+            allUsers.push({
+                id: item.id,
+                label: item.userName,
+                value: item.userName,
+                desc: item.firstName + " " + item.lastName,
+                origin: "user"
+            });
+
+            allFirstNames.push({
+                label: item.firstName,
+                value: item.firstName
+            });
+
+            allLastNames.push({
+                label: item.lastName,
+                value: item.lastName
+            });
+
+            allAffiliations.push({
+                label: item.affiliation,
+                value: item.affiliation
+            })
+
+            allEmails.push({
+                label: item.researchInterests,
+                value: item.researchInterests
+            })
+        })
+
+        $("#fuzzy-search-input").autocomplete({
+            source: allUsers,
+            minLength: 1,
+            appendTo: "#searchUserModal"
+        }).data("ui-autocomplete")._renderItem = function(ul, item) {
+            return $("<li>").data("item.autocomplete", item).append(
+                "<a><strong>" + item.label
+                + "</strong><br>" + item.desc + "</a>").appendTo(ul);
+        }
+
+        $("#firstName-input").autocomplete({
+            source: allFirstNames,
+            minLength: 1,
+            appendTo: "#searchUserModal"
+        }).data("ui-autocomplete")._renderItem = function(ul, item) {
+            return $("<li>").data("item.autocomplete", item).append(
+                "<a><strong>" + item.label + "</strong></a>").appendTo(ul);
+        }
+
+        $("#lastName-input").autocomplete({
+            source: allLastNames,
+            minLength: 1,
+            appendTo: "#searchUserModal"
+        }).data("ui-autocomplete")._renderItem = function(ul, item) {
+            return $("<li>").data("item.autocomplete", item).append(
+                "<a><strong>" + item.label + "</strong></a>").appendTo(ul);
+        }
+
+        $("#affiliation-input").autocomplete({
+            source: allAffiliations,
+            minLength: 1,
+            appendTo: "#searchUserModal"
+        }).data("ui-autocomplete")._renderItem = function(ul, item) {
+            return $("<li>").data("item.autocomplete", item).append(
+                "<a><strong>" + item.label + "</strong></a>").appendTo(ul);
+        }
+
+        $("#email-input").autocomplete({
+            source: allEmails,
+            minLength: 1,
+            appendTo: "#searchUserModal"
+        }).data("ui-autocomplete")._renderItem = function(ul, item) {
+            return $("<li>").data("item.autocomplete", item).append(
+                "<a><strong>" + item.label + "</strong></a>").appendTo(ul);
+        }
+    })
 }
 
 function commentPost() {
+
+    var userId = $("#hiddenUserId").val();
+    var userName = $("#hiddenUserId").val();
+
     //click comment to slide down
     $(".comment-btn").click(function() {
         var post = $(this).closest(".post");
@@ -93,7 +161,7 @@ function commentPost() {
         var id = $(this).attr('id').split('-')[1];
         var content = $(this).parent().prev("input.form-control");
         var text = content.val();
-        console.log(id + content);
+
         var obj = {
             content: text,
             postId: id
@@ -115,7 +183,7 @@ function commentPost() {
             var dt = new Date();
             var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
 
-            $(list).prependTo(
+            $(list).prepend(
                 '<li class="comment"> <a class="pull-left" href="#">' +
                 '<img class="avatar" src="http://localhost:9034/users/getPhoto/' + userId +'" alt="avatar"> </a>' +
                 '<div class="comment-body"> <div class="comment-heading"> <h4 class="user">'+ userName + '</h4>' +

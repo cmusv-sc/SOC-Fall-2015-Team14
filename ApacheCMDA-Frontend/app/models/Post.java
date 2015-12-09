@@ -1,7 +1,6 @@
 package models;
 
 import com.fasterxml.jackson.databind.JsonNode;
-
 import play.libs.Json;
 import util.APICall;
 import util.Constants;
@@ -245,5 +244,26 @@ public class Post {
         return APICall.postAPI(ADD_POST_SERVICE_CALL, jsonData);
     }
 
+    /*
+        get top ten posts
+     */
 
+    public static ArrayList<Post> getTopTenPosts() {
+        ArrayList<Post> posts = new ArrayList<>();
+        JsonNode postNodes = APICall.callAPI(Constants.NEW_BACKEND + Constants.GET_POPULAR_POSTS);
+
+        if (postNodes == null || postNodes.has("error") || !postNodes.isArray()) {
+            return posts;
+        }
+
+        System.out.println("get popular posts");
+
+        for (int i = 0; i < postNodes.size(); i++) {
+            JsonNode json = postNodes.path(i);
+            Post newPost = Json.fromJson(json, Post.class);
+            posts.add(newPost);
+        }
+
+        return posts;
+    }
 }

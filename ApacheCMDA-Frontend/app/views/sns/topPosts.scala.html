@@ -1,0 +1,223 @@
+@(posts: java.util.ArrayList[Post])
+@import helper._
+@import sns._
+
+@header = {
+    <!-- Static navbar -->
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Project name</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li @if(requestHeader.uri == routes.MainController.home.url){ class="active" }>
+                        <a href="@routes.MainController.home()">Home</a>
+                    </li>
+                    <li @if(requestHeader.uri == routes.MainController.main.url){ class="active" }>
+                        <a href="@routes.MainController.main()">Main</a>
+                    </li>
+                </ul>
+
+                <div class="col-sm-3 col-md-3 pull-left">
+                    <input type="text" class="form-control" placeholder="Search Posts" name="keyword" id="srch-term">
+                </div>
+                <div class="col-sm-3 col-md-3 pull-left">
+                    <button type="button" id="search-user-btn" data-toggle="modal" data-target="#searchUserModal">
+                        Search User
+                    </button>
+                </div>
+
+                <div class="nav navbar-right">
+
+                    @if(!session.get("userName")) {
+                        <form class="navbar-form navbar-right" action="@routes.Application.login()">
+                            <button type="submit" class="btn btn-default navbar-btn pull-right">Log in</button>
+                        </form>
+                    } else {
+                        <form class="navbar-form navbar-right" action="@routes.Application.logout()">
+                            <button type="submit" class="btn btn-default navbar-btn pull-right">Log out</button>
+                        </form>
+                    }
+                </div>
+            </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+    </nav>
+
+    <!-- Search User Modal -->
+    <div class="modal fade" id="searchUserModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                    <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                    data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Search User
+                    </h4>
+                </div>
+
+                    <!-- Modal Body -->
+                <div class="modal-body">
+                    <ul class="nav nav-tabs nav-justified">
+                        <li class="active">
+                            <a  href="#fuzzy-search-tab" data-toggle="tab">Fuzzy Search</a>
+                        </li>
+                        <li>
+                            <a  href="#advanced-search-tab" data-toggle="tab">Advanced Search</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content clearfix">
+                        <div class="tab-pane active" id="fuzzy-search-tab">
+                            <form class="form-horizontal" role="search" action="@routes.MainController.fuzzySearch()" method="post">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Search ..." name="fuzzy-search" id="fuzzy-search-input">
+                                </div>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                    Close
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    Submit
+                                </button>
+                            </form>
+                        </div>
+                        <div class="tab-pane" id="advanced-search-tab">
+                            <form class="form-horizontal" role="search" action="@routes.MainController.advancedSearch()" method="post">
+                                <div class="form-group">
+                                    <label for="firstName-input">FirstName</label>
+                                    <input type="text" required="" class="form-control" placeholder="FirstName" name="firstName-search" id="firstName-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName-input">LastName</label>
+                                    <input type="text" required="" class="form-control" placeholder="LastName" name="lastName-search" id="lastName-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="affiliation-input">Affiliation</label>
+                                    <input type="text" class="form-control" placeholder="Affiliation" name="affiliation-search" id="affiliation-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email-input">Email</label>
+                                    <input type="text" class="form-control" placeholder="Email" name="email-search" id="email-input">
+                                </div>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                    Close
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    Submit
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@index("Main Page")(header) {
+
+    <div class="container main-content">
+
+        <div class="col col-md-12 content-container">
+            <div class="wrap">
+                <div class="row">
+                        <!--- Content -->
+                    <div class="three-fourth content">
+                        @for((post, index) <- posts.zipWithIndex) {
+                            <div class="container bootstrap snippet">
+                                <div class="col-sm-8">
+                                    <div class="panel panel-white post panel-shadow" id="post-@post.getId">
+                                        <div class="post-heading">
+                                            <div class="pull-left rank">
+                                                <span class="badge">@(index + 1)</span>
+                                            </div>
+                                            <div class="pull-left image">
+                                                <a href="#">
+                                                @if(post.getUser.getId == null) {
+                                                    <img src="http://avatarbox.net/avatars/img32/ned_flanders_avatar_picture_23953.gif" alt="user profile image" class="img-circle avatar"/>
+                                                } else {
+                                                    <img class="img-circle avatar" src="http://localhost:9034/users/getPhoto/@post.getUser.getId" alt="user profile image" />
+                                                }
+                                                </a>
+                                            </div>
+
+                                            <div class="pull-left meta">
+                                                <div class="title h5">
+
+                                                        <a href="/sns/user/@post.getUser.getId">
+                                                        <b>@post.getUser.getUserName</b></a>
+                                                    made a post.
+                                                </div>
+                                                <h6 class="text-muted time">@post.getTime</h6>
+                                            </div>
+                                        </div>
+                                        <div class="post-description">
+                                            <p>@post.getContent</p>
+                                            <div class="stats">
+                                                <a href="#" class="btn btn-default stat-item like-btn">
+                                                    <i class="fa fa-thumbs-up icon"></i>@post.getLikeCount
+                                                </a>
+
+                                                <a href="#" class="btn btn-default stat-item share-btn">
+                                                    <i class="fa fa-share icon"></i>@post.getShareCount
+                                                </a>
+                                                <a href="#" class="btn btn-default stat-item comment-btn">
+                                                    <i class="fa fa-comment icon"></i>@post.getCommentCount
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="post-footer">
+                                            <div class="input-group">
+                                                <input class="form-control" placeholder="Add a comment" type="text">
+
+                                                <span class="input-group-addon">
+                                                    <a href="#" class="submit-comment" id="comment-@post.getId"><i class="fa fa-edit"></i></a>
+                                                </span>
+                                            </div>
+                                            <ul class="comments-list">
+                                            @for(comment <- post.getComments) {
+                                                <li class="comment">
+                                                    <a class="pull-left" href="#">
+                                                        <img class="avatar" src="http://localhost:9034/users/getPhoto/@comment.getUser.getId" alt="avatar">
+                                                    </a>
+                                                    <div class="comment-body">
+                                                        <div class="comment-heading">
+                                                            @if(comment.getUser.getId.equals(session.get("userId"))
+                                                                    ||comment.getUser.getId == session.get("userId")
+                                                            ) {
+                                                                <a href="/sns/home">
+                                                                } else {
+                                                                <a href="/sns/user/@comment.getUser.getId">
+                                                                }
+                                                        <h4 class="user">@comment.getUser.getUserName</h4>
+                                                        </a>
+                                                        <h5 class="time">@comment.getTime</h5>
+                                                        </div>
+                                                        <p>@comment.getContent</p>
+                                                    </div>
+                                                </li>
+                                            }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if(posts.size() >= 10) {
+                            <a href="#" class="more-btn"> more >>></a>
+                        }
+                    </div>
+                </div> @*row*@
+            </div> @*wrap*@
+        </div> @*content-container*@
+    </div>
+}
+
+
+

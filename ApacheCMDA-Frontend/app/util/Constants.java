@@ -62,6 +62,7 @@ public class Constants {
     public static final String GET_ALL_USERS = "/users/getAllUsers/json";
     public static final String GET_ALL_POSTS = "/posts/getAllPosts/json";
     public static final String GET_FOLLOWING_POSTS = "/users/getFollowingPosts/";
+    public static final String GET_POPULAR_POSTS = "/posts/getMostPopularPosts";
     public static final String UPLOAD_IMAGE = "/users/uploadPhoto/";
     public static final String USER_API = "/users/";
     public static final String ADD_POST = "/posts/add";
