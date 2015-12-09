@@ -20,10 +20,7 @@ import java.io.File;
 import java.util.*;
 
 import com.google.gson.GsonBuilder;
-import models.Post;
-import models.PostRepository;
-import models.User;
-import models.UserRepository;
+import models.*;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import play.mvc.*;
@@ -50,13 +47,15 @@ public class UserController extends Controller {
 
 	private final UserRepository userRepository;
 	private final PostRepository postRepository;
+	private final CommentRepository commentRepository;
 
 	// We are using constructor injection to receive a repository to support our
 	// desire for immutability.
 	@Inject
-	public UserController(final UserRepository userRepository, final PostRepository postRepository) {
+	public UserController(final UserRepository userRepository, final PostRepository postRepository, final CommentRepository commentRepository) {
 		this.userRepository = userRepository;
 		this.postRepository = postRepository;
+		this.commentRepository = commentRepository;
 	}
 
 	public Result addUser() {
@@ -589,6 +588,11 @@ public class UserController extends Controller {
 		}
 
 		Collections.sort(posts, new PostComparator());
+
+		for(Post post: posts) {
+			List<Comment> comments = commentRepository.findByPostOrderByTimeDesc(post);
+			post.setComments(comments);
+		}
 
 		String result = new String();
 		if (format.equals("json")) {

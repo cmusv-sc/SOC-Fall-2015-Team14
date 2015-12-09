@@ -341,8 +341,7 @@ public class PostController extends Controller {
         List<Post> posts = postRepository.findByUserOrderByTimeDesc(user);
 
         for(Post post: posts) {
-            List<Comment> comments = post.getComments();
-            Collections.sort(comments);
+            List<Comment> comments = commentRepository.findByPostOrderByTimeDesc(post);
             post.setComments(comments);
         }
 
@@ -388,8 +387,7 @@ public class PostController extends Controller {
         List<Post> posts = postRepository.findBySharedUsersOrderByTimeDesc(user);
 
         for(Post post: posts) {
-            List<Comment> comments = post.getComments();
-            Collections.sort(comments);
+            List<Comment> comments = commentRepository.findByPostOrderByTimeDesc(post);
             post.setComments(comments);
         }
 

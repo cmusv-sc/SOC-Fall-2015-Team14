@@ -4,6 +4,7 @@
     <list default="true" id="cf560821-70fb-46b7-b5e2-57e9549993d7" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/PostController.java" afterPath="$PROJECT_DIR$/app/controllers/PostController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/UserController.java" afterPath="$PROJECT_DIR$/app/controllers/UserController.java" />
     </list>
     <ignored path="ApacheCMDA_Backend.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,11 +39,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PostController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PostController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/PostController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5805785">
-              <caret line="281" column="66" selection-start-line="281" selection-start-column="66" selection-end-line="281" selection-end-column="66" />
+            <state vertical-scroll-proportion="-5.962963">
+              <caret line="34" column="54" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -58,11 +59,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="UserController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/UserController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="683" column="30" selection-start-line="683" selection-start-column="30" selection-end-line="683" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.3654267">
+              <caret line="593" column="39" selection-start-line="593" selection-start-column="39" selection-end-line="593" selection-end-column="39" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -83,8 +84,8 @@
       <file leaf-file-name="CommentController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/CommentController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="120" column="50" selection-start-line="120" selection-start-column="33" selection-end-line="120" selection-end-column="50" />
+            <state vertical-scroll-proportion="-8.481482">
+              <caret line="154" column="67" selection-start-line="154" selection-start-column="64" selection-end-line="154" selection-end-column="67" />
               <folding />
             </state>
           </provider>
@@ -127,7 +128,7 @@
         <entry file="file://$PROJECT_DIR$/conf/routes">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="90" column="33" selection-start-line="90" selection-start-column="33" selection-end-line="90" selection-end-column="33" />
+              <caret line="49" column="149" selection-start-line="49" selection-start-column="132" selection-end-line="49" selection-end-column="149" />
               <folding />
             </state>
           </provider>
@@ -148,8 +149,8 @@
       <list>
         <option value="$PROJECT_DIR$/app/models/PostRepository.java" />
         <option value="$PROJECT_DIR$/conf/routes" />
-        <option value="$PROJECT_DIR$/app/controllers/UserController.java" />
         <option value="$PROJECT_DIR$/app/controllers/PostController.java" />
+        <option value="$PROJECT_DIR$/app/controllers/UserController.java" />
       </list>
     </option>
   </component>
@@ -723,12 +724,12 @@
       <workItem from="1449470124386" duration="29000" />
       <workItem from="1449470240521" duration="97000" />
       <workItem from="1449527722840" duration="765000" />
-      <workItem from="1449642151518" duration="262000" />
+      <workItem from="1449642151518" duration="954000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2648000" />
+    <option name="totallyTimeSpent" value="3340000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="43" y="23" width="1388" height="872" extended-state="0" />
@@ -1018,29 +1019,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/conf/routes">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="90" column="33" selection-start-line="90" selection-start-column="33" selection-end-line="90" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="55" column="37" selection-start-line="55" selection-start-column="37" selection-end-line="55" selection-end-column="37" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="683" column="30" selection-start-line="683" selection-start-column="30" selection-end-line="683" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1065,17 +1048,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/CommentController.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.481482">
+          <caret line="154" column="67" selection-start-line="154" selection-start-column="64" selection-end-line="154" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/routes">
+      <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="120" column="50" selection-start-line="120" selection-start-column="33" selection-end-line="120" selection-end-column="50" />
+          <caret line="49" column="149" selection-start-line="49" selection-start-column="132" selection-end-line="49" selection-end-column="149" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/PostController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5805785">
-          <caret line="281" column="66" selection-start-line="281" selection-start-column="66" selection-end-line="281" selection-end-column="66" />
+        <state vertical-scroll-proportion="-5.962963">
+          <caret line="34" column="54" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="54" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3654267">
+          <caret line="593" column="39" selection-start-line="593" selection-start-column="39" selection-end-line="593" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
