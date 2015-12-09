@@ -277,9 +277,12 @@ public class PostController extends Controller {
         }
 
         Post post = postRepository.findOne(id);
+        if (post == null) {
+            System.out.println("Post not found with with id: " + id);
+            return notFound("Post not found with with id: " + id);
+        }
 
-        List<Comment> comments = post.getComments();
-        Collections.sort(comments);
+        List<Comment> comments = commentRepository.findByPostOrderByTimeDesc(post);
         post.setComments(comments);
 
         if (post == null) {

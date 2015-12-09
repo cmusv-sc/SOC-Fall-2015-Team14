@@ -671,7 +671,7 @@ public class UserController extends Controller {
 		String firstName = json.path("firstName").asText();
 		String lastName = json.path("lastName").asText();
 		String affiliation = json.path("affiliation").asText();
-		String researchInterests = json.path("researchInterests").asText();
+		String email = json.path("email").asText();
 
 		List<User> users = userRepository.findByFirstNameAndLastName(firstName, lastName);
 		List<User> matchUsers = new ArrayList<>();
@@ -680,7 +680,7 @@ public class UserController extends Controller {
 			if (match && affiliation.length() > 0 && !affiliation.equals(user.getAffiliation())) {
 				match = false;
 			}
-			if (match && researchInterests.length() > 0 && !researchInterests.equals(user.getResearchInterests())) {
+			if (match && email.length() > 0 && !email.equals(user.getEmail())) {
 				match = false;
 			}
 			if (match) {
