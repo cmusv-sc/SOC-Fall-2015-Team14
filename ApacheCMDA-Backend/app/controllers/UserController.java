@@ -79,6 +79,7 @@ public class UserController extends Controller {
 	    String faxNumber = json.path("faxNumber").asText();
 	    String researchInterests = json.path("researchInterests").asText();
 	    String highestDegree = json.path("highestDegree").asText();
+		boolean hasFrontLayerPhoto = json.path("hasFrontLayerPhoto").asBoolean();
 
 		try {
 			if (userRepository.findByUserName(userName).size()>0) {
@@ -87,7 +88,7 @@ public class UserController extends Controller {
 			}
 
 			User user = new User(userName, password, firstName, lastName, middleInitial, affiliation,
-					title, email, mailingAddress, phoneNumber, faxNumber, researchInterests, highestDegree);
+					title, email, mailingAddress, phoneNumber, faxNumber, researchInterests, highestDegree, hasFrontLayerPhoto);
 			userRepository.save(user);
 			System.out.println("User saved: " + user.getId());
 			return created(new Gson().toJson(user.getId()));
@@ -218,6 +219,7 @@ public class UserController extends Controller {
 	    String faxNumber = json.path("faxNumber").asText();
 	    String researchInterests = json.path("researchInterests").asText();
 	    String highestDegree = json.path("highestDegree").asText();
+		boolean hasFrontLayerPhoto = json.path("hasFrontLayerPhoto").asBoolean();
 		try {
 			User updateUser = userRepository.findOne(id);
 
@@ -232,6 +234,7 @@ public class UserController extends Controller {
 			updateUser.setPhoneNumber(phoneNumber);
 			updateUser.setResearchInterests(researchInterests);
 			updateUser.setTitle(title);
+			updateUser.setHasFrontLayerPhoto(hasFrontLayerPhoto);
 			
 			User savedUser = userRepository.save(updateUser);
 			System.out.println("User updated: " + savedUser.getFirstName()
