@@ -58,6 +58,8 @@ public class User {
 	private String highestDegree;
 	@Expose
 	private String photoContentType;
+	@Expose
+	private boolean hasFrontLayerPhoto;
 
 	@ManyToMany (fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
 	@JoinTable(name = "UserRelationship",
@@ -81,7 +83,7 @@ public class User {
 			String lastName, String middleInitial, String affiliation,
 			String title, String email, String mailingAddress,
 			String phoneNumber, String faxNumber, String researchInterests,
-			String highestDegree) {
+			String highestDegree, boolean hasFrontLayerPhoto) {
 		super();
 		this.userName = userName;
 		this.password = password;
@@ -95,6 +97,7 @@ public class User {
 		this.phoneNumber = phoneNumber;
 		this.faxNumber = faxNumber;
 		this.researchInterests = researchInterests;
+		this.hasFrontLayerPhoto = hasFrontLayerPhoto;
 		this.highestDegree = highestDegree;
 		this.followers = new HashSet<>();
 		this.followedUsers = new HashSet<>();
@@ -165,6 +168,10 @@ public class User {
 	public Set<User> getFollowedUsers() { return followedUsers; }
 
 	public Set<Post> getSharedPosts() { return sharedPosts; }
+
+	public boolean isHasFrontLayerPhoto() { return hasFrontLayerPhoto; }
+
+	public void setHasFrontLayerPhoto(boolean hasFrontLayerPhoto) { this.hasFrontLayerPhoto = hasFrontLayerPhoto; }
 
 	public void setUserName(String userName) {
 		this.userName = userName;

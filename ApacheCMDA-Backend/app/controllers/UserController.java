@@ -79,6 +79,7 @@ public class UserController extends Controller {
 	    String faxNumber = json.path("faxNumber").asText();
 	    String researchInterests = json.path("researchInterests").asText();
 	    String highestDegree = json.path("highestDegree").asText();
+		boolean hasFrontLayerPhoto = json.path("hasFrontLayerPhoto").asBoolean();
 
 		try {
 			if (userRepository.findByUserName(userName).size()>0) {
@@ -87,7 +88,7 @@ public class UserController extends Controller {
 			}
 
 			User user = new User(userName, password, firstName, lastName, middleInitial, affiliation,
-					title, email, mailingAddress, phoneNumber, faxNumber, researchInterests, highestDegree);
+					title, email, mailingAddress, phoneNumber, faxNumber, researchInterests, highestDegree, hasFrontLayerPhoto);
 			userRepository.save(user);
 			System.out.println("User saved: " + user.getId());
 			return created(new Gson().toJson(user.getId()));
@@ -218,6 +219,7 @@ public class UserController extends Controller {
 	    String faxNumber = json.path("faxNumber").asText();
 	    String researchInterests = json.path("researchInterests").asText();
 	    String highestDegree = json.path("highestDegree").asText();
+		boolean hasFrontLayerPhoto = json.path("hasFrontLayerPhoto").asBoolean();
 		try {
 			User updateUser = userRepository.findOne(id);
 
@@ -232,6 +234,7 @@ public class UserController extends Controller {
 			updateUser.setPhoneNumber(phoneNumber);
 			updateUser.setResearchInterests(researchInterests);
 			updateUser.setTitle(title);
+			updateUser.setHasFrontLayerPhoto(hasFrontLayerPhoto);
 			
 			User savedUser = userRepository.save(updateUser);
 			System.out.println("User updated: " + savedUser.getFirstName()
@@ -243,6 +246,32 @@ public class UserController extends Controller {
 			System.out.println("User not updated: " + firstName + " "
 					+ lastName);
 			return badRequest("User not updated: " + firstName + " " + lastName);
+		}
+	}
+
+	public Result updateFrontLayerPhotoFlag(long id) {
+		JsonNode json = request().body().asJson();
+		if (json == null) {
+			System.out.println("User not saved, expecting Json data");
+			return badRequest("User not saved, expecting Json data");
+		}
+
+		// Parse JSON file
+		boolean hasFrontLayerPhoto = json.path("hasFrontLayerPhoto").asBoolean();
+		try {
+			User updateUser = userRepository.findOne(id);
+
+			updateUser.setHasFrontLayerPhoto(hasFrontLayerPhoto);
+
+			User savedUser = userRepository.save(updateUser);
+			System.out.println("User updated: " + savedUser.getFirstName()
+					+ " " + savedUser.getLastName());
+			return created("User updated: " + savedUser.getFirstName() + " "
+					+ savedUser.getLastName());
+		} catch (PersistenceException pe) {
+			pe.printStackTrace();
+			System.out.println("User not updated for id " + id);
+			return badRequest("User not updated for id " + id);
 		}
 	}
 
