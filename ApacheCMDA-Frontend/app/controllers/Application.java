@@ -133,7 +133,8 @@ public class Application extends Controller {
             jsonData.put("faxNumber", nu.get().getFaxNumber());
             jsonData.put("researchInterests", nu.get().getResearchInterests());
             jsonData.put("highestDegree", nu.get().getHighestDegree());
-            System.out.println(jsonData.toString());
+            jsonData.put("hasFrontLayerPhoto", false);
+
             JsonNode response = APICall.postAPI(Constants.NEW_BACKEND + Constants.ADD_USER, jsonData);
 
             // flash the response message

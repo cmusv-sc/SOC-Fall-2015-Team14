@@ -57,38 +57,30 @@ public class User {
 	private String highestDegree;
     private String photoContentType;
 
-	// @OneToMany(mappedBy = "user", cascade={CascadeType.ALL})
-	// private Set<ClimateService> climateServices = new
-	// HashSet<ClimateService>();
+    private Boolean hasFrontLayerPhoto;
 
 	public User() {
 	}
 
-	public User(String userName, String password, String firstName,
-			String lastName, String middleInitial, String affiliation,
-			String title, String email, String mailingAddress,
-			String phoneNumber, String faxNumber, String researchInterests,
-			String highestDegree, String photoContentType) {
-		super();
-		this.userName = userName;
-		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.middleInitial = middleInitial;
-		this.affiliation = affiliation;
-		this.title = title;
-		this.email = email;
-		this.mailingAddress = mailingAddress;
-		this.phoneNumber = phoneNumber;
-		this.faxNumber = faxNumber;
-		this.researchInterests = researchInterests;
-		this.highestDegree = highestDegree;
+    public User(String userName, String password, String firstName, String lastName, String middleInitial, String affiliation, String title, String email, String mailingAddress, String phoneNumber, String faxNumber, String researchInterests, String highestDegree, String photoContentType, Boolean hasFrontLayerPhoto) {
+        this.userName = userName;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.middleInitial = middleInitial;
+        this.affiliation = affiliation;
+        this.title = title;
+        this.email = email;
+        this.mailingAddress = mailingAddress;
+        this.phoneNumber = phoneNumber;
+        this.faxNumber = faxNumber;
+        this.researchInterests = researchInterests;
+        this.highestDegree = highestDegree;
         this.photoContentType = photoContentType;
-	}
+        this.hasFrontLayerPhoto = hasFrontLayerPhoto;
+    }
 
-
-
-	public long getId() {
+    public long getId() {
 		return id;
 	}
 
@@ -207,6 +199,14 @@ public class User {
 
     public void setPhotoContentType(String photoContentType) {
         this.photoContentType = photoContentType;
+    }
+
+    public Boolean getHasFrontLayerPhoto() {
+        return hasFrontLayerPhoto;
+    }
+
+    public void setHasFrontLayerPhoto(Boolean hasFrontLayerPhoto) {
+        this.hasFrontLayerPhoto = hasFrontLayerPhoto;
     }
 
     @Override

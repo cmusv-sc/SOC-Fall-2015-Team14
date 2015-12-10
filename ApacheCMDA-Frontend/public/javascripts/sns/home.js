@@ -54,12 +54,28 @@ $(document).ready(function() {
 
     //support france
     $("#support-france-btn").click(function() {
+        $.ajax({
+            url: "/sns/addFrontLayer",
+            type: "GET"
+        })
 
+        //set front end
+        $(".profile-container").append('<div class="profile-image img-rounded front-layer-image"></div>');
+
+        $(".panel.panel-white.post.panel-shadow .post-heading .pull-left.image a").append('<div class="img-circle avatar front-layer-image"></div>');
     })
 
     //remvoe layer
     $("#remove-layer-btn").click(function(){
+        $.ajax({
+            url: "/sns/removeFrontLayer",
+            type: "GET"
+        })
 
+        //set front end
+        $(".profile-container .profile-image.img-rounded.front-layer-image").remove();
+
+        $(".panel.panel-white.post.panel-shadow .post-heading .pull-left.image a .img-circle.avatar.front-layer-image").remove();
     })
 })
 

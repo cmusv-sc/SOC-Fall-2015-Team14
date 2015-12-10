@@ -80,9 +80,37 @@ public class UserController extends Controller{
         return ok();
     }
 
+    public static Result removeFollowee(String followeeID) {
+        String response = String.valueOf(APICall.deleteAPI(Constants.NEW_BACKEND + "/users/" + session().get("userId")
+                + "/unfollow/" + followeeID));
+
+        System.out.println(response);
+        return ok();
+    }
+
     public static Result getAllUsers() {
 
         JsonNode response = APICall.callAPI(Constants.NEW_BACKEND + "/users/getAllUsers/json");
         return ok(response);
     }
+
+    public static Result addFrontLayer() {
+        String id = String.valueOf(user.getId());
+        ObjectNode jsonData= Json.newObject();
+        jsonData.put("hasFrontLayerPhoto", true);
+        JsonNode response = APICall.putAPI(Constants.NEW_BACKEND + "/users/updateFrontLayerPhotoFlag/" + id, jsonData);
+
+        return ok();
+    }
+
+    public static Result removeFrontLayer() {
+        String id = String.valueOf(user.getId());
+        ObjectNode jsonData= Json.newObject();
+        jsonData.put("hasFrontLayerPhoto", false);
+        JsonNode response = APICall.putAPI(Constants.NEW_BACKEND + "/users/updateFrontLayerPhotoFlag/" + id, jsonData);
+
+        return ok();
+    }
+
+
 }

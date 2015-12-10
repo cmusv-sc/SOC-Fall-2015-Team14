@@ -21,6 +21,8 @@ import views.html.sns.search;
 import views.html.sns.topPosts;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author: Xunrong Li
@@ -77,7 +79,18 @@ public class MainController extends Controller {
         ArrayList<User> otherFollowingUser = User.getFollowingUsers(userId);
         ArrayList<User> otherFollowedUser = User.getFollowedUsers(userId);
 
-        return ok(other.render(otherUser, postForm, otherPosts, otherFollowingUser, otherFollowedUser));
+        ArrayList<String> followingIds = new ArrayList<>();
+
+        System.out.println("static user id" + user.getId() + " " + session().get("userId"));
+        followingUsers = User.getFollowingUsers(String.valueOf(user.getId()));
+
+
+        for (int i = 0; i < followingUsers.size(); i++) {
+            System.out.println(followingUsers.get(i).getUserName() + followingUsers.get(i).getId());
+            followingIds.add(String.valueOf(followingUsers.get(i).getId()));
+        }
+
+        return ok(other.render(otherUser, postForm, otherPosts, otherFollowingUser, otherFollowedUser, followingIds));
     }
 
     public static Result fuzzySearch() {

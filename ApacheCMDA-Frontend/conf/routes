@@ -49,6 +49,7 @@ POST        /sns/posts/newLike                               controllers.PostCon
 POST        /sns/posts/newShare                              controllers.PostController.newShare()
 GET         /sns/posts/:id/delete/                           controllers.PostController.deletePost(id: String)
 GET         /sns/users/follow/:id                            controllers.UserController.addFollowee(id: String)
+GET         /sns/users/unfollow/:id                          controllers.UserController.removeFollowee(id: String)
 
 POST        /sns/fuzzySearch                                 controllers.MainController.fuzzySearch()
 POST        /sns/advancedSearch                              controllers.MainController.advancedSearch()
@@ -67,3 +68,6 @@ POST        /sns/isEmailExisted                              controllers.Applica
 POST        /sns/isUserNameExisted                           controllers.Application.isUserNameExisted()
 POST        /sns/users/uploadPhoto                           controllers.UserController.uploadImage()
 POST        /sns/users/updateUser                            controllers.UserController.updateUser()
+
+GET         /sns/addFrontLayer                               controllers.UserController.addFrontLayer()
+GET         /sns/removeFrontLayer                            controllers.UserController.removeFrontLayer()

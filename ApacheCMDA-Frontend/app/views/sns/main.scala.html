@@ -241,7 +241,9 @@
                                                     <img src="http://avatarbox.net/avatars/img32/ned_flanders_avatar_picture_23953.gif" alt="user profile image" class="img-circle avatar"/>
                                                 } else {
                                                     <img class="img-circle avatar" src="http://localhost:9034/users/getPhoto/@post.getUser.getId" alt="user profile image"/>
-                                                    <div class="img-circle avatar front-layer-image"></div>
+                                                    @if(post.getUser.getHasFrontLayerPhoto) {
+                                                        <div class="img-circle avatar front-layer-image"></div>
+                                                    }
                                                 }
                                                 </a>
                                             </div>
