@@ -94,8 +94,8 @@ public class PostController extends Controller {
         }
 
         deletePost.setUser(null);
-        deletePost.setLikeUsers(null);
-        deletePost.setSharedUsers(null);
+        deletePost.getLikeUsers().clear();
+        deletePost.getSharedUsers().clear();
         for (Comment comment : deletePost.getComments()) {
             commentRepository.delete(comment);
         }
