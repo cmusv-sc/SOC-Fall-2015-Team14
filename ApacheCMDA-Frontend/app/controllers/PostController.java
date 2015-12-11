@@ -37,6 +37,9 @@ public class PostController extends Controller {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         jsonData.put("time", dateFormat.format(date));
+        jsonData.put("location", dc.field("location").value());
+        System.out.println("location-----------" + dc.field("location").value());
+
 
         if (dc.field("visibility").value() == null) {
             jsonData.put("visibility", false);
@@ -46,7 +49,7 @@ public class PostController extends Controller {
 
         JsonNode response = APICall.postAPI(Constants.NEW_BACKEND + Constants.ADD_POST, jsonData);
         Application.flashMsg(response);
-        return redirect("/sns/main");
+        return redirect("/sns/home");
     }
 
     public static void getComment() {

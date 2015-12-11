@@ -33,6 +33,7 @@ $(document).ready(function() {
                             state=value[count-2];
                             city=value[count-3];
                             $("#btnTitle").replaceWith( "<h5>" + city + "</h5>" );
+
                             $("#curlocation").val(city);
                             $('#btnTitle').attr("disabled", true);
                         }

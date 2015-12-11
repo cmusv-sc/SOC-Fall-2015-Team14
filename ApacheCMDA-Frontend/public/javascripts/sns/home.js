@@ -12,10 +12,10 @@ $(document).ready(function() {
             $(removeBtn).show();
         }
 
-        var editBtn = $(this).find(".pull-right.meta.edit-div");
-        if ($(editBtn).is(":hidden")) {
-            $(editBtn).show();
-        }
+        //var editBtn = $(this).find(".pull-right.meta.edit-div");
+        //if ($(editBtn).is(":hidden")) {
+        //    $(editBtn).show();
+        //}
 
     }, function () {
         var removeBtn = $(this).find(".pull-right.meta.remove-div");
@@ -23,10 +23,10 @@ $(document).ready(function() {
             $(removeBtn).hide();
         }
 
-        var editBtn = $(this).find(".pull-right.meta.edit-div");
-        if (!$(editBtn).is(":hidden")) {
-            $(editBtn).hide();
-        }
+        //var editBtn = $(this).find(".pull-right.meta.edit-div");
+        //if (!$(editBtn).is(":hidden")) {
+        //    $(editBtn).hide();
+        //}
     })
 
     //click delete button

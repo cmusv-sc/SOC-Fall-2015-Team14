@@ -102,3 +102,13 @@ span.glyphicon.glyphicon-plus.follow-btn {
     background-size: cover;
 }
 
+.snippet {
+    margin-left: -30px;
+}
+
+.form-group div{
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+

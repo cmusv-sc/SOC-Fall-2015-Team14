@@ -76,6 +76,14 @@ public class MainController extends Controller {
     public static Result other(String userId) {
         User otherUser = User.getUserById(userId);
         ArrayList<Post> otherPosts = Post.getUserPosts(userId);
+
+        for (int i = 0; i < otherPosts.size(); i++) {
+            if (otherPosts.get(i).getVisibility()) {
+                //if it is private
+                otherPosts.remove(i);
+            }
+        }
+
         ArrayList<User> otherFollowingUser = User.getFollowingUsers(userId);
         ArrayList<User> otherFollowedUser = User.getFollowedUsers(userId);
 
@@ -134,6 +142,12 @@ public class MainController extends Controller {
     public static Result popularPosts() {
 
         ArrayList<Post> topTenPosts = Post.getTopTenPosts();
+        for (int i = 0; i < topTenPosts.size(); i++) {
+            if (topTenPosts.get(i).getVisibility()) {
+                //if it is private
+                topTenPosts.remove(i);
+            }
+        }
         return ok(topPosts.render(topTenPosts));
     }
 
