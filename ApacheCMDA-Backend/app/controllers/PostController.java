@@ -99,7 +99,6 @@ public class PostController extends Controller {
         for (Comment comment : deletePost.getComments()) {
             commentRepository.delete(comment);
         }
-        deletePost.setComments(null);
         postRepository.save(deletePost);
         postRepository.delete(deletePost);
         System.out.println("Post is deleted: " + id);
