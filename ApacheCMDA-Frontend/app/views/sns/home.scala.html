@@ -21,10 +21,10 @@
                 </ul>
 
                 <div class="col-sm-3 col-md-3 pull-left">
-                    <input type="text" class="form-control" placeholder="Search Posts" name="keyword" id="srch-term">
+                    <input type="text" class="form-control buttonLow" placeholder="Search Posts" name="keyword" id="srch-term">
                 </div>
                 <div class="col-sm-3 col-md-3 pull-left">
-                    <button type="button" id="search-user-btn" data-toggle="modal" data-target="#searchUserModal">
+                    <button type="button" class="btn btn-default buttonLow" id="search-user-btn buttonLow" data-toggle="modal" data-target="#searchUserModal">
                         Search User
                     </button>
                 </div>
@@ -161,12 +161,15 @@
                                     <label for="email-input">Email</label>
                                     <input type="text" class="form-control" placeholder="Email" name="email-search" id="email-input">
                                 </div>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">
                                     Close
                                 </button>
                                 <button type="submit" class="btn btn-primary">
-                                    Submit
+                                    Post
                                 </button>
+                                <button type="button" class="btn btn-default start locButtonRight" id="location">
+                                    <div class="btnTitle">Get Location</div>
                             </form>
                         </div>
                     </div>
