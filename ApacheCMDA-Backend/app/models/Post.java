@@ -35,9 +35,7 @@ public class Post {
     @Expose
     private int shareCount;
     @Expose
-    private double latitude;
-    @Expose
-    private double longitude;
+    private String location;
 
     @Expose
     @ManyToMany (fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
@@ -68,15 +66,14 @@ public class Post {
     }
 
     public Post(User user, String title, String content,
-                Date time, boolean visibility, double latitude, double longitude) {
+                Date time, boolean visibility, String location) {
         super();
         this.user = user;
         this.content = content;
         this.time = time;
         this.visibility = visibility;
         this.title = title;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.location = location;
         this.likeCount = 0;
         this.likeUsers = new HashSet<>();
         this.shareCount = 0;
@@ -130,13 +127,9 @@ public class Post {
         this.visibility = visibility;
     }
 
-    public double getLatitude() { return latitude; }
+    public String getLocation() { return location; }
 
-    public void setLatitude(double latitude) { this.latitude = latitude; }
-
-    public double getLongitude() { return longitude; }
-
-    public void setLongitude(double longitude) { this.longitude = longitude; }
+    public void setLocation(String location) { this.location = location; }
 
     public Set<User> getLikeUsers() { return likeUsers; }
 
