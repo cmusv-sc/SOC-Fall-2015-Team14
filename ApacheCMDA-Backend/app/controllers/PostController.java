@@ -94,12 +94,12 @@ public class PostController extends Controller {
         }
 
         deletePost.setUser(null);
-        deletePost.getLikeUsers().clear();
-        deletePost.getSharedUsers().clear();
+        deletePost.setLikeUsers(null);
+        deletePost.setSharedUsers(null);
         for (Comment comment : deletePost.getComments()) {
             commentRepository.delete(comment);
         }
-        deletePost.getComments().clear();
+        deletePost.setComments(null);
         postRepository.save(deletePost);
         postRepository.delete(deletePost);
         System.out.println("Post is deleted: " + id);
