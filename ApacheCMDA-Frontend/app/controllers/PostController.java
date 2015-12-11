@@ -105,9 +105,10 @@ public class PostController extends Controller {
     }
 
     public static Result deletePost(String id) {
-        System.out.println("delete");
-        APICall.deleteAPI(Constants.NEW_BACKEND + Constants.DELETE_POST + id);
-        return redirect("/sns/home");
+        System.out.println("delete + id");
+        String response = String.valueOf(APICall.deleteAPI(Constants.NEW_BACKEND + Constants.DELETE_POST + id));
+        System.out.println(response);
+        return ok();
     }
 
     public static Result getAllPosts() {

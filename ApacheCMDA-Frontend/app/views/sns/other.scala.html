@@ -107,7 +107,8 @@
 
 @index("Other Page")(header) {
     <script src='@routes.Assets.at("javascripts/sns/other.js")' type="text/javascript"></script>
-
+    <input type="hidden" id="hiddenUserName" value="@session.get("userName")/>
+    <input type="hidden" id="hiddenUserId" value="@session.get("userId)">
     <div class="container main-content">
 
         <input type="hidden" id="hiddenSession" value="@user.getId">

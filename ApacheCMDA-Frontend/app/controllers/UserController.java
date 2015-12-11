@@ -29,7 +29,7 @@ public class UserController extends Controller{
         Http.RequestBody body = request().body();
         JsonNode json = body.asJson();
         JsonNode response = null;
-
+        user = User.getUserById(session().get("userId"));
         try {
             user.setUserName(json.path("userName").asText());
             user.setFirstName(json.path("firstName").asText());
@@ -46,7 +46,6 @@ public class UserController extends Controller{
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            System.out.println("finally" + user.getAffiliation());
             return ok(response);
         }
     }
